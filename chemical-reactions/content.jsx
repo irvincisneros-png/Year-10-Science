@@ -115,6 +115,7 @@ function Section61({ progress, setProgress }) {
         <p className="lead">In every chemical reaction, the total mass of the substances you start with equals the total mass of the substances you end up with.</p>
       </div>
 
+      <Figure src="img/conservation-mass.png" caption="Mass is conserved — the reactant and product masses balance." />
       <DotPoint id="6.1.1" title="Explain the meaning of the law of conservation of mass" progress={progress} setProgress={setProgress}>
         <p>The <Term def="Mass cannot be created or destroyed in a chemical reaction. Total mass of reactants equals total mass of products.">law of conservation of mass</Term> states that mass cannot be created or destroyed during a <Term def="A process in which substances called reactants are changed into new substances called products.">chemical reaction</Term>. This means the total mass of the <Term def="Substances that are present at the start of a reaction and are used up.">reactants</Term> always equals the total mass of the <Term def="New substances formed during a chemical reaction.">products</Term>.</p>
         <p>The law was first stated by the French chemist <Term def="French chemist (1743 to 1794) who first formulated the law of conservation of mass through careful experiments.">Antoine Lavoisier</Term> in 1789. It is one of the most important foundations of chemistry.</p>
@@ -776,6 +777,7 @@ function Section63({ progress, setProgress }) {
         <p className="lead">Concentration, surface area, temperature, and catalysts all change how quickly reactants become products.</p>
       </div>
 
+      <Figure src="img/reaction-rate.png" caption="Smaller particles mean more surface area and a faster reaction." />
       <DotPoint id="6.3.1" title="Investigate and explain how concentration, surface area, temperature and catalysts affect rate" progress={progress} setProgress={setProgress}>
         <p>The <Term def="A measure of how quickly reactants are converted into products in a chemical reaction.">rate of a chemical reaction</Term> tells you how fast it goes. Explosions are very fast; rusting is very slow. <Term def="The theory that reactions occur when particles collide with sufficient energy and the correct orientation.">Collision theory</Term> explains rate: a reaction only happens when particles collide with enough energy (the <Term def="The minimum amount of energy that colliding particles must have for a reaction to occur.">activation energy</Term>) and with the correct orientation. Anything that increases the frequency or energy of successful collisions increases the rate.</p>
         <p>Higher <Term def="The amount of substance dissolved in a given volume of solution.">concentration</Term> means more particles per unit volume, so collisions happen more often. Larger <Term def="The total area of a solid that is exposed and available for collisions with other particles.">surface area</Term> exposes more particles to collisions; powders react faster than lumps because there are far more particle sites available.</p>
@@ -1013,6 +1015,7 @@ function Section64({ progress, setProgress }) {
         <p className="lead">From the Big Bang to radioactive decay, half-lives, fission, and fusion, the nucleus is where some of the universe's most powerful reactions take place.</p>
       </div>
 
+      <Figure src="img/nuclear.png" caption="In nuclear fission a heavy nucleus splits, releasing energy." />
       <DotPoint id="6.4.1" title="Outline how the first elements were formed after the Big Bang" progress={progress} setProgress={setProgress}>
         <p>The <Term def="The leading scientific theory that the universe began about 13.8 billion years ago from an extremely hot, dense point that rapidly expanded.">Big Bang theory</Term> proposes that around 13.8 billion years ago, all matter and energy were concentrated in one unimaginably hot, dense point. As the universe expanded and cooled, matter began to take shape.</p>
         <p>Within the first second, quarks combined to form protons and neutrons. About 3 to 20 minutes after the Big Bang, <Term def="The production of atomic nuclei from protons and neutrons in the first minutes after the Big Bang.">Big Bang nucleosynthesis</Term> produced the lightest nuclei: approximately 75% hydrogen (H) and 25% helium (He), plus tiny traces of lithium and beryllium.</p>
@@ -1253,6 +1256,7 @@ function Section65({ progress, setProgress }) {
 mountTopicApp({
   year: 10,
   topicTitle: "Chemical Reactions",
+  heroImage: "img/hero.png",
   strand: "Stage 5 · NSW Science",
   accent: "purple",
   storageKey: "y10.chemreactions",

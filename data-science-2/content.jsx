@@ -376,6 +376,7 @@ function Section2({ progress, setProgress }) {
         <p className="lead">Pseudoscience wears the costume of science but dodges the one thing that makes science reliable: the willingness to be proved wrong.</p>
       </div>
 
+      <Figure src="img/pseudoscience.png" caption="Sound evidence versus cherry-picked, misleading data." />
       <DotPoint id="8.2.1" title="Distinguishing science from pseudoscience" progress={progress} setProgress={setProgress}>
         <p>Science is a method for generating reliable knowledge through observation, hypothesis testing, peer review, and replication. <Term def="Claims, practices, or systems that appear scientific but lack the key features of reliable science, especially falsifiability.">Pseudoscience</Term> presents the surface features of science without following scientific methods.</p>
         <p>The philosopher Karl Popper identified <Term def="The property of a claim that means it can, in principle, be shown to be false by a specific experiment or observation.">falsifiability</Term> as the central criterion: a scientific claim makes predictions that could be shown to be false. Pseudoscientific claims are typically structured so that no possible evidence could ever refute them. Negative results are explained away by inventing special exceptions.</p>
@@ -709,6 +710,7 @@ function Section3({ progress, setProgress }) {
         <p className="lead">A single measurement tells you almost nothing. A million measurements, properly analysed, can reveal trends that reshape our understanding of the world.</p>
       </div>
 
+      <Figure src="img/correlation.png" caption="Two variables rising together — but does one cause the other?" />
       <DotPoint id="8.3.1" title="Features, collection, and uses of large datasets" progress={progress} setProgress={setProgress}>
         <p>A <Term def="A collection of data containing many records and often many variables, generated from systematic measurement, observation, or recording over time or across a population.">large dataset</Term> is characterised by volume (many records), variety (multiple variable types: numerical, categorical, geographic, temporal), and sometimes velocity (continuous real-time updating). Digital technology transformed data collection: sensors, satellites, and electronic records now generate billions of observations where humans once collected thousands.</p>
         <p>In Australia, the <Term def="Australia's national statistical agency, which conducts the Census and produces economic and social data.">Australian Bureau of Statistics (ABS)</Term>, the Bureau of Meteorology (BOM), and the Australian Institute of Health and Welfare (AIHW) maintain publicly available large datasets used by scientists, policymakers, and the public.</p>
@@ -953,6 +955,7 @@ function Section4({ progress, setProgress }) {
 mountTopicApp({
   year: 10,
   topicTitle: "Data Science 2",
+  heroImage: "img/hero.png",
   strand: "Stage 5 · NSW Science",
   accent: "teal",
   storageKey: "y10.datascience2",

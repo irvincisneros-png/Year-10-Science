@@ -936,6 +936,7 @@ function Section71({ progress, setProgress }) {
         <p className="lead">Waves carry energy across space and through matter. Here you will explore what all waves have in common and discover how light and sound differ in fundamental ways.</p>
       </div>
 
+      <Figure src="img/wave.png" caption="A transverse wave showing crest, trough and wavelength." />
       <DotPoint id="7.1.1" title="Mechanical waves and electromagnetic waves" progress={progress} setProgress={setProgress}>
         <p>A <Term def="A wave that requires a physical medium (solid, liquid or gas) to travel through.">mechanical wave</Term> needs matter to travel. Sound, water ripples, and seismic waves are all mechanical. Take away the medium and the wave disappears. That is why the vacuum of space is silent: no air means no sound.</p>
         <p>An <Term def="A wave made of oscillating electric and magnetic fields that can travel through a vacuum.">electromagnetic (EM) wave</Term> is completely different. It does not need particles. The electric and magnetic fields that make it up sustain each other as they travel, so light from the Sun crosses 150 million kilometres of almost empty space to reach you. Radio waves, X-rays, and microwaves are all electromagnetic.</p>
@@ -1040,6 +1041,7 @@ function Section72({ progress, setProgress }) {
         <p className="lead">Sound is energy moving through matter as a series of pressure pulses. Explore how it travels, how you hear it, and how it is used in medicine.</p>
       </div>
 
+      <Figure src="img/sound.png" caption="Sound travels as compressions and rarefactions through the air to the ear." />
       <DotPoint id="7.2.1" title="Sound energy travels as compressions and rarefactions" progress={progress} setProgress={setProgress}>
         <p>When an object vibrates, it pushes the surrounding air molecules together, forming a <Term def="A region of higher-than-normal pressure in a longitudinal wave where molecules are pushed close together.">compression</Term>. Then it pulls back, spreading the molecules apart into a <Term def="A region of lower-than-normal pressure in a longitudinal wave where molecules spread apart.">rarefaction</Term>. These alternating pressure changes radiate outward as a longitudinal mechanical wave. The individual air molecules do not travel to your ear. Only the pattern of pressure variations travels.</p>
         <p>The speed of sound depends on the medium and its temperature. In dry air at 20 degrees Celsius, sound travels at about 343 m/s. In water, molecules are much closer together, so collisions transfer energy faster: sound travels at about 1480 m/s in water. In steel, it reaches roughly 5000 m/s. Warmer air also carries sound faster because molecules move faster and collide more frequently.</p>
@@ -1175,6 +1177,7 @@ function Section74({ progress, setProgress }) {
         <p className="lead">Everything that moves follows rules. Learn the language of motion, master distance-time and velocity-time graphs, and use Newton's three laws to explain the world around you.</p>
       </div>
 
+      <Figure src="img/motion.png" caption="A distance–time graph rises as an object moves." />
       <DotPoint id="7.4.1" title="Distance, displacement, speed and velocity" progress={progress} setProgress={setProgress}>
         <p><Term def="The total length of the path travelled by an object. A scalar quantity with no direction.">Distance</Term> is the total path length, a <Term def="A quantity that has magnitude (size) only, with no direction.">scalar</Term> quantity. <Term def="The straight-line distance from start to finish, including direction. A vector quantity.">Displacement</Term> is the straight-line distance from start to end, including direction: it is a <Term def="A quantity that has both magnitude and direction.">vector</Term>. An athlete who runs one lap of a 400 m track and returns to the start has covered 400 m of distance but zero displacement.</p>
         <p><Term def="The rate of change of distance. Speed = distance / time. A scalar quantity.">Speed</Term> is the rate of change of distance (v = d/t), a scalar. <Term def="The rate of change of displacement. Velocity = displacement / time. A vector quantity with magnitude and direction.">Velocity</Term> is the rate of change of displacement, a vector that includes direction. Moving at 60 km/h north is a different velocity from 60 km/h south, even though the speed is the same. An object moving in a circle at constant speed is continuously changing its velocity because its direction is changing.</p>
@@ -1284,6 +1287,7 @@ function Section75({ progress, setProgress }) {
 mountTopicApp({
   year: 10,
   topicTitle: "Waves and Motion",
+  heroImage: "img/hero.png",
   strand: "Stage 5 · NSW Science",
   accent: "blue",
   storageKey: "y10.wavesmotion",
