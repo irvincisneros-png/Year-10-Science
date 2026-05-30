@@ -35,7 +35,7 @@ function ConservationSim() {
   });
 
   return (
-    <Interactive title="Open vs closed system" subtitle="See how system type affects the measured mass after a gas-producing reaction.">
+    <Interactive title="Open vs closed system" subtitle="See how system type affects the measured mass after a gas-producing reaction." takeaway="In a closed system every atom stays inside, so mass is always conserved; in an open system gases can escape and the measured mass appears to drop even though mass is still conserved overall.">
       <div className="ctrl-row">
         <SegToggle
           options={[{ value: "closed", label: "Closed system" }, { value: "open", label: "Open system" }]}
@@ -282,7 +282,7 @@ function EquationBalancer() {
   }
 
   return (
-    <Interactive title="Equation balancer" subtitle="Set the coefficients so the atom counts match on both sides, then hit Check.">
+    <Interactive title="Equation balancer" subtitle="Set the coefficients so the atom counts match on both sides, then hit Check." takeaway="A balanced equation has the same number of each type of atom on both sides because atoms are rearranged, not created or destroyed, during a chemical reaction.">
       <div className="ctrl-row" style={{ justifyContent: "center", marginBottom: 12 }}>
         <SegToggle
           options={equations.map((e, i) => ({ value: i, label: e.label }))}
@@ -370,7 +370,7 @@ function ReactionTypeClassifier() {
 
   const r = reactions[idx];
   return (
-    <Interactive title="Reaction type classifier" subtitle="Read the equation and tap the correct reaction type.">
+    <Interactive title="Reaction type classifier" subtitle="Read the equation and tap the correct reaction type." takeaway="Each reaction type has a characteristic pattern: synthesis joins reactants into one product, decomposition splits one compound apart, displacement swaps a more reactive element in, and neutralisation produces a salt and water from an acid and a base.">
       {done ? (
         <div style={{ textAlign: "center", padding: 16 }}>
           <div style={{ fontSize: 36, fontWeight: 900, color: "var(--accent-deep)", marginBottom: 8 }}>{score}/{reactions.length}</div>
@@ -734,7 +734,7 @@ function CollisionRateSim() {
     Number(relativeRate) < 18 ? "Fast" : "Very fast";
 
   return (
-    <Interactive title="Collision rate simulator" subtitle="Adjust the factors and watch how the relative reaction rate changes.">
+    <Interactive title="Collision rate simulator" subtitle="Adjust the factors and watch how the relative reaction rate changes." takeaway="Higher temperature, higher concentration, greater surface area, and adding a catalyst all increase the reaction rate by increasing the frequency or energy of successful collisions between particles.">
       <div className="grid-2" style={{ gap: 14, marginBottom: 12 }}>
         <Slider label="Temperature" min={20} max={100} value={temperature} onChange={setTemperature} unit=" C"/>
         <Slider label="Concentration" min={1} max={10} value={concentration} onChange={setConcentration} unit="x"/>
@@ -889,7 +889,7 @@ function HalfLifeSim() {
   const currentY = yScale(remaining);
 
   return (
-    <Interactive title="Half-life simulator" subtitle="Pick an isotope and move the time slider to see radioactive decay in action.">
+    <Interactive title="Half-life simulator" subtitle="Pick an isotope and move the time slider to see radioactive decay in action." takeaway="Each half-life halves the number of radioactive atoms remaining, so the decay curve is exponential and the fraction of atoms left can be calculated by repeatedly halving for each half-life elapsed.">
       <div className="ctrl-row" style={{ marginBottom: 12 }}>
         <SegToggle
           options={isotopes.map((iso, i) => ({ value: i, label: iso.name }))}
@@ -969,7 +969,7 @@ function NuclearEquationChecker() {
   const allOk = aOk && zOk;
 
   return (
-    <Interactive title="Nuclear equation checker" subtitle="Work out the mass number and atomic number of the daughter nucleus.">
+    <Interactive title="Nuclear equation checker" subtitle="Work out the mass number and atomic number of the daughter nucleus." takeaway="In nuclear equations, the mass numbers and atomic numbers must balance on both sides, and each decay type changes the daughter nucleus in a predictable way.">
       <div className="ctrl-row" style={{ justifyContent: "center", marginBottom: 10 }}>
         <span className="chip accent">{p.desc}</span>
       </div>
@@ -1180,7 +1180,7 @@ function HaberProcessSim() {
   const rateLabel = reactionRate < 1.5 ? "Slow" : reactionRate < 2.5 ? "Moderate" : "Fast";
 
   return (
-    <Interactive title="Haber process explorer" subtitle="Adjust temperature and pressure to find the best industrial conditions for ammonia production.">
+    <Interactive title="Haber process explorer" subtitle="Adjust temperature and pressure to find the best industrial conditions for ammonia production." takeaway="Industrial conditions for the Haber process are a compromise: lower temperature gives better yield but too slowly, while higher pressure improves yield but makes equipment expensive and dangerous, so around 450 degrees C and 200 atm is used with an iron catalyst.">
       <div className="grid-2" style={{ gap: 14, marginBottom: 12 }}>
         <Slider label="Temperature" min={200} max={600} value={temperature} onChange={setTemperature} unit=" C"/>
         <Slider label="Pressure" min={50} max={400} value={pressure} onChange={setPressure} unit=" atm"/>

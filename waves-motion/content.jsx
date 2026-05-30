@@ -114,7 +114,7 @@ function WaveSim() {
   const wavelength = (600 / frequency).toFixed(0);
 
   return (
-    <Interactive title="Wave simulator" subtitle="Adjust the sliders and watch the wave update live.">
+    <Interactive title="Wave simulator" subtitle="Adjust the sliders and watch the wave update live." takeaway="Increasing frequency shortens the wavelength while the wave speed stays constant, directly demonstrating the wave equation v = f x lambda; transverse and longitudinal waves differ in how their particles move relative to the wave direction.">
       <div className="ctrl-row" style={{ flexWrap: "wrap", gap: "0.5rem" }}>
         <SegToggle
           options={[{ value: "transverse", label: "Transverse" }, { value: "longitudinal", label: "Longitudinal" }]}
@@ -159,7 +159,7 @@ function EMExplorer() {
   const b = bands[selected];
 
   return (
-    <Interactive title="EM spectrum explorer" subtitle="Click a band to see its properties and uses.">
+    <Interactive title="EM spectrum explorer" subtitle="Click a band to see its properties and uses." takeaway="Across the EM spectrum, frequency and energy per photon increase from radio waves to gamma rays, and only the higher-energy bands (UV, X-ray, gamma) are ionising and capable of damaging living cells.">
       <div style={{ display: "flex", gap: "4px", flexWrap: "wrap", marginBottom: "1rem" }}>
         {bands.map((band, i) => (
           <button
@@ -211,7 +211,7 @@ function WaveCalcSim() {
   const lambda = (v / f).toFixed(3);
 
   return (
-    <Interactive title="Wave equation calculator" subtitle="v = f x lambda. Set speed and frequency; see the wavelength.">
+    <Interactive title="Wave equation calculator" subtitle="v = f x lambda. Set speed and frequency; see the wavelength." takeaway="The wave equation v = f x lambda links speed, frequency, and wavelength so that if any two quantities are known the third can be calculated.">
       <div className="ctrl-row" style={{ flexWrap: "wrap" }}>
         <Slider label="Wave speed (v)" min={1} max={3000} step={1} value={v} onChange={setV} unit=" m/s" />
         <Slider label="Frequency (f)" min={1} max={20000} step={1} value={f} onChange={setF} unit=" Hz" />
@@ -287,7 +287,7 @@ function SoundVizSim() {
   const loudLabel = loudness < 20 ? "Whisper" : loudness < 40 ? "Quiet" : loudness < 55 ? "Moderate" : "Loud";
 
   return (
-    <Interactive title="Sound wave visualiser" subtitle="Loudness depends on amplitude; pitch depends on frequency.">
+    <Interactive title="Sound wave visualiser" subtitle="Loudness depends on amplitude; pitch depends on frequency." takeaway="Loudness and pitch are controlled by two completely independent wave properties: amplitude determines how loud a sound is, while frequency determines how high or low the pitch is.">
       <canvas
         ref={canvasRef}
         width={600}
@@ -375,7 +375,7 @@ function DopplerSim() {
   const pitchBehind = sourceSpeed === 0 ? "Normal" : sourceSpeed < 40 ? "Slightly lower" : "Much lower";
 
   return (
-    <Interactive title="Doppler effect simulator" subtitle="The moving source bunches wavefronts ahead and stretches them behind.">
+    <Interactive title="Doppler effect simulator" subtitle="The moving source bunches wavefronts ahead and stretches them behind." takeaway="When a wave source moves towards an observer the wavefronts bunch together so the observed frequency is higher than the source frequency; when it moves away the wavefronts spread out and the observed frequency is lower.">
       <canvas
         ref={canvasRef}
         width={600}
@@ -398,7 +398,7 @@ function UltrasoundCalc() {
   const depth = ((v * echoTime * 0.000001) / 2 * 100).toFixed(1);
 
   return (
-    <Interactive title="Ultrasound depth calculator" subtitle="depth = (v x t) / 2, where v = 1540 m/s in soft tissue.">
+    <Interactive title="Ultrasound depth calculator" subtitle="depth = (v x t) / 2, where v = 1540 m/s in soft tissue." takeaway="Medical ultrasound calculates tissue depth from the echo return time using depth = (v x t) / 2, dividing by two because the pulse travels to the boundary and back.">
       <Slider label="Echo return time (microseconds)" min={5} max={200} step={1} value={echoTime} onChange={setEchoTime} unit=" us" />
       <div className="stat-readout">
         <Stat value={echoTime + " us"} label="Echo time" />
@@ -442,7 +442,7 @@ function LightPropertiesSim() {
   const refrY2 = cy + 80 * Math.cos(refAngle);
 
   return (
-    <Interactive title="Reflection and refraction of light" subtitle="Adjust the angle of incidence to see how light behaves.">
+    <Interactive title="Reflection and refraction of light" subtitle="Adjust the angle of incidence to see how light behaves." takeaway="For reflection the angle of incidence always equals the angle of reflection; for refraction light bends towards the normal when entering a denser medium because it slows down.">
       <div className="ctrl-row">
         <SegToggle
           options={[{ value: "reflection", label: "Reflection" }, { value: "refraction", label: "Refraction" }]}
@@ -541,7 +541,7 @@ function StarTempExplorer() {
   else { colour = "#dc2626"; region = "Infrared (very cool star)"; }
 
   return (
-    <Interactive title="Star temperature explorer" subtitle="Use Wien's law: peak wavelength x temperature = 2.9 x 10^6 nm K.">
+    <Interactive title="Star temperature explorer" subtitle="Use Wien's law: peak wavelength x temperature = 2.9 x 10^6 nm K." takeaway="A star's surface temperature determines the colour of its peak emission: hotter stars appear blue-white and cooler stars appear red, following Wien's displacement law.">
       <Slider label="Star surface temperature (K)" min={2000} max={40000} step={100} value={temp} onChange={setTemp} unit=" K" />
       <div className="stat-readout">
         <Stat value={temp.toLocaleString() + " K"} label="Surface temperature" />
@@ -696,7 +696,7 @@ function MotionGraphSim() {
   }, [scenario]);
 
   return (
-    <Interactive title="Motion graph generator" subtitle="Choose a scenario to see both graph types side by side.">
+    <Interactive title="Motion graph generator" subtitle="Choose a scenario to see both graph types side by side." takeaway="On a distance-time graph the gradient equals speed, while on a velocity-time graph the gradient equals acceleration and the area under the line equals distance travelled.">
       <SegToggle
         options={Object.entries(scenarios).map(([k, v]) => ({ value: k, label: v.label }))}
         value={scenario}
@@ -795,7 +795,7 @@ function NewtonSecondSim() {
   }, [mass, force, accel]);
 
   return (
-    <Interactive title="Newton's second law (F = ma)" subtitle="Change force and mass to see how acceleration changes.">
+    <Interactive title="Newton's second law (F = ma)" subtitle="Change force and mass to see how acceleration changes." takeaway="Applying a larger net force to the same mass produces a greater acceleration, and applying the same force to a larger mass produces a smaller acceleration, consistent with F = ma.">
       <canvas
         ref={canvasRef}
         width={600}
@@ -824,7 +824,7 @@ function NetForceSim() {
   const absNet = Math.abs(net);
 
   return (
-    <Interactive title="Net force diagram" subtitle="Set forces in each direction and find the resultant.">
+    <Interactive title="Net force diagram" subtitle="Set forces in each direction and find the resultant." takeaway="When opposing forces are equal the net force is zero and the object is in equilibrium; any imbalance produces a net force and the object accelerates in the direction of that net force.">
       <svg viewBox="0 0 360 90" width="100%" style={{ maxWidth: 380, display: "block", margin: "0 auto" }}>
         <rect x="140" y="25" width="80" height="40" rx="8" fill="#3b82f6" />
         <text x="180" y="50" textAnchor="middle" fill="#fff" fontSize="12" fontWeight="700">Object</text>
@@ -885,7 +885,7 @@ function CERBuilder() {
   };
 
   return (
-    <Interactive title="CER argument builder" subtitle="Structure your argument about how waves and motion have changed society.">
+    <Interactive title="CER argument builder" subtitle="Structure your argument about how waves and motion have changed society." takeaway="A well-structured scientific argument states a clear claim, backs it up with specific evidence, and explains through reasoning why that evidence supports the claim.">
       <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
         <div>
           <label style={{ fontWeight: 600, fontSize: "0.9rem", display: "block", marginBottom: "0.25rem" }}>
