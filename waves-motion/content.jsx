@@ -1287,6 +1287,7 @@ function Section75({ progress, setProgress }) {
 mountTopicApp({
   year: 10,
   topicTitle: "Waves and Motion",
+  branch: "physics",
   heroImage: "img/hero.png",
   strand: "Stage 5 · NSW Science",
   accent: "blue",

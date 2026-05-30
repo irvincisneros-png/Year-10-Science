@@ -955,6 +955,7 @@ function Section4({ progress, setProgress }) {
 mountTopicApp({
   year: 10,
   topicTitle: "Data Science 2",
+  branch: "general",
   heroImage: "img/hero.png",
   strand: "Stage 5 · NSW Science",
   accent: "teal",

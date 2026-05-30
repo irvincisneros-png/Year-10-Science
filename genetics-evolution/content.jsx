@@ -1088,6 +1088,7 @@ function Section5({ progress, setProgress }) {
 mountTopicApp({
   year: 10,
   topicTitle: "Genetics and Evolutionary Change",
+  branch: "biology",
   heroImage: "img/hero.png",
   strand: "Stage 5 · NSW Science",
   accent: "pink",

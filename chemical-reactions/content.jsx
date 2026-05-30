@@ -1256,6 +1256,7 @@ function Section65({ progress, setProgress }) {
 mountTopicApp({
   year: 10,
   topicTitle: "Chemical Reactions",
+  branch: "chemistry",
   heroImage: "img/hero.png",
   strand: "Stage 5 · NSW Science",
   accent: "purple",
