@@ -20,7 +20,7 @@ function QuestionSorter() {
     { id: "q7", label: "Does ramp height affect how far a toy car rolls?", bucket: "yes" },
   ];
   return (
-    <Interactive title="Investigable or not?" subtitle="Sort each question into the correct category. A question is investigable when it can be answered by collecting measurable evidence.">
+    <Interactive title="Investigable or not?" subtitle="Sort each question into the correct category. A question is investigable when it can be answered by collecting measurable evidence." takeaway="A question is only investigable if it involves at least one variable you can measure or change; questions based on values or beliefs cannot be answered by collecting data.">
       <MatchBuckets
         items={questions}
         buckets={[{ id: "yes", label: "Investigable" }, { id: "no", label: "Not investigable" }]}
@@ -84,7 +84,7 @@ function CERBuilder() {
   const colours = ["var(--red, #e74c3c)", "var(--amber-500, #f59e0b)", "var(--teal-500, #14b8a6)", "var(--green-500, #22c55e)"];
   const labels = ["Start writing", "Getting there", "Almost done", "Strong argument"];
   return (
-    <Interactive title="CER Argument Builder" subtitle="Practice writing a scientific argument using the Claim, Evidence, Reasoning framework.">
+    <Interactive title="CER Argument Builder" subtitle="Practice writing a scientific argument using the Claim, Evidence, Reasoning framework." takeaway="A strong scientific argument requires a clear claim, specific numerical evidence, and explicit reasoning that explains the scientific link between the data and the conclusion.">
       <p className="muted" style={{ marginBottom: 8 }}>Topic: A student tested whether caffeine reduces reaction time. The caffeine group had a mean reaction time of 210 ms vs 245 ms for the control group (n=8 each).</p>
       <div style={{ display: "grid", gap: 10 }}>
         {[
@@ -161,7 +161,7 @@ function SourceEvalTool() {
   const labelMap = { high: "High", low: "Low / Red flag", recent: "Current", old: "Outdated", scientific: "Scientific/public", commercial: "Commercial interest", mislead: "Mislead/agenda", conflict: "Conflict of interest" };
   const src = sources.find(s => s.id === selected);
   return (
-    <Interactive title="Source Evaluation Tool" subtitle="Click a source to evaluate it against the CRAAP criteria: Currency, Relevance, Authority, Accuracy, Purpose.">
+    <Interactive title="Source Evaluation Tool" subtitle="Click a source to evaluate it against the CRAAP criteria: Currency, Relevance, Authority, Accuracy, Purpose." takeaway="Reliable sources score well on all CRAAP criteria; a single red flag such as low authority, inaccurate claims, or a commercial purpose is enough to treat a source with serious caution.">
       <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 16 }}>
         {sources.map(s => (
           <button key={s.id} className={`btn ${selected === s.id ? "btn-accent" : "btn-ghost"}`} onClick={() => setSelected(s.id)} style={{ textAlign: "left", maxWidth: 260 }}>
@@ -283,7 +283,7 @@ function PseudoscienceChecker() {
     score >= 4 ? { label: "Uncertain / needs more investigation", color: "#f59e0b" } :
     { label: "Likely pseudoscientific", color: "#e74c3c" };
   return (
-    <Interactive title="Pseudoscience Checker" subtitle="Apply the 7-criterion checklist to any claim. Tick each criterion that the claim satisfies.">
+    <Interactive title="Pseudoscience Checker" subtitle="Apply the 7-criterion checklist to any claim. Tick each criterion that the claim satisfies." takeaway="Scientific claims meet most of the seven criteria including falsifiability, controlled testing, peer review, and replication; pseudoscientific claims typically fail on several of them, especially falsifiability.">
       <div style={{ display: "grid", gap: 8 }}>
         {criteria.map(c => (
           <label key={c.id} style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer", padding: "8px 12px", borderRadius: 8, background: checks[c.id] ? "var(--accent-soft)" : "var(--surface)", border: "1.5px solid " + (checks[c.id] ? "var(--accent)" : "var(--border)"), transition: "all 0.2s" }}>
@@ -325,7 +325,7 @@ function DataDistortionSim() {
   const step = truncate ? 2 : 20;
   for (let y = yMin; y <= yMax; y += step) ticks.push(y);
   return (
-    <Interactive title="Axis Manipulation Simulator" subtitle="Toggle between a truncated y-axis and a full-scale axis. Notice how the same data looks dramatically different.">
+    <Interactive title="Axis Manipulation Simulator" subtitle="Toggle between a truncated y-axis and a full-scale axis. Notice how the same data looks dramatically different." takeaway="Truncating the y-axis so it does not start at zero can make a tiny difference look enormous; always check where an axis starts before drawing conclusions from a graph.">
       <div style={{ display: "flex", justifyContent: "center", marginBottom: 12 }}>
         <SegToggle
           options={[{ value: "trunc", label: "Truncated axis (misleading)" }, { value: "full", label: "Full scale (honest)" }]}
@@ -391,7 +391,7 @@ function Section2({ progress, setProgress }) {
         <p>Pseudoscientific claims appear in health, wellness, alternative medicine, and paranormal areas. Common warning signs include: undefined jargon such as "quantum healing" or "detoxifying"; anecdotal testimonials as primary evidence; appeals to ancient wisdom; financial interest in the claim; and conspiracy theories to explain why mainstream science does not support it.</p>
         <p>The <Term def="The tendency to accept vague, general statements as personally accurate descriptions of oneself (also called the Forer effect).">Barnum effect</Term> explains why horoscopes and personality readings seem accurate: they use deliberately vague language that almost anyone can identify with. This is not evidence of validity.</p>
         <Callout kind="fact" title="Vaccine safety: the evidence">Over 1.2 million child studies confirm vaccines do not cause autism. The original 1998 Wakefield study was found to be fraudulent, retracted, and the author lost his medical licence in 2010.</Callout>
-        <Interactive title="Pseudoscience Spotters: Claim Cards" subtitle="Decide whether each claim is scientific or pseudoscientific.">
+        <Interactive title="Pseudoscience Spotters: Claim Cards" subtitle="Decide whether each claim is scientific or pseudoscientific." takeaway="Scientific claims are supported by controlled trials and peer review, while pseudoscientific claims rely on anecdote, undefined terms, or lack any controlled testing.">
           <MatchBuckets
             items={[
               { id: "c1", label: "Homeopathy: no effect in multiple large meta-analyses", bucket: "pseudo" },
@@ -466,7 +466,7 @@ function DescriptiveStatsCalc() {
   const toX = v => pad + ((v - (min || 0)) / ((max - min) || 1)) * plotW;
 
   return (
-    <Interactive title="Descriptive Statistics Calculator" subtitle="Type your own numbers (space or comma separated) to see mean, median, range, and standard deviation update live. The dot plot shows the distribution.">
+    <Interactive title="Descriptive Statistics Calculator" subtitle="Type your own numbers (space or comma separated) to see mean, median, range, and standard deviation update live. The dot plot shows the distribution." takeaway="A single outlier can pull the mean far from the typical value while barely affecting the median, which is why both measures should be reported when a dataset might be skewed.">
       <textarea
         value={raw}
         onChange={e => setRaw(e.target.value)}
@@ -588,7 +588,7 @@ function ScatterPlotLab() {
   const rColour = Math.abs(r) > 0.7 ? "#14b8a6" : Math.abs(r) > 0.4 ? "#f59e0b" : "#94a3b8";
 
   return (
-    <Interactive title="Scatter Plot Explorer" subtitle="Switch between datasets to see how correlation strength and direction change. The line of best fit is calculated automatically.">
+    <Interactive title="Scatter Plot Explorer" subtitle="Switch between datasets to see how correlation strength and direction change. The line of best fit is calculated automatically." takeaway="The correlation coefficient r measures both the direction and strength of a linear relationship; values near +1 or -1 indicate a strong relationship while a value near 0 indicates no linear relationship.">
       <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 12 }}>
         {Object.entries(datasets).map(([k, d]) => (
           <button key={k} className={`btn ${dsKey === k ? "btn-accent" : "btn-ghost"}`} onClick={() => setDsKey(k)} style={{ fontSize: 13 }}>
@@ -637,7 +637,7 @@ function ScatterPlotLab() {
 
 function CorrelationCausationSorter() {
   return (
-    <Interactive title="Correlation or Causation?" subtitle="Sort each scenario into the correct category based on whether the relationship is likely causal, a confound, reverse causation, or spurious.">
+    <Interactive title="Correlation or Causation?" subtitle="Sort each scenario into the correct category based on whether the relationship is likely causal, a confound, reverse causation, or spurious." takeaway="Correlation alone does not establish causation; a third confounding variable, reverse causation, or pure coincidence can all produce a correlation where no true causal link exists.">
       <MatchBuckets
         items={[
           { id: "s1", label: "Ice cream sales and drowning deaths both rise in summer", bucket: "confound" },
@@ -818,7 +818,7 @@ function PredictionTool() {
   const lineYs = lineXs.map(x => slope * x + intercept);
 
   return (
-    <Interactive title="Climate Prediction Tool" subtitle="This tool fits a linear trend to Australian temperature anomaly data and lets you extrapolate to any year. Use it to explore the model's prediction, and to think about what limitations extrapolation has.">
+    <Interactive title="Climate Prediction Tool" subtitle="This tool fits a linear trend to Australian temperature anomaly data and lets you extrapolate to any year. Use it to explore the model's prediction, and to think about what limitations extrapolation has." takeaway="A linear trend fitted to historical data can suggest future values, but extrapolation becomes less reliable the further you go beyond the data, and simple models can miss important real-world complexity.">
       <div style={{ display: "flex", justifyContent: "center" }}>
         <svg viewBox={`0 0 ${svgW} ${svgH}`} width="100%" style={{ maxWidth: svgW }}>
           <rect x={pL} y={pT} width={plotW} height={plotH} fill="var(--surface)" stroke="var(--border)" strokeWidth="1" />
@@ -900,7 +900,7 @@ function EvidenceDecisionSim() {
   const [step, setStep] = useState(0);
   const s = steps[step];
   return (
-    <Interactive title="Evidence-Based Decision Framework" subtitle="Step through the five stages of evidence-based decision making using an air quality example.">
+    <Interactive title="Evidence-Based Decision Framework" subtitle="Step through the five stages of evidence-based decision making using an air quality example." takeaway="Sound evidence-based decisions require a clearly defined question, credible data, honest analysis, and consideration of who benefits and who might be disadvantaged before acting.">
       <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 14 }}>
         {steps.map((st, i) => (
           <button key={i} className={`btn ${step === i ? "btn-accent" : "btn-ghost"}`} onClick={() => setStep(i)} style={{ fontSize: 13 }}>
@@ -955,6 +955,7 @@ function Section4({ progress, setProgress }) {
 mountTopicApp({
   year: 10,
   topicTitle: "Data Science 2",
+  branch: "general",
   heroImage: "img/hero.png",
   strand: "Stage 5 · NSW Science",
   accent: "teal",

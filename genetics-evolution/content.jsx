@@ -24,7 +24,7 @@ function DNABaseBuilder() {
   const complement = strand.map(b => PAIRS[b]);
 
   return (
-    <Interactive title="DNA Base Pairing Builder" subtitle="Change any base on the top strand and watch the complementary strand update instantly.">
+    <Interactive title="DNA Base Pairing Builder" subtitle="Change any base on the top strand and watch the complementary strand update instantly." takeaway="DNA base pairing is complementary and specific: A always pairs with T (2 hydrogen bonds) and C always pairs with G (3 hydrogen bonds), ensuring that each strand is an exact template for the other.">
       <div style={{ overflowX: "auto" }}>
         <svg viewBox={`0 0 ${STRAND_LENGTH * 62 + 20} 200`} width="100%" style={{ maxWidth: 560, display: "block", margin: "0 auto" }}>
           {/* Backbone lines */}
@@ -153,7 +153,7 @@ function DNADiscoverySorter() {
   }
 
   return (
-    <Interactive title="DNA Discovery: Who Did What?" subtitle="Tick every scientist who made each contribution. Some have more than one answer.">
+    <Interactive title="DNA Discovery: Who Did What?" subtitle="Tick every scientist who made each contribution. Some have more than one answer." takeaway="The discovery of the DNA double helix depended on contributions from multiple scientists, and Rosalind Franklin's X-ray data was essential to the final model even though she did not share the Nobel Prize.">
       <div style={{ overflowX: "auto" }}>
         <table className="data-table" style={{ minWidth: 440 }}>
           <thead>
@@ -281,7 +281,7 @@ function PunnettSquareTool() {
   const parent2Display = parent2.replace("X", dom).replace("x", rec);
 
   return (
-    <Interactive title="Interactive Punnett Square" subtitle="Pick a trait and both parent genotypes, then read off the offspring ratios.">
+    <Interactive title="Interactive Punnett Square" subtitle="Pick a trait and both parent genotypes, then read off the offspring ratios." takeaway="A Punnett square predicts the probability of each offspring genotype and phenotype; two heterozygous parents (Xx x Xx) give a 3:1 dominant to recessive phenotype ratio.">
       <div className="ctrl-row" style={{ flexWrap: "wrap", gap: 12, alignItems: "flex-start" }}>
         <div>
           <div style={{ fontSize: 12, fontWeight: 700, marginBottom: 4, color: "var(--muted)" }}>Trait</div>
@@ -432,7 +432,7 @@ function MutationSimulator() {
   const mutChunks = formatSeq(mutated);
 
   return (
-    <Interactive title="Mutation Simulator" subtitle="Apply a point substitution, deletion, or insertion and see how the amino acid sequence changes.">
+    <Interactive title="Mutation Simulator" subtitle="Apply a point substitution, deletion, or insertion and see how the amino acid sequence changes." takeaway="A single base deletion or insertion causes a frameshift that alters every amino acid downstream and is usually far more damaging than a point substitution, which may change only one codon or be silent.">
       <div className="ctrl-row" style={{ flexWrap: "wrap", gap: 12 }}>
         <div>
           <div style={{ fontSize: 12, fontWeight: 700, marginBottom: 4, color: "var(--muted)" }}>Mutation type</div>
@@ -529,7 +529,7 @@ function GeneticTechSorter() {
     { id: "conservation", label: "Conservation" },
   ];
   return (
-    <Interactive title="Genetic Technologies: Sort by Application" subtitle="Drag or click each application into the correct sector.">
+    <Interactive title="Genetic Technologies: Sort by Application" subtitle="Drag or click each application into the correct sector." takeaway="Genetic technologies such as PCR, recombinant DNA, and CRISPR are applied across medicine, agriculture, industry, and conservation to solve problems that were previously impossible to address.">
       <MatchBuckets items={items} buckets={buckets}/>
     </Interactive>
   );
@@ -570,7 +570,7 @@ function EthicsDebateTool() {
   const frameLabel = { utilitarian: "Utilitarian (greatest good)", rights: "Rights-based (deontological)", justice: "Justice and fairness" };
 
   return (
-    <Interactive title="Ethics Framework Explorer" subtitle="Choose a scenario and an ethical framework to see how the analysis differs.">
+    <Interactive title="Ethics Framework Explorer" subtitle="Choose a scenario and an ethical framework to see how the analysis differs." takeaway="Different ethical frameworks (utilitarian, rights-based, justice) can lead to different conclusions about the same genetic technology scenario, which is why ethical debates require considering more than one perspective.">
       <div className="ctrl-row" style={{ flexWrap: "wrap", gap: 12 }}>
         <div>
           <div style={{ fontSize: 12, fontWeight: 700, marginBottom: 4, color: "var(--muted)" }}>Scenario</div>
@@ -662,7 +662,7 @@ function NaturalSelectionSim() {
   const barW = chartW / (GENS + 1);
 
   return (
-    <Interactive title="Natural Selection Simulation" subtitle="Adjust camouflage effectiveness and predation pressure, then run the simulation across 10 generations.">
+    <Interactive title="Natural Selection Simulation" subtitle="Adjust camouflage effectiveness and predation pressure, then run the simulation across 10 generations." takeaway="When a heritable trait such as camouflage gives a survival advantage under predation pressure, the frequency of that trait increases through the population across generations as less-suited individuals are removed.">
       <div className="ctrl-row" style={{ flexWrap: "wrap", gap: 16 }}>
         <Slider label="Camouflage effectiveness" min={0} max={1} step={0.05} value={camouflage}
           onChange={v => { setCamouflage(v); reset(); }} fmt={v => `${Math.round(v*100)}%`} unit=""/>
@@ -733,7 +733,7 @@ function EvidenceEvolutionSorter() {
     { id: "biogeography", label: "Biogeography" },
   ];
   return (
-    <Interactive title="Evidence for Evolution: Sort by Type" subtitle="Match each piece of evidence to the correct category.">
+    <Interactive title="Evidence for Evolution: Sort by Type" subtitle="Match each piece of evidence to the correct category." takeaway="Multiple independent lines of evidence, including the fossil record, comparative anatomy, molecular biology, and biogeography, all point to the same conclusion that species share common ancestors and have changed over time.">
       <MatchBuckets items={items} buckets={buckets}/>
     </Interactive>
   );
@@ -1088,6 +1088,7 @@ function Section5({ progress, setProgress }) {
 mountTopicApp({
   year: 10,
   topicTitle: "Genetics and Evolutionary Change",
+  branch: "biology",
   heroImage: "img/hero.png",
   strand: "Stage 5 · NSW Science",
   accent: "pink",
