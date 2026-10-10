@@ -213,7 +213,7 @@ function PunnettSquareTool() {
     { name: "Pea plant height", dom: "T (Tall)", rec: "t (Short)", letter: "T" },
     { name: "Pea seed colour", dom: "Y (Yellow)", rec: "y (Green)", letter: "Y" },
     { name: "Guinea pig coat", dom: "B (Black)", rec: "b (White)", letter: "B" },
-    { name: "Eye colour (simple)", dom: "B (Brown)", rec: "b (Blue)", letter: "B" },
+    { name: "Eye colour (simplified model)", dom: "B (Brown)", rec: "b (Blue)", letter: "B" },
     { name: "Cystic fibrosis (CF)", dom: "F (Normal)", rec: "f (CF)", letter: "F" },
   ];
 
@@ -277,8 +277,8 @@ function PunnettSquareTool() {
     });
   }
 
-  const parent1Display = parent1.replace("X", dom).replace("x", rec);
-  const parent2Display = parent2.replace("X", dom).replace("x", rec);
+  const parent1Display = parent1.replace(/X/g, dom).replace(/x/g, rec);
+  const parent2Display = parent2.replace(/X/g, dom).replace(/x/g, rec);
 
   return (
     <Interactive title="Interactive Punnett Square" subtitle="Pick a trait and both parent genotypes, then read off the offspring ratios." takeaway="A Punnett square predicts the probability of each offspring genotype and phenotype; two heterozygous parents (Xx x Xx) give a 3:1 dominant to recessive phenotype ratio.">
@@ -296,7 +296,7 @@ function PunnettSquareTool() {
         <div>
           <div style={{ fontSize: 12, fontWeight: 700, marginBottom: 4, color: "var(--muted)" }}>Parent 1 genotype</div>
           <SegToggle
-            options={GENO_VALS.map((v, i) => ({ value: v, label: GENO_VALS[i].replace("X", dom).replace("x", rec) }))}
+            options={GENO_VALS.map((v, i) => ({ value: v, label: v.replace(/X/g, dom).replace(/x/g, rec) }))}
             value={parent1}
             onChange={setParent1}
           />
@@ -304,7 +304,7 @@ function PunnettSquareTool() {
         <div>
           <div style={{ fontSize: 12, fontWeight: 700, marginBottom: 4, color: "var(--muted)" }}>Parent 2 genotype</div>
           <SegToggle
-            options={GENO_VALS.map((v, i) => ({ value: v, label: GENO_VALS[i].replace("X", dom).replace("x", rec) }))}
+            options={GENO_VALS.map((v, i) => ({ value: v, label: v.replace(/X/g, dom).replace(/x/g, rec) }))}
             value={parent2}
             onChange={setParent2}
           />
@@ -381,6 +381,8 @@ function MutationSimulator() {
     ATG:"Met(Start)",ATA:"Ile",ATC:"Ile",ATT:"Ile",
     GCA:"Ala",GCG:"Ala",GCC:"Ala",GCT:"Ala",
     TTC:"Phe",TTT:"Phe",TTA:"Leu",TTG:"Leu",
+    CTA:"Leu",CTG:"Leu",CTC:"Leu",CTT:"Leu",
+    ACA:"Thr",ACG:"Thr",ACC:"Thr",ACT:"Thr",
     GAA:"Glu",GAG:"Glu",GAT:"Asp",GAC:"Asp",
     TAG:"STOP",TAA:"STOP",TGA:"STOP",
     AAA:"Lys",AAG:"Lys",AAT:"Asn",AAC:"Asn",
@@ -895,6 +897,7 @@ function Section2({ progress, setProgress }) {
         <p>Geneticists use two main tools to predict and analyse inheritance patterns. A <Term def="A grid used to predict the possible genotypes and phenotypes of offspring from a specific cross.">Punnett square</Term> is a grid where you place each parent's possible gametes along the top and side. Each cell in the grid shows one possible offspring genotype combination. By counting outcomes, you calculate the probability of each genotype and phenotype.</p>
         <p>A <Term def="A family tree diagram that tracks the inheritance of a specific trait across multiple generations, using standard symbols.">pedigree</Term> is a family tree that tracks a trait across generations. Squares represent males; circles represent females; filled (shaded) symbols indicate affected individuals. Pedigrees allow you to determine whether a trait is dominant or recessive, and whether it is <Term def="Carried on chromosomes 1 to 22 (non-sex chromosomes).">autosomal</Term> or <Term def="Carried on a sex chromosome, usually the X chromosome.">sex-linked</Term>.</p>
         <PunnettSquareTool/>
+        <p><em>Note: real eye colour is polygenic, controlled mainly by the OCA2 and HERC2 genes with many others contributing. The simple brown/blue model above is a teaching simplification.</em></p>
         <Callout kind="key" title="Punnett square rules">
           1. Identify both parents' genotypes. 2. Write each parent's possible gametes along the top and side. 3. Fill each cell by combining one allele from the top with one from the side. 4. Count genotypes and phenotypes and express as ratios.
         </Callout>
@@ -903,7 +906,7 @@ function Section2({ progress, setProgress }) {
             options={["1/4 (25%)","1/2 (50%)","3/4 (75%)","1/1 (100%)"]} correct={0}
             explain="Ff x Ff gives: FF (25%), Ff (50%), ff (25%). Only ff develops cystic fibrosis, so 1 in 4 (25%)."/>
           <WrittenQ num={16} question="A pedigree shows that two unaffected parents have an affected child. What can you conclude about the inheritance pattern?"
-            model="The condition must be autosomal recessive. The affected child (homozygous recessive) received one recessive allele from each parent. Both unaffected parents must be heterozygous carriers."/>
+            model="The condition is recessive. Two unaffected parents can only have an affected child if the trait is masked in them, so it cannot be dominant. If it is autosomal recessive, the affected child (homozygous recessive) received one recessive allele from each parent, so both unaffected parents are heterozygous carriers. An X-linked recessive trait also fits if the affected child is male and his mother is a carrier; more pedigree data (for example an affected daughter, or an affected father) is needed to tell them apart."/>
         </QGroup>
       </DotPoint>
     </>
