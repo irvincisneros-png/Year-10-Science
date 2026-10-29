@@ -68,8 +68,8 @@ function PeerReviewCycleSVG() {
             <text x={p.x} y={p.y + 5} textAnchor="middle" fontSize="10" fontWeight="700" fill="var(--ink)">{p.label}</text>
           </g>
         ))}
-        <text x={cx} y={cy + 5} textAnchor="middle" fontSize="11" fill="var(--muted)">Science</text>
-        <text x={cx} y={cy + 18} textAnchor="middle" fontSize="11" fill="var(--muted)">cycle</text>
+        <text x={cx} y={cy + 5} textAnchor="middle" fontSize="11" fill="var(--ink-muted)">Science</text>
+        <text x={cx} y={cy + 18} textAnchor="middle" fontSize="11" fill="var(--ink-muted)">cycle</text>
       </svg>
     </Figure>
   );
@@ -214,7 +214,7 @@ function Section1({ progress, setProgress }) {
         <p>A <Term def="A specific, testable, falsifiable prediction about the relationship between variables.">hypothesis</Term> makes a clear prediction that experiments could in principle disprove. Writing one in the form "If [independent variable] increases, then [dependent variable] will [change] because [mechanism]" keeps it falsifiable and precise.</p>
         <p>After data are collected and analysed, findings are submitted to a <Term def="A process in which independent experts scrutinise a study's methods, analysis, and conclusions before it is published.">peer-reviewed</Term> journal. Reviewers check whether the design was appropriate, whether statistics were used correctly, and whether conclusions follow from the data. After publication, other labs attempt to <Term def="Repeating a study independently to check whether the same results are obtained.">replicate</Term> the findings. A result that cannot be replicated carries little weight, no matter how well it was reviewed.</p>
         <PeerReviewCycleSVG />
-        <Callout kind="fact" title="Science self-corrects">Barry Marshall drank a solution of Helicobacter pylori in 1984 to prove bacteria cause stomach ulcers. The scientific community was sceptical, but the evidence accumulated and the pair won the Nobel Prize in 2005. When evidence demands it, science changes its mind.</Callout>
+        <Callout kind="fact" title="Science self-corrects">Barry Marshall drank a culture of Helicobacter pylori in 1984 to show that bacteria cause stomach ulcers. The scientific community was sceptical, but the evidence accumulated and Marshall and his colleague Robin Warren won the Nobel Prize in 2005. When evidence demands it, science changes its mind.</Callout>
         <QGroup title="Check yourself">
           <MCQ num={3} question="What is the main purpose of peer review in science?" options={["To guarantee a study is correct", "To allow independent experts to check the study before publication", "To give the author feedback on writing style", "To decide how much funding a study receives"]} correct={1} explain="Peer review lets independent experts assess whether methods, statistics, and conclusions are sound. It does not guarantee correctness, which is why replication is also needed." />
         </QGroup>
@@ -340,7 +340,7 @@ function DataDistortionSim() {
           {ticks.map(t => (
             <g key={t}>
               <line x1={padL - 4} y1={toY(t)} x2={padL} y2={toY(t)} stroke="var(--ink)" strokeWidth="1" />
-              <text x={padL - 6} y={toY(t) + 4} textAnchor="end" fontSize="10" fill="var(--muted)">{t}</text>
+              <text x={padL - 6} y={toY(t) + 4} textAnchor="end" fontSize="10" fill="var(--ink-muted)">{t}</text>
             </g>
           ))}
           {bars.map(b => {
@@ -354,8 +354,8 @@ function DataDistortionSim() {
               </g>
             );
           })}
-          <text x={padL - 36} y={(padT + padT + plotH) / 2} textAnchor="middle" fontSize="10" fill="var(--muted)" transform={`rotate(-90, ${padL - 36}, ${(padT + padT + plotH) / 2})`}>Blood pressure (mmHg)</text>
-          <text x={padL + plotW / 2} y={svgH - 2} textAnchor="middle" fontSize="10" fill="var(--muted)">Treatment group</text>
+          <text x={padL - 36} y={(padT + padT + plotH) / 2} textAnchor="middle" fontSize="10" fill="var(--ink-muted)" transform={`rotate(-90, ${padL - 36}, ${(padT + padT + plotH) / 2})`}>Blood pressure (mmHg)</text>
+          <text x={padL + plotW / 2} y={svgH - 2} textAnchor="middle" fontSize="10" fill="var(--ink-muted)">Treatment group</text>
         </svg>
       </div>
       <p className="muted" style={{ marginBottom: 0, textAlign: "center" }}>
@@ -390,7 +390,7 @@ function Section2({ progress, setProgress }) {
       <DotPoint id="8.2.2" title="Identifying pseudoscientific claims" progress={progress} setProgress={setProgress}>
         <p>Pseudoscientific claims appear in health, wellness, alternative medicine, and paranormal areas. Common warning signs include: undefined jargon such as "quantum healing" or "detoxifying"; anecdotal testimonials as primary evidence; appeals to ancient wisdom; financial interest in the claim; and conspiracy theories to explain why mainstream science does not support it.</p>
         <p>The <Term def="The tendency to accept vague, general statements as personally accurate descriptions of oneself (also called the Forer effect).">Barnum effect</Term> explains why horoscopes and personality readings seem accurate: they use deliberately vague language that almost anyone can identify with. This is not evidence of validity.</p>
-        <Callout kind="fact" title="Vaccine safety: the evidence">Over 1.2 million child studies confirm vaccines do not cause autism. The original 1998 Wakefield study was found to be fraudulent, retracted, and the author lost his medical licence in 2010.</Callout>
+        <Callout kind="fact" title="Vaccine safety: the evidence">Studies covering more than 1.2 million children confirm vaccines do not cause autism. The original 1998 Wakefield study was found to be fraudulent, retracted, and the author lost his medical licence in 2010.</Callout>
         <Interactive title="Pseudoscience Spotters: Claim Cards" subtitle="Decide whether each claim is scientific or pseudoscientific." takeaway="Scientific claims are supported by controlled trials and peer review, while pseudoscientific claims rely on anecdote, undefined terms, or lack any controlled testing.">
           <MatchBuckets
             items={[
@@ -459,7 +459,7 @@ function DescriptiveStatsCalc() {
   const max = nums.length ? sorted[sorted.length - 1] : null;
   const range = nums.length ? max - min : null;
   const variance = nums.length > 1 ? nums.reduce((s, x) => s + (x - mean) ** 2, 0) / (nums.length - 1) : null;
-  const sd = variance ? Math.sqrt(variance) : null;
+  const sd = variance !== null ? Math.sqrt(variance) : null;
 
   const svgW = 320, svgH = 80, pad = 20;
   const plotW = svgW - 2 * pad;
@@ -498,8 +498,8 @@ function DescriptiveStatsCalc() {
                 <title>Median</title>
               </line>
             )}
-            <text x={toX(min)} y={svgH - 2} textAnchor="middle" fontSize="10" fill="var(--muted)">{min}</text>
-            <text x={toX(max)} y={svgH - 2} textAnchor="middle" fontSize="10" fill="var(--muted)">{max}</text>
+            <text x={toX(min)} y={svgH - 2} textAnchor="middle" fontSize="10" fill="var(--ink-muted)">{min}</text>
+            <text x={toX(max)} y={svgH - 2} textAnchor="middle" fontSize="10" fill="var(--ink-muted)">{max}</text>
             <text x={toX(mean)} y={12} textAnchor="middle" fontSize="9" fill="#f59e0b">Mean</text>
             <text x={toX(median)} y={22} textAnchor="middle" fontSize="9" fill="#14b8a6">Median</text>
           </svg>
@@ -580,8 +580,15 @@ function ScatterPlotLab() {
   const slope = xs.reduce((s, x, i) => s + (x - mx) * (ys[i] - my), 0) / xs.reduce((s, x) => s + (x - mx) ** 2, 0);
   const intercept = my - slope * mx;
 
-  const lineX1 = xMin, lineY1 = slope * lineX1 + intercept;
-  const lineX2 = xMax, lineY2 = slope * lineX2 + intercept;
+  // Clip the best-fit line to the plot area (shorten it along x rather than squashing y)
+  let lineX1 = xMin, lineX2 = xMax;
+  if (slope !== 0) {
+    const xa = (yMin - intercept) / slope, xb = (yMax - intercept) / slope;
+    lineX1 = Math.max(xMin, Math.min(xa, xb));
+    lineX2 = Math.min(xMax, Math.max(xa, xb));
+  }
+  const lineY1 = slope * lineX1 + intercept;
+  const lineY2 = slope * lineX2 + intercept;
 
   const rStrength = Math.abs(r) > 0.7 ? "strong" : Math.abs(r) > 0.4 ? "moderate" : "weak";
   const rDirection = r > 0.05 ? "positive" : r < -0.05 ? "negative" : "no";
@@ -605,9 +612,9 @@ function ScatterPlotLab() {
             return (
               <g key={t}>
                 <line x1={toSvgX(xv)} y1={padT} x2={toSvgX(xv)} y2={padT + plotH} stroke="var(--border)" strokeWidth="0.5" />
-                <text x={toSvgX(xv)} y={padT + plotH + 14} textAnchor="middle" fontSize="10" fill="var(--muted)">{xv.toFixed(1)}</text>
+                <text x={toSvgX(xv)} y={padT + plotH + 14} textAnchor="middle" fontSize="10" fill="var(--ink-muted)">{xv.toFixed(1)}</text>
                 <line x1={padL} y1={toSvgY(yv)} x2={padL + plotW} y2={toSvgY(yv)} stroke="var(--border)" strokeWidth="0.5" />
-                <text x={padL - 4} y={toSvgY(yv) + 4} textAnchor="end" fontSize="10" fill="var(--muted)">{yv.toFixed(1)}</text>
+                <text x={padL - 4} y={toSvgY(yv) + 4} textAnchor="end" fontSize="10" fill="var(--ink-muted)">{yv.toFixed(1)}</text>
               </g>
             );
           })}
@@ -619,8 +626,8 @@ function ScatterPlotLab() {
           {ds.points.map((p, i) => (
             <circle key={i} cx={toSvgX(p[0])} cy={toSvgY(p[1])} r="5" fill="var(--accent)" stroke="white" strokeWidth="1.5" opacity="0.85" />
           ))}
-          <text x={padL + plotW / 2} y={svgH - 4} textAnchor="middle" fontSize="11" fill="var(--muted)">{ds.xLabel}</text>
-          <text x={14} y={padT + plotH / 2} textAnchor="middle" fontSize="11" fill="var(--muted)" transform={`rotate(-90, 14, ${padT + plotH / 2})`}>{ds.yLabel}</text>
+          <text x={padL + plotW / 2} y={svgH - 4} textAnchor="middle" fontSize="11" fill="var(--ink-muted)">{ds.xLabel}</text>
+          <text x={14} y={padT + plotH / 2} textAnchor="middle" fontSize="11" fill="var(--ink-muted)" transform={`rotate(-90, 14, ${padT + plotH / 2})`}>{ds.yLabel}</text>
         </svg>
       </div>
       <div className="stat-readout" style={{ marginTop: 12 }}>
@@ -629,7 +636,9 @@ function ScatterPlotLab() {
         <Stat value={rDirection} label="Direction" />
       </div>
       <p className="muted" style={{ marginBottom: 0, textAlign: "center", marginTop: 8 }}>
-        r = {r.toFixed(2)} indicates a {rStrength} {rDirection} {rDirection !== "no" ? "linear relationship" : "correlation"} between the two variables.
+        {rDirection !== "no"
+          ? <>r = {r.toFixed(2)} indicates a {rStrength} {rDirection} linear relationship between the two variables.</>
+          : <>r = {r.toFixed(2)} indicates no linear relationship between the two variables.</>}
       </p>
     </Interactive>
   );
@@ -641,8 +650,8 @@ function CorrelationCausationSorter() {
       <MatchBuckets
         items={[
           { id: "s1", label: "Ice cream sales and drowning deaths both rise in summer", bucket: "confound" },
-          { id: "s2", label: "Smoking causes lung cancer (confirmed by RCTs and mechanism)", bucket: "causal" },
-          { id: "s3", label: "Countries with more doctors have higher death rates", bucket: "reverse" },
+          { id: "s2", label: "Smoking causes lung cancer (confirmed by large cohort studies and a known mechanism)", bucket: "causal" },
+          { id: "s3", label: "Students who attend more tutoring have lower test marks", bucket: "reverse" },
           { id: "s4", label: "Nicolas Cage films per year correlated with pool drownings 1999-2009", bucket: "spurious" },
           { id: "s5", label: "Shoe size and reading ability in children (both increase with age)", bucket: "confound" },
           { id: "s6", label: "Vaccine dose and antibody level (dose-response confirmed)", bucket: "causal" },
@@ -677,7 +686,7 @@ function AustralianRainfallSVG() {
           return (
             <g key={v}>
               <line x1={padL} y1={y} x2={svgW - padR} y2={y} stroke="var(--border)" strokeWidth="0.7" />
-              <text x={padL - 4} y={y + 4} textAnchor="end" fontSize="9" fill="var(--muted)">{v}</text>
+              <text x={padL - 4} y={y + 4} textAnchor="end" fontSize="9" fill="var(--ink-muted)">{v}</text>
             </g>
           );
         })}
@@ -693,7 +702,7 @@ function AustralianRainfallSVG() {
             </g>
           );
         })}
-        <text x={padL - 44} y={padT + plotH / 2} textAnchor="middle" fontSize="9" fill="var(--muted)" transform={`rotate(-90, ${padL - 44}, ${padT + plotH / 2})`}>Rainfall (mm/yr)</text>
+        <text x={padL - 44} y={padT + plotH / 2} textAnchor="middle" fontSize="9" fill="var(--ink-muted)" transform={`rotate(-90, ${padL - 44}, ${padT + plotH / 2})`}>Rainfall (mm/yr)</text>
       </svg>
     </Figure>
   );
@@ -825,17 +834,17 @@ function PredictionTool() {
           {[1920, 1940, 1960, 1980, 2000, 2020, 2040, 2060].map(yr => (
             <g key={yr}>
               <line x1={toX(yr)} y1={pT} x2={toX(yr)} y2={pT + plotH} stroke="var(--border)" strokeWidth="0.5" />
-              <text x={toX(yr)} y={pT + plotH + 13} textAnchor="middle" fontSize="9" fill="var(--muted)">{yr}</text>
+              <text x={toX(yr)} y={pT + plotH + 13} textAnchor="middle" fontSize="9" fill="var(--ink-muted)">{yr}</text>
             </g>
           ))}
           {[-0.5, 0, 0.5, 1.0, 1.5].map(v => (
             <g key={v}>
               <line x1={pL} y1={toY(v)} x2={pL + plotW} y2={toY(v)} stroke="var(--border)" strokeWidth="0.5" />
-              <text x={pL - 4} y={toY(v) + 4} textAnchor="end" fontSize="9" fill="var(--muted)">{v.toFixed(1)}</text>
+              <text x={pL - 4} y={toY(v) + 4} textAnchor="end" fontSize="9" fill="var(--ink-muted)">{v.toFixed(1)}</text>
             </g>
           ))}
           <line x1={toX(lineXs[0])} y1={toY(lineYs[0])} x2={toX(lineXs[1])} y2={toY(lineYs[1])} stroke="#f59e0b" strokeWidth="2" strokeDasharray="7,4" />
-          {predictYear > 2025 && (
+          {predictYear > 2023 && (
             <g>
               <line x1={toX(predictYear)} y1={pT} x2={toX(predictYear)} y2={toY(predicted)} stroke="#14b8a6" strokeWidth="1.5" strokeDasharray="4,3" />
               <line x1={pL} y1={toY(predicted)} x2={toX(predictYear)} y2={toY(predicted)} stroke="#14b8a6" strokeWidth="1.5" strokeDasharray="4,3" />
@@ -848,8 +857,8 @@ function PredictionTool() {
           ))}
           <line x1={toX(2023)} y1={pT + 2} x2={toX(2023)} y2={pT + plotH} stroke="#e74c3c" strokeWidth="1" strokeDasharray="3,3" />
           <text x={toX(2023) + 4} y={pT + 14} fontSize="9" fill="#e74c3c">2023</text>
-          <text x={pL - 40} y={pT + plotH / 2} textAnchor="middle" fontSize="9" fill="var(--muted)" transform={`rotate(-90, ${pL - 40}, ${pT + plotH / 2})`}>Temp anomaly (deg C)</text>
-          <text x={pL + plotW / 2} y={svgH - 2} textAnchor="middle" fontSize="9" fill="var(--muted)">Year</text>
+          <text x={pL - 40} y={pT + plotH / 2} textAnchor="middle" fontSize="9" fill="var(--ink-muted)" transform={`rotate(-90, ${pL - 40}, ${pT + plotH / 2})`}>Temp anomaly (deg C)</text>
+          <text x={pL + plotW / 2} y={svgH - 2} textAnchor="middle" fontSize="9" fill="var(--ink-muted)">Year</text>
         </svg>
       </div>
       <div style={{ marginTop: 12 }}>
@@ -875,7 +884,7 @@ function EvidenceDecisionSim() {
     {
       num: 2,
       label: "Gather data",
-      content: "EPA monitoring data shows mean PM2.5 on School Street = 28 micrograms per cubic metre. WHO guideline = 15 micrograms per cubic metre. The alternative route currently reads 12 micrograms per cubic metre.",
+      content: "EPA monitoring data shows mean PM2.5 on School Street = 28 micrograms per cubic metre. WHO 24-hour guideline = 15 micrograms per cubic metre. The alternative route currently reads 12 micrograms per cubic metre.",
       action: "Check your data source for authority, accuracy, currency, and purpose."
     },
     {

@@ -604,7 +604,7 @@ function Section62({ progress, setProgress }) {
               </g>
             ))}
             <text x="10" y="115" fontSize="11" fill="#ef4444" fontWeight="700">ACIDIC</text>
-            <text x="250" y="115" fontSize="11" fill="#22c55e" fontWeight="700" textAnchor="middle">NEUTRAL</text>
+            <text x="280" y="115" fontSize="11" fill="#22c55e" fontWeight="700" textAnchor="middle">NEUTRAL</text>
             <text x="550" y="115" fontSize="11" fill="#6d28d9" fontWeight="700" textAnchor="end">ALKALINE</text>
           </svg>
         </Figure>
@@ -646,13 +646,13 @@ function Section62({ progress, setProgress }) {
             <text x="14" y="90" textAnchor="middle" fontSize="11" fill="var(--muted)" transform="rotate(-90,14,90)">pH</text>
             {/* titration curve */}
             <path
-              d="M40,158 C80,155 110,152 130,148 C150,144 160,140 165,130 C167,125 168,118 168,108 C168,98 169,88 172,78 C175,68 180,60 192,56 C204,52 220,52 250,53 C280,54 300,54 320,55"
+              d="M40,158 C80,155 110,152 130,148 C150,144 160,140 165,125 C167,115 168,100 168,90 C168,75 170,55 176,45 C184,36 200,33 250,30 C280,29 300,28 320,28"
               fill="none" stroke="var(--accent-deep)" strokeWidth="2.5"
             />
             {/* equivalence point */}
             <line x1="168" y1="10" x2="168" y2="170" stroke="#16a34a" strokeWidth="1.5" strokeDasharray="5 3"/>
             <text x="172" y="22" fontSize="10" fill="#16a34a">equiv. point</text>
-            <circle cx="168" cy="108" r="5" fill="#16a34a"/>
+            <circle cx="168" cy="90" r="5" fill="#16a34a"/>
           </svg>
         </Figure>
         <QGroup title="Check yourself">
@@ -707,8 +707,6 @@ function CollisionRateSim() {
 
     function draw() {
       ctx.clearRect(0, 0, W, H);
-      ctx.fillStyle = "var(--surface, #f8f8ff)";
-      ctx.fillRect(0, 0, W, H);
       const ps = stateRef.current.particles;
       ps.forEach(p => {
         p.x += p.vx;
@@ -736,7 +734,7 @@ function CollisionRateSim() {
   return (
     <Interactive title="Collision rate simulator" subtitle="Adjust the factors and watch how the relative reaction rate changes." takeaway="Higher temperature, higher concentration, greater surface area, and adding a catalyst all increase the reaction rate by increasing the frequency or energy of successful collisions between particles.">
       <div className="grid-2" style={{ gap: 14, marginBottom: 12 }}>
-        <Slider label="Temperature" min={20} max={100} value={temperature} onChange={setTemperature} unit=" C"/>
+        <Slider label="Temperature" min={20} max={100} value={temperature} onChange={setTemperature} unit=" °C"/>
         <Slider label="Concentration" min={1} max={10} value={concentration} onChange={setConcentration} unit="x"/>
         <Slider label="Surface area" min={1} max={5} value={surfaceArea} onChange={setSurfaceArea} unit="x"/>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
@@ -1019,7 +1017,7 @@ function Section64({ progress, setProgress }) {
       <DotPoint id="6.4.1" title="Outline how the first elements were formed after the Big Bang" progress={progress} setProgress={setProgress}>
         <p>The <Term def="The leading scientific theory that the universe began about 13.8 billion years ago from an extremely hot, dense point that rapidly expanded.">Big Bang theory</Term> proposes that around 13.8 billion years ago, all matter and energy were concentrated in one unimaginably hot, dense point. As the universe expanded and cooled, matter began to take shape.</p>
         <p>Within the first second, quarks combined to form protons and neutrons. About 3 to 20 minutes after the Big Bang, <Term def="The production of atomic nuclei from protons and neutrons in the first minutes after the Big Bang.">Big Bang nucleosynthesis</Term> produced the lightest nuclei: approximately 75% hydrogen (H) and 25% helium (He), plus tiny traces of lithium and beryllium.</p>
-        <p>After about 380,000 years, the universe cooled enough for electrons to combine with nuclei to form neutral atoms. All elements heavier than lithium were formed much later inside stars through <Term def="The nuclear fusion reactions inside stars that produce heavier elements from lighter ones.">stellar nucleosynthesis</Term>. Stars fuse hydrogen into helium, then helium into carbon and oxygen up to iron. Elements heavier than iron are produced only in the explosions of massive stars called <Term def="An explosive end-of-life event for a massive star that produces and disperses heavy elements throughout the universe.">supernovae</Term>. The carbon, oxygen, and iron in your body were all made inside ancient stars.</p>
+        <p>After about 380,000 years, the universe cooled enough for electrons to combine with nuclei to form neutral atoms. All elements heavier than lithium were formed much later inside stars through <Term def="The nuclear fusion reactions inside stars that produce heavier elements from lighter ones.">stellar nucleosynthesis</Term>. Stars fuse hydrogen into helium, then helium into carbon and oxygen up to iron. Most elements heavier than iron are produced in the explosions of massive stars called <Term def="An explosive end-of-life event for a massive star that produces and disperses heavy elements throughout the universe.">supernovae</Term> (and in collisions between neutron stars). The carbon, oxygen, and iron in your body were all made inside ancient stars.</p>
         <Callout kind="fact" title="We are made of stardust">
           Every atom of carbon in your body was forged inside a star that lived and died long before our solar system was born. The iron in your blood was made in a supernova explosion.
         </Callout>
@@ -1174,7 +1172,7 @@ function HaberProcessSim() {
   // Simplified model: yield peaks around 400-450 C, increases with pressure
   // At high temp, equilibrium shifts back but rate is faster
   // At low temp, yield is better but rate is slower
-  const equilibriumYield = Math.max(5, 85 - (temperature - 400) * 0.3) * Math.min(1, pressure / 150);
+  const equilibriumYield = Math.min(97, 95 * Math.exp(-(temperature - 200) / 250) * Math.pow(pressure / 200, 0.6));
   const reactionRate = 0.5 + (temperature - 200) / 300 + pressure / 400;
   const practicalYield = Math.round(Math.min(equilibriumYield, 100));
   const rateLabel = reactionRate < 1.5 ? "Slow" : reactionRate < 2.5 ? "Moderate" : "Fast";
@@ -1182,20 +1180,20 @@ function HaberProcessSim() {
   return (
     <Interactive title="Haber process explorer" subtitle="Adjust temperature and pressure to find the best industrial conditions for ammonia production." takeaway="Industrial conditions for the Haber process are a compromise: lower temperature gives better yield but too slowly, while higher pressure improves yield but makes equipment expensive and dangerous, so around 450 degrees C and 200 atm is used with an iron catalyst.">
       <div className="grid-2" style={{ gap: 14, marginBottom: 12 }}>
-        <Slider label="Temperature" min={200} max={600} value={temperature} onChange={setTemperature} unit=" C"/>
+        <Slider label="Temperature" min={200} max={600} value={temperature} onChange={setTemperature} unit=" °C"/>
         <Slider label="Pressure" min={50} max={400} value={pressure} onChange={setPressure} unit=" atm"/>
       </div>
       <div className="stat-readout">
         <Stat value={`~${practicalYield}%`} label="Estimated yield"/>
         <Stat value={rateLabel} label="Reaction rate"/>
-        <Stat value={temperature + " C"} label="Temperature"/>
+        <Stat value={temperature + " °C"} label="Temperature"/>
       </div>
       <p style={{ fontSize: 13, color: "var(--muted)", marginTop: 8, marginBottom: 0 }}>
-        Industrially, around 450 C and 200 atm are used with an iron catalyst. Lower temperatures give better yield but too slowly; higher pressure improves yield but makes equipment very expensive and dangerous.
+        Industrially, around 450 °C and 200 atm are used with an iron catalyst. Lower temperatures give better yield but too slowly; higher pressure improves yield but makes equipment very expensive and dangerous.
       </p>
       {temperature < 350 && (
         <Callout kind="tip" title="Too cold">
-          The yield looks good here but the rate is too slow to be economical. The industrial compromise is around 400 to 500 C.
+          The yield looks good here but the rate is too slow to be economical. The industrial compromise is around 400 to 500 °C.
         </Callout>
       )}
       {temperature > 530 && (
@@ -1228,15 +1226,15 @@ function Section65({ progress, setProgress }) {
         <QGroup title="Check yourself">
           <MCQ
             num={24}
-            question="Why does the Haber process use a moderate temperature of around 450 C rather than a much lower temperature, even though lower temperatures give a better equilibrium yield?"
+            question="Why does the Haber process use a moderate temperature of around 450 °C rather than a much lower temperature, even though lower temperatures give a better equilibrium yield?"
             options={[
               "Lower temperatures are more expensive",
               "At lower temperatures the reaction rate is too slow to be economical",
               "Lower temperatures produce the wrong product",
-              "Nitrogen does not react below 450 C"
+              "Nitrogen does not react below 450 °C"
             ]}
             correct={1}
-            explain="Below about 400 C the yield would be higher, but the rate becomes so slow that waiting for equilibrium would be uneconomical. The industrial conditions are a deliberate compromise."
+            explain="Below about 400 °C the yield would be higher, but the rate becomes so slow that waiting for equilibrium would be uneconomical. The industrial conditions are a deliberate compromise."
           />
           <WrittenQ
             num={25}

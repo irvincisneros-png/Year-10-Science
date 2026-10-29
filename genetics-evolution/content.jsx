@@ -258,6 +258,9 @@ function PunnettSquareTool() {
 
   const domPheno = sortedCells.filter(g => g.includes(dom)).length;
   const recPheno = 4 - domPheno;
+  const gcd = (a, b) => (b === 0 ? a : gcd(b, a % b));
+  const ratioDiv = domPheno > 0 && recPheno > 0 ? gcd(domPheno, recPheno) : 1;
+  const ratioText = `${domPheno / ratioDiv}:${recPheno / ratioDiv}`;
 
   const dominantLabel = trait.dom.split("(")[1]?.replace(")", "") || "Dominant";
   const recessiveLabel = trait.rec.split("(")[1]?.replace(")", "") || "Recessive";
@@ -348,7 +351,7 @@ function PunnettSquareTool() {
       </div>
 
       <div className="stat-readout" style={{ marginTop: 16 }}>
-        <Stat value={`${domPheno}:${recPheno}`} label="Phenotype ratio"/>
+        <Stat value={ratioText} label="Phenotype ratio (dominant:recessive)"/>
         <Stat value={domPheno} label={`${dominantLabel} phenotype`}/>
         <Stat value={recPheno} label={`${recessiveLabel} phenotype`}/>
       </div>
@@ -1027,9 +1030,9 @@ function Section4({ progress, setProgress }) {
         <QGroup title="Check yourself">
           <MCQ num={25} question="Approximately when did Australian megafauna become extinct?"
             options={["5,000 to 10,000 years ago","46,000 to 40,000 years ago","250 million years ago","1 million years ago"]} correct={1}
-            explain="Australian megafauna became extinct approximately 46,000 to 40,000 years ago, around the time Aboriginal peoples arrived on the continent."/>
+            explain="Australian megafauna became extinct approximately 46,000 to 40,000 years ago, thousands of years after Aboriginal peoples had arrived on the continent."/>
           <WrittenQ num={26} question="Explain how Aboriginal rock art contributes to the scientific understanding of megafauna extinctions."
-            model="If Aboriginal rock art depicts animals now known only from fossils (megafauna), it suggests those animals were still alive during the period of human occupation (at least 65,000 years ago). This supports the view that extinctions occurred after human arrival, contributing to debate about whether hunting played a role alongside climate change."/>
+            model="If Aboriginal rock art depicts animals now known only from fossils (megafauna), it suggests those animals were still alive during the period of human occupation. This supports the view that extinctions occurred after human arrival, contributing to debate about whether hunting played a role alongside climate change."/>
         </QGroup>
       </DotPoint>
 

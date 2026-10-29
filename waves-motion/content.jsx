@@ -2,6 +2,11 @@
    Slider, SegToggle, Stat, Reveal, FlipCard, MatchBuckets, Ring, mountTopicApp */
 const { useState, useEffect, useRef, useMemo } = React;
 
+/* Canvas cannot resolve CSS var(...) strings, so read the computed value instead. */
+const cssv = (el, name, fb) => {
+  try { const v = getComputedStyle(el).getPropertyValue(name).trim(); return v || fb; } catch (e) { return fb; }
+};
+
 /* =========================================================
    SECTION 7.1 INTERACTIVES
    ========================================================= */
@@ -26,11 +31,11 @@ function WaveSim() {
 
     function draw(t) {
       ctx.clearRect(0, 0, W, H);
-      ctx.fillStyle = "var(--surface, #f8f9fa)";
+      ctx.fillStyle = cssv(canvas, "--surface", "#f8f9fa");
       ctx.fillRect(0, 0, W, H);
 
       // Draw equilibrium line
-      ctx.strokeStyle = "var(--border, #dee2e6)";
+      ctx.strokeStyle = cssv(canvas, "--border", "#dee2e6");
       ctx.lineWidth = 1;
       ctx.setLineDash([6, 4]);
       ctx.beginPath();
@@ -41,11 +46,11 @@ function WaveSim() {
 
       if (waveType === "transverse") {
         // Draw transverse wave (sine curve)
-        ctx.strokeStyle = "var(--accent-deep, #1d4ed8)";
+        ctx.strokeStyle = cssv(canvas, "--accent-deep", "#1d4ed8");
         ctx.lineWidth = 3;
         ctx.beginPath();
         for (let x = 0; x <= W; x++) {
-          const phase = (x / W) * frequency * 2 * Math.PI - t;
+          const phase = (x / W) * frequency * 2 * Math.PI - t * frequency;
           const y = midY - amplitude * Math.sin(phase);
           if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
         }
@@ -53,14 +58,14 @@ function WaveSim() {
 
         // Label crest and trough
         const crestX = W / (frequency * 4);
-        ctx.fillStyle = "var(--accent-deep, #1d4ed8)";
+        ctx.fillStyle = cssv(canvas, "--accent-deep", "#1d4ed8");
         ctx.font = "12px sans-serif";
         ctx.fillText("crest", crestX - 16, midY - amplitude - 8);
-        ctx.fillText("trough", crestX * 3 - 20, midY + amplitude + 18);
+        ctx.fillText("trough", crestX * 3 - 20, midY + amplitude + 14);
 
         // Wavelength arrow
         const wl = W / frequency;
-        const arrowY = midY + amplitude + 32;
+        const arrowY = H - 12;
         ctx.strokeStyle = "#6b7280";
         ctx.lineWidth = 1.5;
         ctx.beginPath();
@@ -84,17 +89,17 @@ function WaveSim() {
         // Draw longitudinal wave (compressions and rarefactions using dots)
         const numParticles = 60;
         const spacing = W / numParticles;
-        ctx.fillStyle = "var(--accent-deep, #1d4ed8)";
+        ctx.fillStyle = cssv(canvas, "--accent-deep", "#1d4ed8");
         for (let i = 0; i < numParticles; i++) {
           const baseX = i * spacing + spacing / 2;
-          const displacement = (amplitude / 2) * Math.sin((baseX / W) * frequency * 2 * Math.PI - t);
+          const displacement = (amplitude / 2) * Math.sin((baseX / W) * frequency * 2 * Math.PI - t * frequency);
           const x = baseX + displacement;
           ctx.beginPath();
           ctx.arc(x, midY, 4, 0, Math.PI * 2);
           ctx.fill();
         }
         // Labels
-        ctx.fillStyle = "var(--accent-deep, #1d4ed8)";
+        ctx.fillStyle = cssv(canvas, "--accent-deep", "#1d4ed8");
         ctx.font = "12px sans-serif";
         const compX = W / (frequency * 4);
         ctx.fillText("compression", compX - 38, midY + 24);
@@ -125,11 +130,11 @@ function WaveSim() {
       <canvas
         ref={canvasRef}
         width={600}
-        height={160}
+        height={200}
         style={{ width: "100%", maxWidth: 600, height: "auto", borderRadius: "0.5rem", marginTop: "0.75rem" }}
       />
       <div className="ctrl-row" style={{ flexWrap: "wrap" }}>
-        <Slider label="Amplitude" min={10} max={65} value={amplitude} onChange={setAmplitude} unit=" px" />
+        <Slider label="Amplitude" min={10} max={55} value={amplitude} onChange={setAmplitude} unit=" px" />
         <Slider label="Frequency (waves)" min={1} max={4} step={0.5} value={frequency} onChange={setFrequency} unit="" />
       </div>
       <div className="stat-readout">
@@ -147,8 +152,8 @@ function WaveSim() {
 /* EM spectrum explorer */
 function EMExplorer() {
   const bands = [
-    { name: "Radio", color: "#6366f1", freq: "10⁴ to 10¹¹ Hz", wl: ">1 mm", energy: "Very low", uses: "Broadcasting, radar, MRI, WiFi", ionising: false },
-    { name: "Microwave", color: "#8b5cf6", freq: "10⁹ to 3x10¹¹ Hz", wl: "1 mm to 30 cm", energy: "Low", uses: "Cooking, satellite links, mobile phones", ionising: false },
+    { name: "Radio", color: "#6366f1", freq: "10⁴ to 10⁹ Hz", wl: ">30 cm", energy: "Very low", uses: "Radio and TV broadcasting, MRI, aircraft communication", ionising: false },
+    { name: "Microwave", color: "#8b5cf6", freq: "10⁹ to 3x10¹¹ Hz", wl: "1 mm to 30 cm", energy: "Low", uses: "Cooking, radar, WiFi, satellite links, mobile phones", ionising: false },
     { name: "Infrared", color: "#f59e0b", freq: "3x10¹¹ to 4x10¹⁴ Hz", wl: "700 nm to 1 mm", energy: "Moderate", uses: "Remote controls, thermal cameras, physiotherapy", ionising: false },
     { name: "Visible", color: "#10b981", freq: "4x10¹⁴ to 7x10¹⁴ Hz", wl: "400 to 700 nm", energy: "Moderate", uses: "Human vision, photography, fibre optics", ionising: false },
     { name: "Ultraviolet", color: "#3b82f6", freq: "7x10¹⁴ to 3x10¹⁶ Hz", wl: "10 to 400 nm", energy: "High", uses: "Sterilisation, fluorescence, forensics", ionising: true },
@@ -249,9 +254,9 @@ function SoundVizSim() {
 
     function draw(t) {
       ctx.clearRect(0, 0, W, H);
-      ctx.fillStyle = "var(--surface, #f8f9fa)";
+      ctx.fillStyle = cssv(canvas, "--surface", "#f8f9fa");
       ctx.fillRect(0, 0, W, H);
-      ctx.strokeStyle = "var(--border, #dee2e6)";
+      ctx.strokeStyle = cssv(canvas, "--border", "#dee2e6");
       ctx.lineWidth = 1;
       ctx.setLineDash([4, 4]);
       ctx.beginPath(); ctx.moveTo(0, midY); ctx.lineTo(W, midY); ctx.stroke();
@@ -323,7 +328,7 @@ function DopplerSim() {
 
     function draw(t) {
       ctx.clearRect(0, 0, W, H);
-      ctx.fillStyle = "var(--surface, #f8f9fa)";
+      ctx.fillStyle = cssv(canvas, "--surface", "#f8f9fa");
       ctx.fillRect(0, 0, W, H);
 
       const srcX = (W / 2) + Math.sin(t * 0.7) * (W * 0.25);
@@ -488,7 +493,7 @@ function LightPropertiesSim() {
         {mode === "reflection" && (
           <>
             <path
-              d={`M ${cx + 30 * Math.sin(rad)} ${cy - 30 * Math.cos(rad)} A 30 30 0 0 1 ${cx} ${cy - 30}`}
+              d={`M ${cx + 30 * Math.sin(rad)} ${cy - 30 * Math.cos(rad)} A 30 30 0 0 0 ${cx} ${cy - 30}`}
               fill="none" stroke="#10b981" strokeWidth="1.5"
             />
             <text x={cx + 14} y={cy - 22} fontSize="10" fill="#059669">{angle}°</text>
@@ -598,9 +603,9 @@ function MotionGraphSim() {
     },
     stationarythen: {
       label: "Stop then go",
-      dtPoints: [[0,0],[1,20],[2,20],[3,20],[4,60]],
+      dtPoints: [[0,0],[1,20],[2,30],[3,30],[4,50]],
       vtPoints: [[0,20],[1,20],[2,0],[3,0],[4,40]],
-      desc: "Distance-time is flat in the middle (stationary). Velocity drops to zero then rises.",
+      desc: "Distance-time is flat between 2 s and 3 s (stationary). Velocity drops to zero, stays at zero, then rises again.",
     },
   };
 
@@ -621,11 +626,11 @@ function MotionGraphSim() {
       const maxX = 4;
       const maxY = 80;
 
-      ctx.fillStyle = "var(--surface-raised, #f1f5f9)";
+      ctx.fillStyle = cssv(canvas, "--surface-raised", "#f1f5f9");
       ctx.fillRect(offsetX, 0, half, H);
 
       // Grid
-      ctx.strokeStyle = "var(--border, #e5e7eb)";
+      ctx.strokeStyle = cssv(canvas, "--border", "#e5e7eb");
       ctx.lineWidth = 1;
       for (let i = 0; i <= 4; i++) {
         const x = x0 + (i / maxX) * gW;
@@ -637,7 +642,7 @@ function MotionGraphSim() {
       }
 
       // Axes
-      ctx.strokeStyle = "var(--ink, #1e293b)";
+      ctx.strokeStyle = cssv(canvas, "--ink", "#1e293b");
       ctx.lineWidth = 2;
       ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x0, y0 + gH); ctx.lineTo(x0 + gW, y0 + gH); ctx.stroke();
 
@@ -661,7 +666,7 @@ function MotionGraphSim() {
       });
 
       // Labels
-      ctx.fillStyle = "var(--ink, #1e293b)";
+      ctx.fillStyle = cssv(canvas, "--ink", "#1e293b");
       ctx.font = "bold 11px sans-serif";
       ctx.textAlign = "center";
       ctx.fillText(title, offsetX + half / 2, 14);
@@ -734,7 +739,7 @@ function NewtonSecondSim() {
 
     function draw() {
       ctx.clearRect(0, 0, W, H);
-      ctx.fillStyle = "var(--surface, #f8f9fa)";
+      ctx.fillStyle = cssv(canvas, "--surface", "#f8f9fa");
       ctx.fillRect(0, 0, W, H);
 
       // Ground
@@ -830,13 +835,7 @@ function NetForceSim() {
         <text x="180" y="50" textAnchor="middle" fill="#fff" fontSize="12" fontWeight="700">Object</text>
         {/* Left force */}
         <line x1={140 - Math.min(120, forceL * 1.2)} y1="45" x2="140" y2="45" stroke="#ef4444" strokeWidth="3" />
-        <polygon
-          points={`140,39 140,51 152,45`}
-          fill="none"
-          stroke="#ef4444"
-          strokeWidth="2"
-          transform="scale(-1,1) translate(-280,0)"
-        />
+        <polygon points={`${140 - Math.min(120, forceL * 1.2)},39 ${140 - Math.min(120, forceL * 1.2)},51 ${140 - Math.min(120, forceL * 1.2) - 12},45`} fill="#ef4444" />
         <text x={140 - Math.min(120, forceL * 1.2) / 2} y="34" textAnchor="middle" fill="#ef4444" fontSize="11">{forceL} N</text>
         {/* Right force */}
         <line x1="220" y1="45" x2={220 + Math.min(120, forceR * 1.2)} y2="45" stroke="#10b981" strokeWidth="3" />
@@ -996,15 +995,15 @@ function Section71({ progress, setProgress }) {
             <line x1="30" y1="65" x2="540" y2="65" stroke="var(--border,#cbd5e1)" strokeWidth="1" strokeDasharray="6,4" />
             <path d="M30,65 Q100,5 170,65 Q240,125 310,65 Q380,5 450,65 Q520,125 540,85" fill="none" stroke="var(--accent-deep,#1d4ed8)" strokeWidth="3" />
             {/* Amplitude */}
-            <line x1="100" y1="5" x2="100" y2="65" stroke="#ef4444" strokeWidth="1.5" strokeDasharray="4,3" />
-            <text x="104" y="38" fontSize="11" fill="#ef4444" fontWeight="600">A (amplitude)</text>
+            <line x1="100" y1="35" x2="100" y2="65" stroke="#ef4444" strokeWidth="1.5" strokeDasharray="4,3" />
+            <text x="104" y="55" fontSize="11" fill="#ef4444" fontWeight="600">A (amplitude)</text>
             {/* Wavelength */}
             <line x1="30" y1="120" x2="310" y2="120" stroke="#10b981" strokeWidth="1.5" />
             <line x1="30" y1="115" x2="30" y2="125" stroke="#10b981" strokeWidth="1.5" />
             <line x1="310" y1="115" x2="310" y2="125" stroke="#10b981" strokeWidth="1.5" />
             <text x="160" y="118" textAnchor="middle" fontSize="11" fill="#10b981" fontWeight="600">lambda (wavelength)</text>
             {/* Labels */}
-            <text x="100" y="13" textAnchor="middle" fontSize="10" fill="#374151">crest</text>
+            <text x="100" y="29" textAnchor="middle" fontSize="10" fill="#374151">crest</text>
             <text x="240" y="128" textAnchor="middle" fontSize="10" fill="#374151">trough</text>
           </svg>
         </Figure>
@@ -1134,7 +1133,7 @@ function Section73({ progress, setProgress }) {
       </DotPoint>
 
       <DotPoint id="7.3.3" title="Applications of light properties in everyday life" progress={progress} setProgress={setProgress}>
-        <p>The properties of light underpin many everyday technologies. Solar hot-water collectors use a dark, absorbing surface to convert solar radiation into thermal energy for heating water. Spectacles correct vision through refraction: a concave (diverging) lens corrects short-sightedness by spreading light rays so they focus on the retina rather than in front of it; a convex (converging) lens corrects long-sightedness. Fibre optic cables guide light signals around bends using <Term def="The complete reflection of light back into a denser medium when the angle of incidence exceeds the critical angle. Used in optical fibres.">total internal reflection</Term>, transmitting data at the speed of light over vast distances with minimal loss.</p>
+        <p>The properties of light underpin many everyday technologies. Solar hot-water collectors use a dark, absorbing surface to convert solar radiation into thermal energy for heating water. Spectacles correct vision through refraction: a concave (diverging) lens corrects short-sightedness by spreading light rays so they focus on the retina rather than in front of it; a convex (converging) lens corrects long-sightedness. Fibre optic cables guide light signals around bends using <Term def="The complete reflection of light back into a denser medium when the angle of incidence exceeds the critical angle. Used in optical fibres.">total internal reflection</Term>, transmitting data as pulses of light over vast distances with minimal loss.</p>
         <p>Rainbows form through refraction and dispersion in water droplets: white sunlight enters a droplet and is split into its constituent wavelengths because different wavelengths refract by slightly different amounts. They reflect off the back of the droplet and exit spread into a spectrum. Curved mirrors are used in torches, car headlights, and reflecting telescopes to redirect light into useful beams or to focus incoming light from distant stars.</p>
         <Figure num="4" caption="Three light properties and their everyday applications.">
           <svg viewBox="0 0 540 80" width="100%" style={{ maxWidth: 540 }}>
@@ -1156,7 +1155,7 @@ function Section73({ progress, setProgress }) {
       </DotPoint>
 
       <DotPoint id="7.3.4" title="The EM spectrum and what it tells us about stars" progress={progress} setProgress={setProgress}>
-        <p>Stars emit radiation across the entire electromagnetic spectrum. Astronomers use different telescopes to observe different regions, building a complete picture of each star. The temperature of a star determines where it emits most strongly: very hot stars (above 30,000 K) peak in the ultraviolet; the Sun (about 5800 K) peaks in visible light; cool stars peak in the infrared. This relationship is described by Wien's displacement law: peak wavelength x temperature = 2.9 x 10^6 nm K.</p>
+        <p>Stars emit radiation across the entire electromagnetic spectrum. Astronomers use different telescopes to observe different regions, building a complete picture of each star. The temperature of a star determines where it emits most strongly: stars hotter than about 7,300 K peak in the ultraviolet; the Sun (about 5800 K) peaks in visible light; stars cooler than about 4,100 K peak in the infrared. This relationship is described by Wien's displacement law: peak wavelength x temperature = 2.9 x 10^6 nm K.</p>
         <p>A star's chemical composition is revealed by its spectrum. When starlight is split by a prism, dark <Term def="Dark lines in a stellar spectrum where atoms in the star's cooler outer atmosphere have absorbed specific wavelengths, creating a chemical fingerprint.">absorption lines (Fraunhofer lines)</Term> appear at wavelengths that match the energy transitions of specific atoms. Each element has a unique pattern of lines. The Doppler effect applies to light too: if these lines are shifted towards shorter wavelengths (blueshift), the star is approaching; if shifted towards longer wavelengths (redshift), it is receding.</p>
         <StarTempExplorer />
         <QGroup title="Check yourself">
