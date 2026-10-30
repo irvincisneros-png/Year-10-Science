@@ -92,6 +92,7 @@ function PeerReviewCycleSVG() {
     };
   });
   return /*#__PURE__*/React.createElement(Figure, {
+    num: "1",
     caption: "The scientific knowledge cycle: every finding must survive peer review and replication before it becomes accepted knowledge."
   }, /*#__PURE__*/React.createElement("svg", {
     viewBox: "0 0 440 280",
@@ -145,7 +146,7 @@ function PeerReviewCycleSVG() {
       textAnchor: "middle",
       fontSize: "10",
       fontWeight: "700",
-      fill: "var(--ink)"
+      fill: "var(--accent-deep)"
     }, p.label));
   }), /*#__PURE__*/React.createElement("text", {
     x: cx,
@@ -179,7 +180,7 @@ function CERBuilder() {
     shown = _useState8[0],
     setShown = _useState8[1];
   var score = [claim.trim().length > 10, evidence.trim().length > 10, reasoning.trim().length > 10].filter(Boolean).length;
-  var colours = ["var(--red, #e74c3c)", "var(--amber-500, #f59e0b)", "var(--teal-500, #14b8a6)", "var(--green-500, #22c55e)"];
+  var colours = ["#e74c3c", "#d97706", "#0d9488", "#16a34a"];
   var labels = ["Start writing", "Getting there", "Almost done", "Strong argument"];
   return /*#__PURE__*/React.createElement(Interactive, {
     title: "CER Argument Builder",
@@ -242,7 +243,8 @@ function CERBuilder() {
         border: "1.5px solid var(--border)",
         fontSize: 14,
         resize: "vertical",
-        background: "var(--surface)"
+        background: "var(--surface)",
+        color: "var(--ink)"
       },
       placeholder: "Write your ".concat(label.toLowerCase(), "...")
     }));
@@ -279,7 +281,7 @@ function CERBuilder() {
 function SourceEvalTool() {
   var sources = [{
     id: "a",
-    title: "CSIRO Climate Report 2023",
+    title: "CSIRO and Bureau of Meteorology: State of the Climate 2024",
     authority: "high",
     accuracy: "high",
     purpose: "scientific",
@@ -320,14 +322,14 @@ function SourceEvalTool() {
     setRevealed = _useState10[1];
   var criteria = ["authority", "accuracy", "purpose", "currency"];
   var colourMap = {
-    high: "#14b8a6",
+    high: "#0d9488",
     low: "#e74c3c",
-    recent: "#14b8a6",
+    recent: "#0d9488",
     old: "#e74c3c",
-    scientific: "#14b8a6",
-    commercial: "#f59e0b",
+    scientific: "#0d9488",
+    commercial: "#d97706",
     mislead: "#e74c3c",
-    conflict: "#f59e0b"
+    conflict: "#d97706"
   };
   var labelMap = {
     high: "High",
@@ -411,7 +413,7 @@ function SourceEvalTool() {
     }
   }, "Verdict: ", /*#__PURE__*/React.createElement("span", {
     style: {
-      color: src.label === "Reliable" ? "#14b8a6" : "#e74c3c"
+      color: src.label === "Reliable" ? "#0d9488" : "#e74c3c"
     }
   }, src.label))), !selected && /*#__PURE__*/React.createElement("p", {
     className: "muted"
@@ -526,7 +528,7 @@ function Section1(_ref2) {
   }, "limitations"), ". Using qualifying language such as \"the data suggest,\" \"the results are consistent with,\" or \"further investigation is needed\" is not weakness but scientific honesty."), /*#__PURE__*/React.createElement(Callout, {
     kind: "key",
     title: "Weak vs strong conclusion"
-  }, "Weak: \"My hypothesis was correct.\" Strong: \"As temperature increased from 20 to 60 degrees C, mean enzyme activity increased by 42%, supporting the hypothesis that higher temperature increases reaction rate up to a threshold. However, with only 8 trials per condition, further testing with larger samples is needed.\"")), /*#__PURE__*/React.createElement(DotPoint, {
+  }, "Weak: \"My hypothesis was correct.\" Strong: \"As temperature increased from 20 to 60 \xB0C, mean enzyme activity increased by 42%, supporting the hypothesis that higher temperature increases reaction rate up to a threshold. However, with only 8 trials per condition, further testing with larger samples is needed.\"")), /*#__PURE__*/React.createElement(DotPoint, {
     id: "8.1.6",
     title: "Written scientific arguments (CER)",
     progress: progress,
@@ -545,8 +547,8 @@ function Section1(_ref2) {
     explain: "Reasoning is the scientific principle that explains why the evidence implies the claim. Without it, the reader cannot see how the data leads to the conclusion."
   }), /*#__PURE__*/React.createElement(WrittenQ, {
     num: 7,
-    question: "Use the CER framework to write a scientific argument for the claim: 'Increasing atmospheric CO2 is associated with rising global average temperature.' Use these data: CO2 has risen from 280 ppm in 1750 to 420 ppm in 2023; global mean temperature has risen by approximately 1.1 degrees C over the same period; CO2 absorbs and re-emits infrared radiation.",
-    model: "Claim: increasing atmospheric CO2 is associated with rising global average temperature. Evidence: CO2 rose from 280 ppm in 1750 to 420 ppm in 2023 (a 50% increase); global mean temperature rose by approximately 1.1 degrees C over the same period. Reasoning: CO2 is a greenhouse gas that absorbs infrared radiation emitted by Earth's surface and re-emits it, reducing heat escaping to space. The correlation between rising CO2 and rising temperature is consistent with this physical mechanism, and the timescale matches increased fossil fuel combustion."
+    question: "Use the CER framework to write a scientific argument for the claim: 'Increasing atmospheric CO2 is associated with rising global average temperature.' Use these data: CO2 has risen from 280 ppm in 1750 to 420 ppm in 2023; global mean temperature has risen by approximately 1.1 \xB0C over the same period; CO2 absorbs and re-emits infrared radiation.",
+    model: "Claim: increasing atmospheric CO2 is associated with rising global average temperature. Evidence: CO2 rose from 280 ppm in 1750 to 420 ppm in 2023 (a 50% increase); global mean temperature rose by approximately 1.1 \xB0C over the same period. Reasoning: CO2 is a greenhouse gas that absorbs infrared radiation emitted by Earth's surface and re-emits it, reducing heat escaping to space. The correlation between rising CO2 and rising temperature is consistent with this physical mechanism, and the timescale matches increased fossil fuel combustion."
   }))));
 }
 
@@ -596,10 +598,10 @@ function PseudoscienceChecker() {
   }).length;
   var verdict = score >= 6 ? {
     label: "Likely scientific",
-    color: "#14b8a6"
+    color: "#0d9488"
   } : score >= 4 ? {
     label: "Uncertain / needs more investigation",
-    color: "#f59e0b"
+    color: "#d97706"
   } : {
     label: "Likely pseudoscientific",
     color: "#e74c3c"
@@ -624,6 +626,7 @@ function PseudoscienceChecker() {
         padding: "8px 12px",
         borderRadius: 8,
         background: checks[c.id] ? "var(--accent-soft)" : "var(--surface)",
+        color: checks[c.id] ? "#1b1a17" : "var(--ink)",
         border: "1.5px solid " + (checks[c.id] ? "var(--accent)" : "var(--border)"),
         transition: "all 0.2s"
       }
@@ -832,21 +835,168 @@ function DataDistortionSim() {
       marginBottom: 0,
       textAlign: "center"
     }
-  }, truncate ? "Truncated axis (starts at 124): the 3 mmHg difference looks enormous." : "Full scale (starts at 0): the same 3 mmHg difference is barely visible out of 140 mmHg total."));
+  }, truncate ? "Truncated axis (starts at 124): the 3 mmHg difference looks enormous." : "Full scale (starts at 0): the same 3 mmHg difference is barely visible on a scale from 0 to 140 mmHg."));
 }
-function Section2(_ref3) {
-  var progress = _ref3.progress,
-    setProgress = _ref3.setProgress;
+
+/* Header figure for 8.2: what cherry-picking looks like. Deterministic data: a rising trend
+   (0.1 per year) plus fixed noise; years 12-17 happen to dip, so choosing only them suggests a fall. */
+function CherryPickFigure() {
+  var NOISE = [0.2, -0.3, 0.1, 0.3, -0.2, 0, 0.4, -0.1, 0.2, -0.3, 0.1, 0.3, 0.8, 0.5, 0.3, 0, -0.2, -0.5, 0.1, -0.2, 0.3, 0, 0.2, -0.1, 0.4, 0.1, -0.2, 0.3, 0, 0.2];
+  var pts = NOISE.map(function (e, i) {
+    return [i, 0.1 * i + e];
+  });
+  var W0 = 12,
+    W1 = 17; // cherry-picked window (inclusive)
+  var fit = function fit(ps) {
+    var n = ps.length,
+      mx = ps.reduce(function (a, p) {
+        return a + p[0];
+      }, 0) / n,
+      my = ps.reduce(function (a, p) {
+        return a + p[1];
+      }, 0) / n;
+    var m = ps.reduce(function (a, p) {
+      return a + (p[0] - mx) * (p[1] - my);
+    }, 0) / ps.reduce(function (a, p) {
+      return a + Math.pow(p[0] - mx, 2);
+    }, 0);
+    return [m, my - m * mx];
+  };
+  var _fit = fit(pts),
+    _fit2 = _slicedToArray(_fit, 2),
+    mA = _fit2[0],
+    cA = _fit2[1];
+  var _fit3 = fit(pts.slice(W0, W1 + 1)),
+    _fit4 = _slicedToArray(_fit3, 2),
+    mW = _fit4[0],
+    cW = _fit4[1];
+  var X = function X(i) {
+      return 46 + i * 10;
+    },
+    Y = function Y(v) {
+      return 196 - (v + 0.6) * 44;
+    };
+  var TEAL = "#0d9488",
+    CORAL = "#ef6b4b";
+  return /*#__PURE__*/React.createElement(Figure, {
+    caption: "Cherry-picking. All 30 years of data (teal line) show a clear rise, but choosing only the six shaded years (coral line) makes it look as if the values are falling. Sound evidence uses all the relevant data."
+  }, /*#__PURE__*/React.createElement("svg", {
+    viewBox: "0 0 360 236",
+    width: "100%",
+    style: {
+      maxWidth: 460,
+      display: "block",
+      margin: "0 auto"
+    },
+    role: "img",
+    "aria-label": "Scatter plot of 30 yearly measurements rising overall. A teal best-fit line through all points slopes upward. Six points in a shaded window are highlighted in coral, and a coral best-fit line through only those six slopes downward."
+  }, /*#__PURE__*/React.createElement("rect", {
+    x: X(W0) - 5,
+    y: "40",
+    width: X(W1) - X(W0) + 10,
+    height: "156",
+    fill: CORAL,
+    opacity: "0.16"
+  }), /*#__PURE__*/React.createElement("text", {
+    x: (X(W0) + X(W1)) / 2,
+    y: "54",
+    textAnchor: "middle",
+    fontSize: "11",
+    fontWeight: "700",
+    fill: "var(--ink)"
+  }, "picked"), /*#__PURE__*/React.createElement("line", {
+    x1: "40",
+    y1: "196",
+    x2: "340",
+    y2: "196",
+    stroke: "var(--ink)",
+    strokeWidth: "1.5"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "40",
+    y1: "36",
+    x2: "40",
+    y2: "196",
+    stroke: "var(--ink)",
+    strokeWidth: "1.5"
+  }), /*#__PURE__*/React.createElement("text", {
+    x: "190",
+    y: "214",
+    textAnchor: "middle",
+    fontSize: "12",
+    fill: "var(--ink-muted)"
+  }, "Time (years)"), /*#__PURE__*/React.createElement("text", {
+    x: "16",
+    y: "116",
+    textAnchor: "middle",
+    fontSize: "12",
+    fill: "var(--ink-muted)",
+    transform: "rotate(-90,16,116)"
+  }, "Measurement"), /*#__PURE__*/React.createElement("line", {
+    x1: X(0),
+    y1: Y(cA),
+    x2: X(29),
+    y2: Y(mA * 29 + cA),
+    stroke: TEAL,
+    strokeWidth: "3",
+    strokeLinecap: "round"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: X(W0) - 4,
+    y1: Y(mW * (W0 - 0.4) + cW),
+    x2: X(W1) + 4,
+    y2: Y(mW * (W1 + 0.4) + cW),
+    stroke: CORAL,
+    strokeWidth: "3.5",
+    strokeLinecap: "round"
+  }), pts.map(function (_ref3) {
+    var _ref4 = _slicedToArray(_ref3, 2),
+      i = _ref4[0],
+      v = _ref4[1];
+    var inW = i >= W0 && i <= W1;
+    return /*#__PURE__*/React.createElement("circle", {
+      key: i,
+      cx: X(i),
+      cy: Y(v),
+      r: inW ? 4.5 : 3.5,
+      fill: inW ? CORAL : "var(--ink-muted)",
+      stroke: inW ? "#1b1a17" : "none",
+      strokeWidth: "1"
+    });
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "46",
+    y1: "16",
+    x2: "66",
+    y2: "16",
+    stroke: TEAL,
+    strokeWidth: "3"
+  }), /*#__PURE__*/React.createElement("text", {
+    x: "72",
+    y: "20",
+    fontSize: "12",
+    fill: "var(--ink)"
+  }, "All 30 years: rising"), /*#__PURE__*/React.createElement("line", {
+    x1: "200",
+    y1: "16",
+    x2: "220",
+    y2: "16",
+    stroke: CORAL,
+    strokeWidth: "3.5"
+  }), /*#__PURE__*/React.createElement("text", {
+    x: "226",
+    y: "20",
+    fontSize: "12",
+    fill: "var(--ink)"
+  }, "6 picked: falling")));
+}
+function Section2(_ref5) {
+  var progress = _ref5.progress,
+    setProgress = _ref5.setProgress;
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "topic-head"
   }, /*#__PURE__*/React.createElement("div", {
     className: "eyebrow"
   }, "8.2 Pseudoscience"), /*#__PURE__*/React.createElement("h1", null, "Science versus pseudoscience"), /*#__PURE__*/React.createElement("p", {
     className: "lead"
-  }, "Pseudoscience wears the costume of science but dodges the one thing that makes science reliable: the willingness to be proved wrong.")), /*#__PURE__*/React.createElement(Figure, {
-    src: "img/pseudoscience.png",
-    caption: "Sound evidence versus cherry-picked, misleading data."
-  }), /*#__PURE__*/React.createElement(DotPoint, {
+  }, "Pseudoscience wears the costume of science but dodges the one thing that makes science reliable: the willingness to be proved wrong.")), /*#__PURE__*/React.createElement(CherryPickFigure, null), /*#__PURE__*/React.createElement(DotPoint, {
     id: "8.2.1",
     title: "Distinguishing science from pseudoscience",
     progress: progress,
@@ -922,7 +1072,7 @@ function Section2(_ref3) {
     setProgress: setProgress
   }, /*#__PURE__*/React.createElement("p", null, "Pseudoscience appears in television advertising, social media wellness influencers, and news articles that misrepresent preliminary research as definitive findings. ", /*#__PURE__*/React.createElement(Term, {
     def: "When news articles give equal weight to two 'sides' of an issue even when the vast majority of evidence supports one side."
-  }, "False balance"), " in reporting creates the impression of scientific controversy where there is actually strong consensus."), /*#__PURE__*/React.createElement("p", null, "Social media algorithms reward engagement over accuracy: emotionally arousing misinformation spreads faster than accurate but less dramatic information. A 2018 MIT study found false news spreads six times faster than true news on social media. Being aware of this helps you pause before sharing."), /*#__PURE__*/React.createElement(Callout, {
+  }, "False balance"), " in reporting creates the impression of scientific controversy where there is actually strong consensus."), /*#__PURE__*/React.createElement("p", null, "Social media algorithms reward engagement over accuracy: emotionally arousing misinformation spreads faster than accurate but less dramatic information. A 2018 MIT study of Twitter found that false news reached 1,500 people about six times faster than true news. Being aware of this helps you pause before sharing."), /*#__PURE__*/React.createElement(Callout, {
     kind: "tip",
     title: "Lateral reading"
   }, "Professional fact-checkers use lateral reading: opening new tabs to search for information about a source before reading its content. This is faster and more reliable than reading the source deeply first."), /*#__PURE__*/React.createElement(QGroup, {
@@ -964,7 +1114,7 @@ function Section2(_ref3) {
   }, "confirmation bias"), " and other cognitive shortcuts."), /*#__PURE__*/React.createElement("p", null, "A claim can be uncertain and still be scientific, as long as it makes specific, testable predictions. \"We do not yet understand this phenomenon\" is different from pseudoscience: ball lightning was reported for centuries before a physical model was developed, but it was consistently observable by independent witnesses and eventually documented experimentally."), /*#__PURE__*/React.createElement(Callout, {
     kind: "key",
     title: "Extraordinary claims require extraordinary evidence"
-  }, "The more a claim contradicts established scientific knowledge, the stronger and more rigorous the evidence required before it should be accepted. This is sometimes called Sagan's Razor."), /*#__PURE__*/React.createElement(QGroup, {
+  }, "The more a claim contradicts established scientific knowledge, the stronger and more rigorous the evidence required before it should be accepted. This is sometimes called the Sagan standard."), /*#__PURE__*/React.createElement(QGroup, {
     title: "Check yourself"
   }, /*#__PURE__*/React.createElement(MCQ, {
     num: 5,
@@ -1035,6 +1185,7 @@ function DescriptiveStatsCalc() {
       fontSize: 14,
       resize: "none",
       background: "var(--surface)",
+      color: "var(--ink)",
       fontFamily: "monospace"
     },
     placeholder: "Enter numbers separated by spaces..."
@@ -1085,7 +1236,7 @@ function DescriptiveStatsCalc() {
     y1: padT,
     x2: toX(mean),
     y2: svgH - 10,
-    stroke: "#f59e0b",
+    stroke: "#d97706",
     strokeWidth: "2",
     strokeDasharray: "4,3"
   }, /*#__PURE__*/React.createElement("title", null, "Mean")), median !== null && /*#__PURE__*/React.createElement("line", {
@@ -1093,7 +1244,7 @@ function DescriptiveStatsCalc() {
     y1: 10,
     x2: toX(median),
     y2: svgH - 10,
-    stroke: "#14b8a6",
+    stroke: "#0d9488",
     strokeWidth: "2",
     strokeDasharray: "4,3"
   }, /*#__PURE__*/React.createElement("title", null, "Median")), /*#__PURE__*/React.createElement("text", {
@@ -1113,13 +1264,13 @@ function DescriptiveStatsCalc() {
     y: 12,
     textAnchor: "middle",
     fontSize: "9",
-    fill: "#f59e0b"
+    fill: "#d97706"
   }, "Mean"), /*#__PURE__*/React.createElement("text", {
     x: toX(median),
     y: 22,
     textAnchor: "middle",
     fontSize: "9",
-    fill: "#14b8a6"
+    fill: "#0d9488"
   }, "Median"))));
 }
 
@@ -1147,7 +1298,7 @@ function ScatterPlotLab() {
   var datasets = {
     temp_elec: {
       label: "Temperature vs Electricity demand",
-      xLabel: "Avg daily temp (degrees C)",
+      xLabel: "Avg daily temp (°C)",
       yLabel: "Electricity demand (GWh)",
       points: [[12, 3.1], [15, 2.9], [18, 2.8], [22, 3.2], [26, 3.8], [30, 4.6], [33, 5.1], [35, 5.5], [28, 4.1], [20, 3.0], [24, 3.5], [16, 2.8], [38, 6.0], [14, 3.0], [31, 4.9]]
     },
@@ -1224,7 +1375,7 @@ function ScatterPlotLab() {
   var lineY2 = slope * lineX2 + intercept;
   var rStrength = Math.abs(r) > 0.7 ? "strong" : Math.abs(r) > 0.4 ? "moderate" : "weak";
   var rDirection = r > 0.05 ? "positive" : r < -0.05 ? "negative" : "no";
-  var rColour = Math.abs(r) > 0.7 ? "#14b8a6" : Math.abs(r) > 0.4 ? "#f59e0b" : "#94a3b8";
+  var rColour = Math.abs(r) > 0.7 ? "#0d9488" : Math.abs(r) > 0.4 ? "#d97706" : "#94a3b8";
   return /*#__PURE__*/React.createElement(Interactive, {
     title: "Scatter Plot Explorer",
     subtitle: "Switch between datasets to see how correlation strength and direction change. The line of best fit is calculated automatically.",
@@ -1236,10 +1387,10 @@ function ScatterPlotLab() {
       gap: 8,
       marginBottom: 12
     }
-  }, Object.entries(datasets).map(function (_ref4) {
-    var _ref5 = _slicedToArray(_ref4, 2),
-      k = _ref5[0],
-      d = _ref5[1];
+  }, Object.entries(datasets).map(function (_ref6) {
+    var _ref7 = _slicedToArray(_ref6, 2),
+      k = _ref7[0],
+      d = _ref7[1];
     return /*#__PURE__*/React.createElement("button", {
       key: k,
       className: "btn ".concat(dsKey === k ? "btn-accent" : "btn-ghost"),
@@ -1433,6 +1584,7 @@ function AustralianRainfallSVG() {
   var plotH = svgH - padT - padB;
   var barW = plotW / cities.length * 0.6;
   return /*#__PURE__*/React.createElement(Figure, {
+    num: "2",
     caption: "Mean annual rainfall for selected Australian cities. Darwin receives almost three times as much rain as Hobart. Data sourced from Bureau of Meteorology averages."
   }, /*#__PURE__*/React.createElement("svg", {
     viewBox: "0 0 ".concat(svgW, " ").concat(svgH),
@@ -1496,9 +1648,9 @@ function AustralianRainfallSVG() {
   }, "Rainfall (mm/yr)")));
 }
 var padT = 20;
-function Section3(_ref6) {
-  var progress = _ref6.progress,
-    setProgress = _ref6.setProgress;
+function Section3(_ref8) {
+  var progress = _ref8.progress,
+    setProgress = _ref8.setProgress;
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "topic-head"
   }, /*#__PURE__*/React.createElement("div", {
@@ -1615,7 +1767,7 @@ function Section3(_ref6) {
     def: "When changes in one variable directly and reliably produce changes in the other."
   }, "causal"), " relationship exists when one variable directly produces changes in the other. Correlation does not imply causation: three situations can produce correlation without it."), /*#__PURE__*/React.createElement("p", null, "First, a ", /*#__PURE__*/React.createElement(Term, {
     def: "A third variable that influences both measured variables, creating an apparent correlation between them (also called a lurking variable)."
-  }, "confounding variable"), " causes both to change together (hot weather causes both ice cream sales and drowning deaths). Second, the direction of causality may be reversed (poor health causes hospitalisation, not the reverse). Third, the correlation may be purely coincidental: Nicolas Cage film appearances per year correlated with swimming pool drowning deaths from 1999 to 2009 with no causal mechanism whatsoever."), /*#__PURE__*/React.createElement(CorrelationCausationSorter, null), /*#__PURE__*/React.createElement(QGroup, {
+  }, "confounding variable"), " causes both to change together (hot weather causes both ice cream sales and drowning deaths). Second, the direction of causality may be reversed (people in hospital are more often unwell, but the illness causes the hospital stay, not the other way round). Third, the correlation may be purely coincidental: Nicolas Cage film appearances per year correlated with swimming pool drowning deaths from 1999 to 2009 with no causal mechanism whatsoever."), /*#__PURE__*/React.createElement(CorrelationCausationSorter, null), /*#__PURE__*/React.createElement(QGroup, {
     title: "Check yourself"
   }, /*#__PURE__*/React.createElement(WrittenQ, {
     num: 6,
@@ -1783,7 +1935,7 @@ function PredictionTool() {
     y1: toY(lineYs[0]),
     x2: toX(lineXs[1]),
     y2: toY(lineYs[1]),
-    stroke: "#f59e0b",
+    stroke: "#d97706",
     strokeWidth: "2",
     strokeDasharray: "7,4"
   }), predictYear > 2023 && /*#__PURE__*/React.createElement("g", null, /*#__PURE__*/React.createElement("line", {
@@ -1791,7 +1943,7 @@ function PredictionTool() {
     y1: pT,
     x2: toX(predictYear),
     y2: toY(predicted),
-    stroke: "#14b8a6",
+    stroke: "#0d9488",
     strokeWidth: "1.5",
     strokeDasharray: "4,3"
   }), /*#__PURE__*/React.createElement("line", {
@@ -1799,22 +1951,22 @@ function PredictionTool() {
     y1: toY(predicted),
     x2: toX(predictYear),
     y2: toY(predicted),
-    stroke: "#14b8a6",
+    stroke: "#0d9488",
     strokeWidth: "1.5",
     strokeDasharray: "4,3"
   }), /*#__PURE__*/React.createElement("circle", {
     cx: toX(predictYear),
     cy: toY(predicted),
     r: "7",
-    fill: "#14b8a6",
+    fill: "#0d9488",
     opacity: "0.9"
   }), /*#__PURE__*/React.createElement("text", {
     x: toX(predictYear) + 10,
     y: toY(predicted) + 4,
     fontSize: "11",
     fontWeight: "700",
-    fill: "#14b8a6"
-  }, predicted.toFixed(2), " C")), baseData.map(function (d, i) {
+    fill: "#0d9488"
+  }, predicted.toFixed(2), " \xB0C")), baseData.map(function (d, i) {
     return /*#__PURE__*/React.createElement("circle", {
       key: i,
       cx: toX(d.year),
@@ -1845,7 +1997,7 @@ function PredictionTool() {
     fontSize: "9",
     fill: "var(--ink-muted)",
     transform: "rotate(-90, ".concat(pL - 40, ", ").concat(pT + plotH / 2, ")")
-  }, "Temp anomaly (deg C)"), /*#__PURE__*/React.createElement("text", {
+  }, "Temp anomaly (\xB0C)"), /*#__PURE__*/React.createElement("text", {
     x: pL + plotW / 2,
     y: svgH - 2,
     textAnchor: "middle",
@@ -1872,7 +2024,7 @@ function PredictionTool() {
     value: predictYear,
     label: "Prediction year"
   }), /*#__PURE__*/React.createElement(Stat, {
-    value: predicted.toFixed(2) + " C",
+    value: predicted.toFixed(2) + " °C",
     label: "Model prediction"
   }))), /*#__PURE__*/React.createElement(Callout, {
     kind: "warn",
@@ -1936,6 +2088,7 @@ function EvidenceDecisionSim() {
   })), /*#__PURE__*/React.createElement("div", {
     style: {
       background: "var(--accent-soft)",
+      color: "#1b1a17",
       borderRadius: 12,
       padding: "14px 16px",
       border: "1.5px solid var(--accent)"
@@ -1981,9 +2134,9 @@ function EvidenceDecisionSim() {
     disabled: step === steps.length - 1
   }, "Next step")));
 }
-function Section4(_ref7) {
-  var progress = _ref7.progress,
-    setProgress = _ref7.setProgress;
+function Section4(_ref9) {
+  var progress = _ref9.progress,
+    setProgress = _ref9.setProgress;
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "topic-head"
   }, /*#__PURE__*/React.createElement("div", {

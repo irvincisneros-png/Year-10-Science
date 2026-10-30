@@ -40,7 +40,7 @@ function PeerReviewCycleSVG() {
     return { x: cx + r * Math.cos(angle), y: cy + r * Math.sin(angle), label: s };
   });
   return (
-    <Figure caption="The scientific knowledge cycle: every finding must survive peer review and replication before it becomes accepted knowledge.">
+    <Figure num="1" caption="The scientific knowledge cycle: every finding must survive peer review and replication before it becomes accepted knowledge.">
       <svg viewBox="0 0 440 280" width="100%" style={{ maxWidth: 440 }}>
         {points.map((p, i) => {
           const next = points[(i + 1) % points.length];
@@ -65,7 +65,7 @@ function PeerReviewCycleSVG() {
         {points.map((p, i) => (
           <g key={i}>
             <circle cx={p.x} cy={p.y} r="26" fill="var(--accent-soft)" stroke="var(--accent)" strokeWidth="2" />
-            <text x={p.x} y={p.y + 5} textAnchor="middle" fontSize="10" fontWeight="700" fill="var(--ink)">{p.label}</text>
+            <text x={p.x} y={p.y + 5} textAnchor="middle" fontSize="10" fontWeight="700" fill="var(--accent-deep)">{p.label}</text>
           </g>
         ))}
         <text x={cx} y={cy + 5} textAnchor="middle" fontSize="11" fill="var(--ink-muted)">Science</text>
@@ -81,7 +81,7 @@ function CERBuilder() {
   const [reasoning, setReasoning] = useState("");
   const [shown, setShown] = useState(false);
   const score = [claim.trim().length > 10, evidence.trim().length > 10, reasoning.trim().length > 10].filter(Boolean).length;
-  const colours = ["var(--red, #e74c3c)", "var(--amber-500, #f59e0b)", "var(--teal-500, #14b8a6)", "var(--green-500, #22c55e)"];
+  const colours = ["#e74c3c", "#d97706", "#0d9488", "#16a34a"];
   const labels = ["Start writing", "Getting there", "Almost done", "Strong argument"];
   return (
     <Interactive title="CER Argument Builder" subtitle="Practice writing a scientific argument using the Claim, Evidence, Reasoning framework." takeaway="A strong scientific argument requires a clear claim, specific numerical evidence, and explicit reasoning that explains the scientific link between the data and the conclusion.">
@@ -99,7 +99,7 @@ function CERBuilder() {
               value={val}
               onChange={e => set(e.target.value)}
               rows={2}
-              style={{ width: "100%", padding: "8px 10px", borderRadius: 8, border: "1.5px solid var(--border)", fontSize: 14, resize: "vertical", background: "var(--surface)" }}
+              style={{ width: "100%", padding: "8px 10px", borderRadius: 8, border: "1.5px solid var(--border)", fontSize: 14, resize: "vertical", background: "var(--surface)", color: "var(--ink)" }}
               placeholder={`Write your ${label.toLowerCase()}...`}
             />
           </div>
@@ -119,7 +119,7 @@ function SourceEvalTool() {
   const sources = [
     {
       id: "a",
-      title: "CSIRO Climate Report 2023",
+      title: "CSIRO and Bureau of Meteorology: State of the Climate 2024",
       authority: "high",
       accuracy: "high",
       purpose: "scientific",
@@ -157,7 +157,7 @@ function SourceEvalTool() {
   const [selected, setSelected] = useState(null);
   const [revealed, setRevealed] = useState({});
   const criteria = ["authority", "accuracy", "purpose", "currency"];
-  const colourMap = { high: "#14b8a6", low: "#e74c3c", recent: "#14b8a6", old: "#e74c3c", scientific: "#14b8a6", commercial: "#f59e0b", mislead: "#e74c3c", conflict: "#f59e0b" };
+  const colourMap = { high: "#0d9488", low: "#e74c3c", recent: "#0d9488", old: "#e74c3c", scientific: "#0d9488", commercial: "#d97706", mislead: "#e74c3c", conflict: "#d97706" };
   const labelMap = { high: "High", low: "Low / Red flag", recent: "Current", old: "Outdated", scientific: "Scientific/public", commercial: "Commercial interest", mislead: "Mislead/agenda", conflict: "Conflict of interest" };
   const src = sources.find(s => s.id === selected);
   return (
@@ -181,7 +181,7 @@ function SourceEvalTool() {
             ))}
           </div>
           <p style={{ marginTop: 12, fontWeight: 700 }}>
-            Verdict: <span style={{ color: src.label === "Reliable" ? "#14b8a6" : "#e74c3c" }}>{src.label}</span>
+            Verdict: <span style={{ color: src.label === "Reliable" ? "#0d9488" : "#e74c3c" }}>{src.label}</span>
           </p>
         </div>
       )}
@@ -243,7 +243,7 @@ function Section1({ progress, setProgress }) {
         <p>A scientific conclusion links data to a claim through explicit reasoning. It has three components: an accurate description of the data pattern, a link between the data and the hypothesis, and reasoning that explains the scientific principle connecting the observation to the claim.</p>
         <p>Conclusions must also acknowledge <Term def="Constraints that reduce the confidence you can place in a conclusion, such as small sample size or uncontrolled variables.">limitations</Term>. Using qualifying language such as "the data suggest," "the results are consistent with," or "further investigation is needed" is not weakness but scientific honesty.</p>
         <Callout kind="key" title="Weak vs strong conclusion">
-          Weak: "My hypothesis was correct." Strong: "As temperature increased from 20 to 60 degrees C, mean enzyme activity increased by 42%, supporting the hypothesis that higher temperature increases reaction rate up to a threshold. However, with only 8 trials per condition, further testing with larger samples is needed."
+          Weak: "My hypothesis was correct." Strong: "As temperature increased from 20 to 60 °C, mean enzyme activity increased by 42%, supporting the hypothesis that higher temperature increases reaction rate up to a threshold. However, with only 8 trials per condition, further testing with larger samples is needed."
         </Callout>
       </DotPoint>
 
@@ -253,7 +253,7 @@ function Section1({ progress, setProgress }) {
         <CERBuilder />
         <QGroup title="Check yourself">
           <MCQ num={6} question="What does the 'R' in CER stand for?" options={["Result", "Replication", "Reasoning", "Reference"]} correct={2} explain="Reasoning is the scientific principle that explains why the evidence implies the claim. Without it, the reader cannot see how the data leads to the conclusion." />
-          <WrittenQ num={7} question="Use the CER framework to write a scientific argument for the claim: 'Increasing atmospheric CO2 is associated with rising global average temperature.' Use these data: CO2 has risen from 280 ppm in 1750 to 420 ppm in 2023; global mean temperature has risen by approximately 1.1 degrees C over the same period; CO2 absorbs and re-emits infrared radiation." model="Claim: increasing atmospheric CO2 is associated with rising global average temperature. Evidence: CO2 rose from 280 ppm in 1750 to 420 ppm in 2023 (a 50% increase); global mean temperature rose by approximately 1.1 degrees C over the same period. Reasoning: CO2 is a greenhouse gas that absorbs infrared radiation emitted by Earth's surface and re-emits it, reducing heat escaping to space. The correlation between rising CO2 and rising temperature is consistent with this physical mechanism, and the timescale matches increased fossil fuel combustion." />
+          <WrittenQ num={7} question="Use the CER framework to write a scientific argument for the claim: 'Increasing atmospheric CO2 is associated with rising global average temperature.' Use these data: CO2 has risen from 280 ppm in 1750 to 420 ppm in 2023; global mean temperature has risen by approximately 1.1 °C over the same period; CO2 absorbs and re-emits infrared radiation." model="Claim: increasing atmospheric CO2 is associated with rising global average temperature. Evidence: CO2 rose from 280 ppm in 1750 to 420 ppm in 2023 (a 50% increase); global mean temperature rose by approximately 1.1 °C over the same period. Reasoning: CO2 is a greenhouse gas that absorbs infrared radiation emitted by Earth's surface and re-emits it, reducing heat escaping to space. The correlation between rising CO2 and rising temperature is consistent with this physical mechanism, and the timescale matches increased fossil fuel combustion." />
         </QGroup>
       </DotPoint>
     </>
@@ -279,14 +279,14 @@ function PseudoscienceChecker() {
   ];
   const [checks, setChecks] = useState({});
   const score = criteria.filter(c => checks[c.id]).length;
-  const verdict = score >= 6 ? { label: "Likely scientific", color: "#14b8a6" } :
-    score >= 4 ? { label: "Uncertain / needs more investigation", color: "#f59e0b" } :
+  const verdict = score >= 6 ? { label: "Likely scientific", color: "#0d9488" } :
+    score >= 4 ? { label: "Uncertain / needs more investigation", color: "#d97706" } :
     { label: "Likely pseudoscientific", color: "#e74c3c" };
   return (
     <Interactive title="Pseudoscience Checker" subtitle="Apply the 7-criterion checklist to any claim. Tick each criterion that the claim satisfies." takeaway="Scientific claims meet most of the seven criteria including falsifiability, controlled testing, peer review, and replication; pseudoscientific claims typically fail on several of them, especially falsifiability.">
       <div style={{ display: "grid", gap: 8 }}>
         {criteria.map(c => (
-          <label key={c.id} style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer", padding: "8px 12px", borderRadius: 8, background: checks[c.id] ? "var(--accent-soft)" : "var(--surface)", border: "1.5px solid " + (checks[c.id] ? "var(--accent)" : "var(--border)"), transition: "all 0.2s" }}>
+          <label key={c.id} style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer", padding: "8px 12px", borderRadius: 8, background: checks[c.id] ? "var(--accent-soft)" : "var(--surface)", color: checks[c.id] ? "#1b1a17" : "var(--ink)", border: "1.5px solid " + (checks[c.id] ? "var(--accent)" : "var(--border)"), transition: "all 0.2s" }}>
             <input type="checkbox" checked={!!checks[c.id]} onChange={e => setChecks(prev => ({ ...prev, [c.id]: e.target.checked }))} style={{ width: 18, height: 18, accentColor: "var(--accent)" }} />
             <span style={{ fontSize: 14 }}>{c.label}</span>
           </label>
@@ -361,9 +361,50 @@ function DataDistortionSim() {
       <p className="muted" style={{ marginBottom: 0, textAlign: "center" }}>
         {truncate
           ? "Truncated axis (starts at 124): the 3 mmHg difference looks enormous."
-          : "Full scale (starts at 0): the same 3 mmHg difference is barely visible out of 140 mmHg total."}
+          : "Full scale (starts at 0): the same 3 mmHg difference is barely visible on a scale from 0 to 140 mmHg."}
       </p>
     </Interactive>
+  );
+}
+
+/* Header figure for 8.2: what cherry-picking looks like. Deterministic data: a rising trend
+   (0.1 per year) plus fixed noise; years 12-17 happen to dip, so choosing only them suggests a fall. */
+function CherryPickFigure() {
+  const NOISE = [0.2, -0.3, 0.1, 0.3, -0.2, 0, 0.4, -0.1, 0.2, -0.3, 0.1, 0.3, 0.8, 0.5, 0.3, 0, -0.2, -0.5, 0.1, -0.2, 0.3, 0, 0.2, -0.1, 0.4, 0.1, -0.2, 0.3, 0, 0.2];
+  const pts = NOISE.map((e, i) => [i, 0.1 * i + e]);
+  const W0 = 12, W1 = 17;                                  // cherry-picked window (inclusive)
+  const fit = (ps) => {
+    const n = ps.length, mx = ps.reduce((a, p) => a + p[0], 0) / n, my = ps.reduce((a, p) => a + p[1], 0) / n;
+    const m = ps.reduce((a, p) => a + (p[0] - mx) * (p[1] - my), 0) / ps.reduce((a, p) => a + (p[0] - mx) ** 2, 0);
+    return [m, my - m * mx];
+  };
+  const [mA, cA] = fit(pts);
+  const [mW, cW] = fit(pts.slice(W0, W1 + 1));
+  const X = (i) => 46 + i * 10, Y = (v) => 196 - (v + 0.6) * 44;
+  const TEAL = "#0d9488", CORAL = "#ef6b4b";
+  return (
+    <Figure caption="Cherry-picking. All 30 years of data (teal line) show a clear rise, but choosing only the six shaded years (coral line) makes it look as if the values are falling. Sound evidence uses all the relevant data.">
+      <svg viewBox="0 0 360 236" width="100%" style={{ maxWidth: 460, display: "block", margin: "0 auto" }} role="img"
+        aria-label="Scatter plot of 30 yearly measurements rising overall. A teal best-fit line through all points slopes upward. Six points in a shaded window are highlighted in coral, and a coral best-fit line through only those six slopes downward.">
+        <rect x={X(W0) - 5} y="40" width={X(W1) - X(W0) + 10} height="156" fill={CORAL} opacity="0.16"/>
+        <text x={(X(W0) + X(W1)) / 2} y="54" textAnchor="middle" fontSize="11" fontWeight="700" fill="var(--ink)">picked</text>
+        <line x1="40" y1="196" x2="340" y2="196" stroke="var(--ink)" strokeWidth="1.5"/>
+        <line x1="40" y1="36" x2="40" y2="196" stroke="var(--ink)" strokeWidth="1.5"/>
+        <text x="190" y="214" textAnchor="middle" fontSize="12" fill="var(--ink-muted)">Time (years)</text>
+        <text x="16" y="116" textAnchor="middle" fontSize="12" fill="var(--ink-muted)" transform="rotate(-90,16,116)">Measurement</text>
+        <line x1={X(0)} y1={Y(cA)} x2={X(29)} y2={Y(mA * 29 + cA)} stroke={TEAL} strokeWidth="3" strokeLinecap="round"/>
+        <line x1={X(W0) - 4} y1={Y(mW * (W0 - 0.4) + cW)} x2={X(W1) + 4} y2={Y(mW * (W1 + 0.4) + cW)} stroke={CORAL} strokeWidth="3.5" strokeLinecap="round"/>
+        {pts.map(([i, v]) => {
+          const inW = i >= W0 && i <= W1;
+          return <circle key={i} cx={X(i)} cy={Y(v)} r={inW ? 4.5 : 3.5} fill={inW ? CORAL : "var(--ink-muted)"} stroke={inW ? "#1b1a17" : "none"} strokeWidth="1"/>;
+        })}
+        {/* legend */}
+        <line x1="46" y1="16" x2="66" y2="16" stroke={TEAL} strokeWidth="3"/>
+        <text x="72" y="20" fontSize="12" fill="var(--ink)">All 30 years: rising</text>
+        <line x1="200" y1="16" x2="220" y2="16" stroke={CORAL} strokeWidth="3.5"/>
+        <text x="226" y="20" fontSize="12" fill="var(--ink)">6 picked: falling</text>
+      </svg>
+    </Figure>
   );
 }
 
@@ -376,7 +417,7 @@ function Section2({ progress, setProgress }) {
         <p className="lead">Pseudoscience wears the costume of science but dodges the one thing that makes science reliable: the willingness to be proved wrong.</p>
       </div>
 
-      <Figure src="img/pseudoscience.png" caption="Sound evidence versus cherry-picked, misleading data." />
+      <CherryPickFigure/>
       <DotPoint id="8.2.1" title="Distinguishing science from pseudoscience" progress={progress} setProgress={setProgress}>
         <p>Science is a method for generating reliable knowledge through observation, hypothesis testing, peer review, and replication. <Term def="Claims, practices, or systems that appear scientific but lack the key features of reliable science, especially falsifiability.">Pseudoscience</Term> presents the surface features of science without following scientific methods.</p>
         <p>The philosopher Karl Popper identified <Term def="The property of a claim that means it can, in principle, be shown to be false by a specific experiment or observation.">falsifiability</Term> as the central criterion: a scientific claim makes predictions that could be shown to be false. Pseudoscientific claims are typically structured so that no possible evidence could ever refute them. Negative results are explained away by inventing special exceptions.</p>
@@ -410,7 +451,7 @@ function Section2({ progress, setProgress }) {
 
       <DotPoint id="8.2.3" title="Pseudoscience in popular media" progress={progress} setProgress={setProgress}>
         <p>Pseudoscience appears in television advertising, social media wellness influencers, and news articles that misrepresent preliminary research as definitive findings. <Term def="When news articles give equal weight to two 'sides' of an issue even when the vast majority of evidence supports one side.">False balance</Term> in reporting creates the impression of scientific controversy where there is actually strong consensus.</p>
-        <p>Social media algorithms reward engagement over accuracy: emotionally arousing misinformation spreads faster than accurate but less dramatic information. A 2018 MIT study found false news spreads six times faster than true news on social media. Being aware of this helps you pause before sharing.</p>
+        <p>Social media algorithms reward engagement over accuracy: emotionally arousing misinformation spreads faster than accurate but less dramatic information. A 2018 MIT study of Twitter found that false news reached 1,500 people about six times faster than true news. Being aware of this helps you pause before sharing.</p>
         <Callout kind="tip" title="Lateral reading">Professional fact-checkers use lateral reading: opening new tabs to search for information about a source before reading its content. This is faster and more reliable than reading the source deeply first.</Callout>
         <QGroup title="Check yourself">
           <MCQ num={3} question="A news headline says: 'New study suggests coffee prevents Alzheimer's.' The study had 120 participants over three months and was funded by a coffee industry group. What is the strongest reason to treat this claim with caution?" options={["Coffee is a well-studied substance so the finding is likely wrong", "Industry funding creates a conflict of interest and the sample is too small for this type of research", "The headline uses the word 'suggests' rather than 'proves'", "Three months is an adequate time period for Alzheimer's research"]} correct={1} explain="Industry funding creates financial incentive to produce positive results, and 120 participants over three months is far too small and short to study a disease that develops over decades." />
@@ -429,7 +470,7 @@ function Section2({ progress, setProgress }) {
       <DotPoint id="8.2.5" title="Determining if a claim is pseudoscientific" progress={progress} setProgress={setProgress}>
         <p>Applying the seven-criterion checklist (falsifiability, controlled testing, peer review, replication, consistent mechanism, honest evidence handling, expert consensus) systematically is more reliable than gut feeling. Gut feeling is susceptible to <Term def="The tendency to accept information that confirms existing beliefs.">confirmation bias</Term> and other cognitive shortcuts.</p>
         <p>A claim can be uncertain and still be scientific, as long as it makes specific, testable predictions. "We do not yet understand this phenomenon" is different from pseudoscience: ball lightning was reported for centuries before a physical model was developed, but it was consistently observable by independent witnesses and eventually documented experimentally.</p>
-        <Callout kind="key" title="Extraordinary claims require extraordinary evidence">The more a claim contradicts established scientific knowledge, the stronger and more rigorous the evidence required before it should be accepted. This is sometimes called Sagan's Razor.</Callout>
+        <Callout kind="key" title="Extraordinary claims require extraordinary evidence">The more a claim contradicts established scientific knowledge, the stronger and more rigorous the evidence required before it should be accepted. This is sometimes called the Sagan standard.</Callout>
         <QGroup title="Check yourself">
           <MCQ num={5} question="A student argues: 'Mainstream science dismissed continental drift in 1912, so dismissing homeopathy today proves nothing.' What is the key flaw in this analogy?" options={["Continental drift was never dismissed by scientists", "Wegener's hypothesis made specific testable predictions that were later confirmed; homeopathy has been tested in thousands of controlled trials and consistently shows no effect beyond placebo", "Homeopathy is more ancient than continental drift theory", "Scientists always dismiss new ideas initially"]} correct={1} explain="Wegener made specific, testable predictions (matching geological features, fossils) that were confirmed by later evidence. Homeopathy has been tested extensively under controlled conditions and consistently fails. The situations are not comparable." />
         </QGroup>
@@ -471,7 +512,7 @@ function DescriptiveStatsCalc() {
         value={raw}
         onChange={e => setRaw(e.target.value)}
         rows={2}
-        style={{ width: "100%", padding: "8px 10px", borderRadius: 8, border: "1.5px solid var(--border)", fontSize: 14, resize: "none", background: "var(--surface)", fontFamily: "monospace" }}
+        style={{ width: "100%", padding: "8px 10px", borderRadius: 8, border: "1.5px solid var(--border)", fontSize: 14, resize: "none", background: "var(--surface)", color: "var(--ink)", fontFamily: "monospace" }}
         placeholder="Enter numbers separated by spaces..."
       />
       <p className="muted" style={{ fontSize: 12, margin: "4px 0 12px" }}>n = {nums.length} values loaded</p>
@@ -489,19 +530,19 @@ function DescriptiveStatsCalc() {
               <circle key={i} cx={toX(v)} cy={svgH / 2} r="5" fill="var(--accent)" opacity="0.7" />
             ))}
             {mean !== null && (
-              <line x1={toX(mean)} y1={padT} x2={toX(mean)} y2={svgH - 10} stroke="#f59e0b" strokeWidth="2" strokeDasharray="4,3">
+              <line x1={toX(mean)} y1={padT} x2={toX(mean)} y2={svgH - 10} stroke="#d97706" strokeWidth="2" strokeDasharray="4,3">
                 <title>Mean</title>
               </line>
             )}
             {median !== null && (
-              <line x1={toX(median)} y1={10} x2={toX(median)} y2={svgH - 10} stroke="#14b8a6" strokeWidth="2" strokeDasharray="4,3">
+              <line x1={toX(median)} y1={10} x2={toX(median)} y2={svgH - 10} stroke="#0d9488" strokeWidth="2" strokeDasharray="4,3">
                 <title>Median</title>
               </line>
             )}
             <text x={toX(min)} y={svgH - 2} textAnchor="middle" fontSize="10" fill="var(--ink-muted)">{min}</text>
             <text x={toX(max)} y={svgH - 2} textAnchor="middle" fontSize="10" fill="var(--ink-muted)">{max}</text>
-            <text x={toX(mean)} y={12} textAnchor="middle" fontSize="9" fill="#f59e0b">Mean</text>
-            <text x={toX(median)} y={22} textAnchor="middle" fontSize="9" fill="#14b8a6">Median</text>
+            <text x={toX(mean)} y={12} textAnchor="middle" fontSize="9" fill="#d97706">Mean</text>
+            <text x={toX(median)} y={22} textAnchor="middle" fontSize="9" fill="#0d9488">Median</text>
           </svg>
         </>
       )}
@@ -524,7 +565,7 @@ function ScatterPlotLab() {
   const datasets = {
     temp_elec: {
       label: "Temperature vs Electricity demand",
-      xLabel: "Avg daily temp (degrees C)",
+      xLabel: "Avg daily temp (°C)",
       yLabel: "Electricity demand (GWh)",
       points: [
         [12, 3.1], [15, 2.9], [18, 2.8], [22, 3.2], [26, 3.8], [30, 4.6],
@@ -592,7 +633,7 @@ function ScatterPlotLab() {
 
   const rStrength = Math.abs(r) > 0.7 ? "strong" : Math.abs(r) > 0.4 ? "moderate" : "weak";
   const rDirection = r > 0.05 ? "positive" : r < -0.05 ? "negative" : "no";
-  const rColour = Math.abs(r) > 0.7 ? "#14b8a6" : Math.abs(r) > 0.4 ? "#f59e0b" : "#94a3b8";
+  const rColour = Math.abs(r) > 0.7 ? "#0d9488" : Math.abs(r) > 0.4 ? "#d97706" : "#94a3b8";
 
   return (
     <Interactive title="Scatter Plot Explorer" subtitle="Switch between datasets to see how correlation strength and direction change. The line of best fit is calculated automatically." takeaway="The correlation coefficient r measures both the direction and strength of a linear relationship; values near +1 or -1 indicate a strong relationship while a value near 0 indicates no linear relationship.">
@@ -679,7 +720,7 @@ function AustralianRainfallSVG() {
   const plotH = svgH - padT - padB;
   const barW = (plotW / cities.length) * 0.6;
   return (
-    <Figure caption="Mean annual rainfall for selected Australian cities. Darwin receives almost three times as much rain as Hobart. Data sourced from Bureau of Meteorology averages.">
+    <Figure num="2" caption="Mean annual rainfall for selected Australian cities. Darwin receives almost three times as much rain as Hobart. Data sourced from Bureau of Meteorology averages.">
       <svg viewBox={`0 0 ${svgW} ${svgH}`} width="100%" style={{ maxWidth: svgW }}>
         {[0, 500, 1000, 1500].map(v => {
           const y = padT + plotH - (v / maxMm) * plotH;
@@ -768,7 +809,7 @@ function Section3({ progress, setProgress }) {
 
       <DotPoint id="8.3.6" title="Correlation versus causation" progress={progress} setProgress={setProgress}>
         <p>Two variables are <Term def="When changes in one variable are statistically associated with changes in another, but one does not necessarily cause the other.">correlated</Term> when changes in one are associated with changes in the other. A <Term def="When changes in one variable directly and reliably produce changes in the other.">causal</Term> relationship exists when one variable directly produces changes in the other. Correlation does not imply causation: three situations can produce correlation without it.</p>
-        <p>First, a <Term def="A third variable that influences both measured variables, creating an apparent correlation between them (also called a lurking variable).">confounding variable</Term> causes both to change together (hot weather causes both ice cream sales and drowning deaths). Second, the direction of causality may be reversed (poor health causes hospitalisation, not the reverse). Third, the correlation may be purely coincidental: Nicolas Cage film appearances per year correlated with swimming pool drowning deaths from 1999 to 2009 with no causal mechanism whatsoever.</p>
+        <p>First, a <Term def="A third variable that influences both measured variables, creating an apparent correlation between them (also called a lurking variable).">confounding variable</Term> causes both to change together (hot weather causes both ice cream sales and drowning deaths). Second, the direction of causality may be reversed (people in hospital are more often unwell, but the illness causes the hospital stay, not the other way round). Third, the correlation may be purely coincidental: Nicolas Cage film appearances per year correlated with swimming pool drowning deaths from 1999 to 2009 with no causal mechanism whatsoever.</p>
         <CorrelationCausationSorter />
         <QGroup title="Check yourself">
           <WrittenQ num={6} question="A study finds that people who drink more coffee have lower rates of depression. Explain why the conclusion 'drinking coffee prevents depression' is flawed. Give two alternative explanations." model="The conclusion is flawed because the study is observational and cannot establish causation. Two alternatives: (1) Reverse causation: depressed people may drink less coffee due to reduced motivation. (2) Confounding: coffee drinkers may have more social interactions in cafes, or higher employment rates, which reduce depression independently of coffee itself." />
@@ -843,13 +884,13 @@ function PredictionTool() {
               <text x={pL - 4} y={toY(v) + 4} textAnchor="end" fontSize="9" fill="var(--ink-muted)">{v.toFixed(1)}</text>
             </g>
           ))}
-          <line x1={toX(lineXs[0])} y1={toY(lineYs[0])} x2={toX(lineXs[1])} y2={toY(lineYs[1])} stroke="#f59e0b" strokeWidth="2" strokeDasharray="7,4" />
+          <line x1={toX(lineXs[0])} y1={toY(lineYs[0])} x2={toX(lineXs[1])} y2={toY(lineYs[1])} stroke="#d97706" strokeWidth="2" strokeDasharray="7,4" />
           {predictYear > 2023 && (
             <g>
-              <line x1={toX(predictYear)} y1={pT} x2={toX(predictYear)} y2={toY(predicted)} stroke="#14b8a6" strokeWidth="1.5" strokeDasharray="4,3" />
-              <line x1={pL} y1={toY(predicted)} x2={toX(predictYear)} y2={toY(predicted)} stroke="#14b8a6" strokeWidth="1.5" strokeDasharray="4,3" />
-              <circle cx={toX(predictYear)} cy={toY(predicted)} r="7" fill="#14b8a6" opacity="0.9" />
-              <text x={toX(predictYear) + 10} y={toY(predicted) + 4} fontSize="11" fontWeight="700" fill="#14b8a6">{predicted.toFixed(2)} C</text>
+              <line x1={toX(predictYear)} y1={pT} x2={toX(predictYear)} y2={toY(predicted)} stroke="#0d9488" strokeWidth="1.5" strokeDasharray="4,3" />
+              <line x1={pL} y1={toY(predicted)} x2={toX(predictYear)} y2={toY(predicted)} stroke="#0d9488" strokeWidth="1.5" strokeDasharray="4,3" />
+              <circle cx={toX(predictYear)} cy={toY(predicted)} r="7" fill="#0d9488" opacity="0.9" />
+              <text x={toX(predictYear) + 10} y={toY(predicted) + 4} fontSize="11" fontWeight="700" fill="#0d9488">{predicted.toFixed(2)} °C</text>
             </g>
           )}
           {baseData.map((d, i) => (
@@ -857,7 +898,7 @@ function PredictionTool() {
           ))}
           <line x1={toX(2023)} y1={pT + 2} x2={toX(2023)} y2={pT + plotH} stroke="#e74c3c" strokeWidth="1" strokeDasharray="3,3" />
           <text x={toX(2023) + 4} y={pT + 14} fontSize="9" fill="#e74c3c">2023</text>
-          <text x={pL - 40} y={pT + plotH / 2} textAnchor="middle" fontSize="9" fill="var(--ink-muted)" transform={`rotate(-90, ${pL - 40}, ${pT + plotH / 2})`}>Temp anomaly (deg C)</text>
+          <text x={pL - 40} y={pT + plotH / 2} textAnchor="middle" fontSize="9" fill="var(--ink-muted)" transform={`rotate(-90, ${pL - 40}, ${pT + plotH / 2})`}>Temp anomaly (°C)</text>
           <text x={pL + plotW / 2} y={svgH - 2} textAnchor="middle" fontSize="9" fill="var(--ink-muted)">Year</text>
         </svg>
       </div>
@@ -865,7 +906,7 @@ function PredictionTool() {
         <Slider label="Predict year" min={2024} max={2080} step={1} value={predictYear} onChange={setPredictYear} unit="" />
         <div className="stat-readout" style={{ marginTop: 8 }}>
           <Stat value={predictYear} label="Prediction year" />
-          <Stat value={predicted.toFixed(2) + " C"} label="Model prediction" />
+          <Stat value={predicted.toFixed(2) + " °C"} label="Model prediction" />
         </div>
       </div>
       <Callout kind="warn" title="Extrapolation has real limits">This is a simple linear model. Real climate modelling uses far more complex physics-based simulations, not just trend lines. A straight-line extrapolation works reasonably over short ranges, but becomes less reliable further from the data. Always state the assumptions and limitations of your model.</Callout>
@@ -917,7 +958,7 @@ function EvidenceDecisionSim() {
           </button>
         ))}
       </div>
-      <div style={{ background: "var(--accent-soft)", borderRadius: 12, padding: "14px 16px", border: "1.5px solid var(--accent)" }}>
+      <div style={{ background: "var(--accent-soft)", color: "#1b1a17", borderRadius: 12, padding: "14px 16px", border: "1.5px solid var(--accent)" }}>
         <p style={{ fontWeight: 700, marginBottom: 6 }}>Step {s.num}: {s.label}</p>
         <p style={{ marginBottom: 10 }}>{s.content}</p>
         <div style={{ background: "var(--surface)", borderRadius: 8, padding: "8px 12px" }}>

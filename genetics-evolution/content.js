@@ -125,7 +125,7 @@ function DNABaseBuilder() {
       textAnchor: "middle",
       fontSize: "14",
       fontWeight: "800",
-      fill: "#fff"
+      fill: "#1b1a17"
     }, base), /*#__PURE__*/React.createElement("line", {
       x1: x,
       y1: "42",
@@ -147,14 +147,14 @@ function DNABaseBuilder() {
       y: "102",
       textAnchor: "middle",
       fontSize: "9",
-      fill: "var(--muted)",
+      fill: "var(--ink-muted)",
       fontWeight: "600"
     }, base === "A" || base === "T" ? "A-T" : "C-G"), /*#__PURE__*/React.createElement("text", {
       x: x,
       y: "114",
       textAnchor: "middle",
       fontSize: "8",
-      fill: "var(--muted)"
+      fill: "var(--ink-muted)"
     }, base === "A" || base === "T" ? "2 bonds" : "3 bonds"), /*#__PURE__*/React.createElement("rect", {
       x: x - 16,
       y: "158",
@@ -170,20 +170,20 @@ function DNABaseBuilder() {
       textAnchor: "middle",
       fontSize: "14",
       fontWeight: "800",
-      fill: "#fff"
+      fill: "#1b1a17"
     }, comp));
   }), /*#__PURE__*/React.createElement("text", {
     x: "8",
     y: "56",
     fontSize: "10",
-    fill: "var(--muted)",
+    fill: "var(--ink-muted)",
     fontWeight: "700",
     writingMode: "tb"
   }, "5'"), /*#__PURE__*/React.createElement("text", {
     x: "8",
     y: "148",
     fontSize: "10",
-    fill: "var(--muted)",
+    fill: "var(--ink-muted)",
     fontWeight: "700",
     writingMode: "tb"
   }, "3'"))), /*#__PURE__*/React.createElement("div", {
@@ -201,7 +201,7 @@ function DNABaseBuilder() {
     }, /*#__PURE__*/React.createElement("div", {
       style: {
         fontSize: 11,
-        color: "var(--muted)",
+        color: "var(--ink-muted)",
         marginBottom: 2
       }
     }, "Pos ", i + 1), /*#__PURE__*/React.createElement(SegToggle, {
@@ -275,7 +275,7 @@ function GeneticOrganisationSVG() {
       y: "42",
       textAnchor: "middle",
       fontSize: "9",
-      fill: "var(--muted)"
+      fill: "var(--ink-muted)"
     }, lv.desc), i < levels.length - 1 && /*#__PURE__*/React.createElement("text", {
       x: "116",
       y: "36",
@@ -397,6 +397,7 @@ function DNADiscoverySorter() {
         style: {
           textAlign: "center",
           background: bg,
+          color: checked && bg !== "transparent" ? "#1b1a17" : undefined,
           cursor: "pointer",
           borderRadius: 4
         },
@@ -553,7 +554,7 @@ function PunnettSquareTool() {
       fontSize: 12,
       fontWeight: 700,
       marginBottom: 4,
-      color: "var(--muted)"
+      color: "var(--ink-muted)"
     }
   }, "Trait"), /*#__PURE__*/React.createElement(SegToggle, {
     options: TRAITS.map(function (t, i) {
@@ -580,7 +581,7 @@ function PunnettSquareTool() {
       fontSize: 12,
       fontWeight: 700,
       marginBottom: 4,
-      color: "var(--muted)"
+      color: "var(--ink-muted)"
     }
   }, "Parent 1 genotype"), /*#__PURE__*/React.createElement(SegToggle, {
     options: GENO_VALS.map(function (v, i) {
@@ -596,7 +597,7 @@ function PunnettSquareTool() {
       fontSize: 12,
       fontWeight: 700,
       marginBottom: 4,
-      color: "var(--muted)"
+      color: "var(--ink-muted)"
     }
   }, "Parent 2 genotype"), /*#__PURE__*/React.createElement(SegToggle, {
     options: GENO_VALS.map(function (v, i) {
@@ -659,6 +660,7 @@ function PunnettSquareTool() {
           height: 64,
           border: "2px solid var(--border)",
           background: cellColor(cell),
+          color: "#1b1a17",
           textAlign: "center",
           fontSize: 20,
           fontWeight: 700
@@ -702,6 +704,137 @@ function PunnettSquareTool() {
     kind: "key",
     title: "Reading the grid"
   }, "Green = homozygous dominant (", dom + dom, "). Light green = heterozygous (", dom + rec, ", shows dominant trait). Red = homozygous recessive (", rec + rec, ", shows recessive trait)."));
+}
+
+/* Static worked example for the top of 5.2: a monohybrid Bb x Bb cross,
+   using the same guinea pig coat trait and cell colours as PunnettSquareTool.
+   Cell fills are fixed light colours, so text inside them is fixed dark ink
+   (legible in both themes); everything outside the cells uses theme vars. */
+function PunnettFigure() {
+  var CELL = {
+    BB: "#bbf7d0",
+    Bb: "#d1fae5",
+    bb: "#fecaca"
+  };
+  var gx = 104,
+    gy = 82,
+    cw = 112,
+    ch = 86; // grid origin + cell size
+  var top = ["B", "b"],
+    side = ["B", "b"];
+  var gamete = function gamete(x, y, a) {
+    return /*#__PURE__*/React.createElement("g", {
+      key: "".concat(x, "-").concat(y)
+    }, /*#__PURE__*/React.createElement("circle", {
+      cx: x,
+      cy: y,
+      r: "17",
+      fill: "var(--accent-soft)",
+      stroke: "var(--accent-deep)",
+      strokeWidth: "2"
+    }), /*#__PURE__*/React.createElement("text", {
+      x: x,
+      y: y + 7,
+      textAnchor: "middle",
+      fontSize: "20",
+      fontWeight: "800",
+      fill: "var(--accent-deep)"
+    }, a));
+  };
+  return /*#__PURE__*/React.createElement(Figure, {
+    caption: "A Punnett square for a cross between two heterozygous black guinea pigs (Bb \xD7 Bb). Each parent's gametes go along the edges; the four cells show the equally likely offspring: 1 BB : 2 Bb : 1 bb, so 3 black : 1 white."
+  }, /*#__PURE__*/React.createElement("svg", {
+    viewBox: "0 0 348 356",
+    width: "100%",
+    style: {
+      maxWidth: 420,
+      display: "block",
+      margin: "0 auto"
+    },
+    role: "img",
+    "aria-label": "Punnett square for Bb crossed with Bb. Parent 2 gametes B and b across the top, Parent 1 gametes B and b down the side. Offspring cells: BB black, Bb black, Bb black, bb white. Genotype ratio 1 BB to 2 Bb to 1 bb; phenotype ratio 3 black to 1 white."
+  }, /*#__PURE__*/React.createElement("text", {
+    x: gx + cw,
+    y: "18",
+    textAnchor: "middle",
+    fontSize: "13",
+    fontWeight: "700",
+    fill: "var(--ink)"
+  }, "Parent 2: Bb (black)"), /*#__PURE__*/React.createElement("text", {
+    x: "16",
+    y: gy + ch,
+    textAnchor: "middle",
+    fontSize: "13",
+    fontWeight: "700",
+    fill: "var(--ink)",
+    transform: "rotate(-90, 16, ".concat(gy + ch, ")")
+  }, "Parent 1: Bb (black)"), top.map(function (a, i) {
+    return gamete(gx + cw * i + cw / 2, 50, a);
+  }), side.map(function (a, i) {
+    return gamete(64, gy + ch * i + ch / 2, a);
+  }), side.map(function (s, r) {
+    return top.map(function (t, c) {
+      var g = [s, t].sort(function (p, q) {
+        return p === q ? 0 : p === "B" ? -1 : 1;
+      }).join("");
+      var black = g.includes("B");
+      var x = gx + cw * c,
+        y = gy + ch * r;
+      return /*#__PURE__*/React.createElement("g", {
+        key: "".concat(r).concat(c)
+      }, /*#__PURE__*/React.createElement("rect", {
+        x: x,
+        y: y,
+        width: cw,
+        height: ch,
+        fill: CELL[g],
+        stroke: "var(--border-strong)",
+        strokeWidth: "2"
+      }), /*#__PURE__*/React.createElement("text", {
+        x: x + cw / 2,
+        y: y + 40,
+        textAnchor: "middle",
+        fontSize: "28",
+        fontWeight: "800",
+        fill: "#1b1a17"
+      }, g), /*#__PURE__*/React.createElement("circle", {
+        cx: x + cw / 2 - 26,
+        cy: y + 62,
+        r: "7",
+        fill: black ? "#1b1a17" : "#ffffff",
+        stroke: "#1b1a17",
+        strokeWidth: "1.5"
+      }), /*#__PURE__*/React.createElement("text", {
+        x: x + cw / 2 - 14,
+        y: y + 67,
+        fontSize: "13",
+        fontWeight: "600",
+        fill: "#1b1a17"
+      }, black ? "black" : "white"));
+    });
+  }), /*#__PURE__*/React.createElement("text", {
+    x: "174",
+    y: gy + ch * 2 + 30,
+    textAnchor: "middle",
+    fontSize: "14",
+    fill: "var(--ink)"
+  }, /*#__PURE__*/React.createElement("tspan", {
+    fontWeight: "700"
+  }, "Genotypes "), "1 BB : 2 Bb : 1 bb"), /*#__PURE__*/React.createElement("text", {
+    x: "174",
+    y: gy + ch * 2 + 52,
+    textAnchor: "middle",
+    fontSize: "14",
+    fill: "var(--ink)"
+  }, /*#__PURE__*/React.createElement("tspan", {
+    fontWeight: "700"
+  }, "Phenotypes "), "3 black : 1 white"), /*#__PURE__*/React.createElement("text", {
+    x: "174",
+    y: gy + ch * 2 + 72,
+    textAnchor: "middle",
+    fontSize: "12",
+    fill: "var(--ink-muted)"
+  }, "B = black (dominant), b = white (recessive)")));
 }
 function MutationSimulator() {
   var ORIGINAL = "ATG GCA TTC GAA TAG";
@@ -834,7 +967,7 @@ function MutationSimulator() {
       fontSize: 12,
       fontWeight: 700,
       marginBottom: 4,
-      color: "var(--muted)"
+      color: "var(--ink-muted)"
     }
   }, "Mutation type"), /*#__PURE__*/React.createElement(SegToggle, {
     options: [{
@@ -857,7 +990,7 @@ function MutationSimulator() {
       fontSize: 12,
       fontWeight: 700,
       marginBottom: 4,
-      color: "var(--muted)"
+      color: "var(--ink-muted)"
     }
   }, "Position (1-", original.length, ")"), /*#__PURE__*/React.createElement(Slider, {
     min: 1,
@@ -870,7 +1003,7 @@ function MutationSimulator() {
       fontSize: 12,
       fontWeight: 700,
       marginBottom: 4,
-      color: "var(--muted)"
+      color: "var(--ink-muted)"
     }
   }, "New base"), /*#__PURE__*/React.createElement(SegToggle, {
     options: ["A", "T", "C", "G"],
@@ -915,6 +1048,7 @@ function MutationSimulator() {
       style: {
         marginRight: 4,
         background: changed ? "#fef08a" : "transparent",
+        color: changed ? "#1b1a17" : undefined,
         borderRadius: 3,
         padding: "0 2px"
       }
@@ -932,6 +1066,7 @@ function MutationSimulator() {
       style: {
         marginRight: 4,
         background: changed ? "#fecaca" : "transparent",
+        color: changed ? "#1b1a17" : undefined,
         borderRadius: 3,
         padding: "0 2px"
       }
@@ -939,7 +1074,10 @@ function MutationSimulator() {
   })))))), mutType === "del" && /*#__PURE__*/React.createElement(Callout, {
     kind: "warn",
     title: "Frameshift detected"
-  }, "A single base deletion shifts every codon after position ", pos, ", changing all downstream amino acids. This is usually much more damaging than a substitution."), mutType === "sub" && /*#__PURE__*/React.createElement(Callout, {
+  }, "A single base deletion shifts every codon after position ", pos, ", changing all downstream amino acids. This is usually much more damaging than a substitution."), mutType === "ins" && /*#__PURE__*/React.createElement(Callout, {
+    kind: "warn",
+    title: "Frameshift detected"
+  }, "A single base insertion shifts every codon after position ", pos, ", changing all downstream amino acids. Like a deletion, this is usually much more damaging than a substitution."), mutType === "sub" && /*#__PURE__*/React.createElement(Callout, {
     kind: "tip",
     title: "Point substitution"
   }, "Only one codon changes. If the new codon encodes the same amino acid, this is a silent (synonymous) mutation with no effect on the protein."));
@@ -1017,7 +1155,7 @@ function EthicsDebateTool() {
   var scenarios = [{
     title: "HeLa cells in medical research",
     benefit: "HeLa cells have enabled thousands of advances including the polio vaccine, cancer research, and IVF development.",
-    concern: "Cells were taken from Henrietta Lacks without her consent. Her family received no compensation while corporations profited.",
+    concern: "Cells were taken from Henrietta Lacks without her consent. For decades her family received no compensation while companies profited.",
     utilitarian: "The vast benefit to millions may outweigh harm to one person, but the precedent of non-consent harms trust in research.",
     rights: "Henrietta's right to autonomy and informed consent was violated. The ends do not justify the means.",
     justice: "An African American woman in a segregated hospital bore the cost; mainly wealthy institutions gained the benefit. This is unjust."
@@ -1070,7 +1208,7 @@ function EthicsDebateTool() {
       fontSize: 12,
       fontWeight: 700,
       marginBottom: 4,
-      color: "var(--muted)"
+      color: "var(--ink-muted)"
     }
   }, "Scenario"), /*#__PURE__*/React.createElement(SegToggle, {
     options: scenarios.map(function (s, i) {
@@ -1088,7 +1226,7 @@ function EthicsDebateTool() {
       fontSize: 12,
       fontWeight: 700,
       marginBottom: 4,
-      color: "var(--muted)"
+      color: "var(--ink-muted)"
     }
   }, "Ethical framework"), /*#__PURE__*/React.createElement(SegToggle, {
     options: [{
@@ -1120,7 +1258,8 @@ function EthicsDebateTool() {
   }, /*#__PURE__*/React.createElement("div", {
     className: "card",
     style: {
-      background: "#d1fae5"
+      background: "#d1fae5",
+      color: "#1b1a17"
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
@@ -1135,7 +1274,8 @@ function EthicsDebateTool() {
   }, s.benefit)), /*#__PURE__*/React.createElement("div", {
     className: "card",
     style: {
-      background: "#fecaca"
+      background: "#fecaca",
+      color: "#1b1a17"
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
@@ -1216,7 +1356,7 @@ function NaturalSelectionSim() {
     if (running) {
       intervalRef.current = setInterval(function () {
         setGen(function (g) {
-          if (g >= GENS - 1) {
+          if (g >= GENS) {
             setRunning(false);
             return g;
           }
@@ -1309,7 +1449,7 @@ function NaturalSelectionSim() {
       y: chartH - y * chartH / 100 + 14,
       textAnchor: "end",
       fontSize: "9",
-      fill: "var(--muted)"
+      fill: "var(--ink-muted)"
     }, y, "%"));
   }), history.map(function (h, i) {
     return /*#__PURE__*/React.createElement("g", {
@@ -1334,20 +1474,20 @@ function NaturalSelectionSim() {
       y: chartH + 28,
       textAnchor: "middle",
       fontSize: "9",
-      fill: "var(--muted)"
+      fill: "var(--ink-muted)"
     }, i));
   }), /*#__PURE__*/React.createElement("text", {
     x: chartW / 2 + 52,
     y: chartH + 42,
     textAnchor: "middle",
     fontSize: "10",
-    fill: "var(--muted)"
+    fill: "var(--ink-muted)"
   }, "Generation"), /*#__PURE__*/React.createElement("text", {
     x: "8",
     y: chartH / 2 + 10,
     textAnchor: "middle",
     fontSize: "10",
-    fill: "var(--muted)",
+    fill: "var(--ink-muted)",
     transform: "rotate(-90, 8, ".concat(chartH / 2 + 10, ")")
   }, "% of population"))), /*#__PURE__*/React.createElement("div", {
     style: {
@@ -1389,11 +1529,202 @@ function NaturalSelectionSim() {
     onClick: function onClick() {
       return setRunning(true);
     },
-    disabled: running || gen >= GENS - 1
+    disabled: running || gen >= GENS
   }, "Run simulation"), /*#__PURE__*/React.createElement("button", {
     className: "btn btn-ghost",
     onClick: reset
   }, "Reset")));
+}
+
+/* Header figure for 5.4: three-panel camouflage story (variation -> selection -> inheritance).
+   Panels use fixed leaf colours; labels outside the panels use theme vars. */
+function NaturalSelectionFigure() {
+  var POS = [[32, 34], [84, 28], [142, 40], [50, 80], [108, 74], [154, 96], [28, 126], [80, 136], [128, 130], [160, 150]];
+  var PANELS = [{
+    title: "1. Variation",
+    sub: "colours vary",
+    c: "GBGBGBBGBG",
+    eaten: []
+  }, {
+    title: "2. Selection",
+    sub: "brown ones eaten",
+    c: "GBGBGBBGBG",
+    eaten: [1, 3, 7, 8]
+  }, {
+    title: "3. Inheritance",
+    sub: "mostly green",
+    c: "GGGBGGGGBG",
+    eaten: []
+  }];
+  var beetle = function beetle(x, y, col, faded, k) {
+    return /*#__PURE__*/React.createElement("g", {
+      key: k,
+      transform: "translate(".concat(x, ",").concat(y, ") rotate(").concat(k * 37 % 60 - 30, ")"),
+      opacity: faded ? 0.28 : 1
+    }, [-7, 0, 7].map(function (ly) {
+      return /*#__PURE__*/React.createElement("line", {
+        key: ly,
+        x1: "-13",
+        y1: ly,
+        x2: "13",
+        y2: ly,
+        stroke: "#1b1a17",
+        strokeWidth: "1.4"
+      });
+    }), /*#__PURE__*/React.createElement("circle", {
+      cx: "0",
+      cy: "-13",
+      r: "5",
+      fill: "#1b1a17"
+    }), /*#__PURE__*/React.createElement("ellipse", {
+      cx: "0",
+      cy: "0",
+      rx: "9",
+      ry: "12",
+      fill: col === "G" ? "#4f9443" : "#8a5a2b",
+      stroke: "#1b1a17",
+      strokeWidth: "1.4"
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "0",
+      y1: "-11",
+      x2: "0",
+      y2: "12",
+      stroke: "#1b1a17",
+      strokeWidth: "1"
+    }));
+  };
+  return /*#__PURE__*/React.createElement(Figure, {
+    caption: "Natural selection by camouflage. Beetles vary in colour; birds spot and eat more of the brown beetles on green leaves; survivors pass on their colour genes, so over generations green beetles become more common."
+  }, /*#__PURE__*/React.createElement("svg", {
+    viewBox: "0 0 600 264",
+    width: "100%",
+    style: {
+      maxWidth: 640,
+      display: "block",
+      margin: "0 auto"
+    },
+    role: "img",
+    "aria-label": "Three panels. Panel 1, variation: five green and five brown beetles on green leaves. Panel 2, selection: birds eat three brown beetles and one green beetle; four green and two brown survive. Panel 3, inheritance: several generations later, eight green beetles and two brown beetles."
+  }, /*#__PURE__*/React.createElement("defs", null, /*#__PURE__*/React.createElement("clipPath", {
+    id: "ns-panel-clip"
+  }, /*#__PURE__*/React.createElement("rect", {
+    x: "1",
+    y: "1",
+    width: "178",
+    height: "170",
+    rx: "9"
+  }))), PANELS.map(function (p, i) {
+    var ox = 10 + i * 200,
+      oy = 24;
+    return /*#__PURE__*/React.createElement("g", {
+      key: p.title
+    }, /*#__PURE__*/React.createElement("g", {
+      transform: "translate(".concat(ox, ",").concat(oy, ")")
+    }, /*#__PURE__*/React.createElement("rect", {
+      width: "180",
+      height: "172",
+      rx: "10",
+      fill: "#cfe5c4",
+      stroke: "var(--border-strong)",
+      strokeWidth: "2"
+    }), /*#__PURE__*/React.createElement("g", {
+      clipPath: "url(#ns-panel-clip)"
+    }, /*#__PURE__*/React.createElement("ellipse", {
+      cx: "55",
+      cy: "50",
+      rx: "62",
+      ry: "30",
+      fill: "#6fae5a",
+      transform: "rotate(-25 55 50)"
+    }), /*#__PURE__*/React.createElement("ellipse", {
+      cx: "130",
+      cy: "110",
+      rx: "66",
+      ry: "32",
+      fill: "#5a9e4b",
+      transform: "rotate(20 130 110)"
+    }), /*#__PURE__*/React.createElement("ellipse", {
+      cx: "40",
+      cy: "140",
+      rx: "44",
+      ry: "24",
+      fill: "#6fae5a",
+      transform: "rotate(-10 40 140)"
+    })), POS.map(function (_ref3, k) {
+      var _ref4 = _slicedToArray(_ref3, 2),
+        x = _ref4[0],
+        y = _ref4[1];
+      return beetle(x, y, p.c[k], p.eaten.includes(k), k);
+    }), p.eaten.map(function (k) {
+      return /*#__PURE__*/React.createElement("g", {
+        key: "x" + k,
+        stroke: "#c4471c",
+        strokeWidth: "3",
+        strokeLinecap: "round"
+      }, /*#__PURE__*/React.createElement("line", {
+        x1: POS[k][0] - 10,
+        y1: POS[k][1] - 10,
+        x2: POS[k][0] + 10,
+        y2: POS[k][1] + 10
+      }), /*#__PURE__*/React.createElement("line", {
+        x1: POS[k][0] + 10,
+        y1: POS[k][1] - 10,
+        x2: POS[k][0] - 10,
+        y2: POS[k][1] + 10
+      }));
+    }), i === 1 && /*#__PURE__*/React.createElement("g", {
+      transform: "translate(150,-6)"
+    }, /*#__PURE__*/React.createElement("ellipse", {
+      cx: "0",
+      cy: "8",
+      rx: "16",
+      ry: "11",
+      fill: "#4b7bc9",
+      stroke: "#1b1a17",
+      strokeWidth: "1.6"
+    }), /*#__PURE__*/React.createElement("circle", {
+      cx: "-13",
+      cy: "0",
+      r: "8",
+      fill: "#4b7bc9",
+      stroke: "#1b1a17",
+      strokeWidth: "1.6"
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M -20 -2 L -30 2 L -20 4 Z",
+      fill: "#d99e1e",
+      stroke: "#1b1a17",
+      strokeWidth: "1.2"
+    }), /*#__PURE__*/React.createElement("circle", {
+      cx: "-14",
+      cy: "-2",
+      r: "1.8",
+      fill: "#1b1a17"
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M 2 4 Q 10 -4 18 2",
+      fill: "none",
+      stroke: "#1b1a17",
+      strokeWidth: "1.4"
+    }))), /*#__PURE__*/React.createElement("text", {
+      x: ox + 90,
+      y: "228",
+      textAnchor: "middle",
+      fontSize: "22",
+      fontWeight: "800",
+      fill: "var(--ink)"
+    }, p.title), /*#__PURE__*/React.createElement("text", {
+      x: ox + 90,
+      y: "254",
+      textAnchor: "middle",
+      fontSize: "20",
+      fill: "var(--ink-muted)"
+    }, p.sub), i < 2 && /*#__PURE__*/React.createElement("path", {
+      d: "M ".concat(ox + 184, " 110 l 12 0 m -5 -5 l 5 5 l -5 5"),
+      fill: "none",
+      stroke: "var(--ink)",
+      strokeWidth: "2.2",
+      strokeLinecap: "round"
+    }));
+  })));
 }
 function EvidenceEvolutionSorter() {
   var items = [{
@@ -1463,9 +1794,9 @@ function EvidenceEvolutionSorter() {
 /* ============================================================
    SECTION 5.1: DNA Structure and Function
    ============================================================ */
-function Section1(_ref3) {
-  var progress = _ref3.progress,
-    setProgress = _ref3.setProgress;
+function Section1(_ref5) {
+  var progress = _ref5.progress,
+    setProgress = _ref5.setProgress;
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "topic-head"
   }, /*#__PURE__*/React.createElement("div", {
@@ -1598,19 +1929,16 @@ function Section1(_ref3) {
 /* ============================================================
    SECTION 5.2: Variation and Inheritance
    ============================================================ */
-function Section2(_ref4) {
-  var progress = _ref4.progress,
-    setProgress = _ref4.setProgress;
+function Section2(_ref6) {
+  var progress = _ref6.progress,
+    setProgress = _ref6.setProgress;
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "topic-head"
   }, /*#__PURE__*/React.createElement("div", {
     className: "eyebrow"
   }, "5.2 Variation and Inheritance"), /*#__PURE__*/React.createElement("h1", null, "Why you look like (but not exactly like) your parents"), /*#__PURE__*/React.createElement("p", {
     className: "lead"
-  }, "How does genetic information pass from parent to child? Why do siblings look different? And how do mutations create the raw material for evolution?")), /*#__PURE__*/React.createElement(Figure, {
-    src: "img/inheritance.png",
-    caption: "A Punnett square predicts how traits pass to offspring."
-  }), /*#__PURE__*/React.createElement(DotPoint, {
+  }, "How does genetic information pass from parent to child? Why do siblings look different? And how do mutations create the raw material for evolution?")), /*#__PURE__*/React.createElement(PunnettFigure, null), /*#__PURE__*/React.createElement(DotPoint, {
     id: "5.2.1",
     title: "Passing genetic information to offspring",
     progress: progress,
@@ -1653,7 +1981,7 @@ function Section2(_ref4) {
     def: "The observable characteristics of an organism, produced by the interaction of genotype and environment."
   }, "phenotypes"), ", result from the combined effect of many genes working together (called ", /*#__PURE__*/React.createElement(Term, {
     def: "Inheritance in which a single trait is influenced by many genes, each making a small contribution."
-  }, "polygenic inheritance"), ") plus the influence of environmental factors. Human height, for example, is influenced by more than 700 identified gene variants, but also by nutrition, physical activity, and general health during childhood."), /*#__PURE__*/React.createElement("p", null, "The interaction between an organism's ", /*#__PURE__*/React.createElement(Term, {
+  }, "polygenic inheritance"), ") plus the influence of environmental factors. Human height, for example, is influenced by thousands of identified gene variants, but also by nutrition, physical activity, and general health during childhood."), /*#__PURE__*/React.createElement("p", null, "The interaction between an organism's ", /*#__PURE__*/React.createElement(Term, {
     def: "The specific alleles an organism carries at its gene loci."
   }, "genotype"), " (its genetic makeup) and the environment produces the phenotype. Two organisms with identical genotypes can develop different phenotypes if raised in different environments. This is why identical twins, who share the same DNA, often develop differences in height, weight, and health over time. Rather than 'nature versus nurture', most biologists today recognise that genes and environment always work together."), /*#__PURE__*/React.createElement(Callout, {
     kind: "fact",
@@ -1665,7 +1993,7 @@ function Section2(_ref4) {
     question: "Which of the following traits is MOST strongly influenced by environment?",
     options: ["ABO blood type", "Human height", "Number of chromosomes", "Eye shape"],
     correct: 1,
-    explain: "Height is influenced by over 700 genes AND environmental factors like nutrition. Blood type is entirely genetic."
+    explain: "Height is influenced by thousands of gene variants AND environmental factors like nutrition. Blood type is entirely genetic."
   }))), /*#__PURE__*/React.createElement(DotPoint, {
     id: "5.2.3",
     title: "DNA mutations and genetic variation",
@@ -1758,9 +2086,9 @@ function Section2(_ref4) {
 /* ============================================================
    SECTION 5.3: Genetic Technologies
    ============================================================ */
-function Section3(_ref5) {
-  var progress = _ref5.progress,
-    setProgress = _ref5.setProgress;
+function Section3(_ref7) {
+  var progress = _ref7.progress,
+    setProgress = _ref7.setProgress;
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "topic-head"
   }, /*#__PURE__*/React.createElement("div", {
@@ -1847,19 +2175,16 @@ function Section3(_ref5) {
 /* ============================================================
    SECTION 5.4: Theory of Evolution and Evidence
    ============================================================ */
-function Section4(_ref6) {
-  var progress = _ref6.progress,
-    setProgress = _ref6.setProgress;
+function Section4(_ref8) {
+  var progress = _ref8.progress,
+    setProgress = _ref8.setProgress;
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "topic-head"
   }, /*#__PURE__*/React.createElement("div", {
     className: "eyebrow"
   }, "5.4 The Theory of Evolution and Evidence of Natural Selection"), /*#__PURE__*/React.createElement("h1", null, "Why there are so many species"), /*#__PURE__*/React.createElement("p", {
     className: "lead"
-  }, "Natural selection, geographic isolation, and deep time have shaped every living thing on Earth. Explore the evidence and the history of ideas that led to one of biology's greatest unifying theories.")), /*#__PURE__*/React.createElement(Figure, {
-    src: "img/natural-selection.png",
-    caption: "Better-camouflaged individuals survive and pass on their traits."
-  }), /*#__PURE__*/React.createElement(DotPoint, {
+  }, "Natural selection, geographic isolation, and deep time have shaped every living thing on Earth. Explore the evidence and the history of ideas that led to one of biology's greatest unifying theories.")), /*#__PURE__*/React.createElement(NaturalSelectionFigure, null), /*#__PURE__*/React.createElement(DotPoint, {
     id: "5.4.1",
     title: "Natural selection and isolation drive evolutionary change",
     progress: progress,
@@ -1980,9 +2305,9 @@ function Section4(_ref6) {
 /* ============================================================
    SECTION 5.5: Genetics and Evolutionary Change in Context
    ============================================================ */
-function Section5(_ref7) {
-  var progress = _ref7.progress,
-    setProgress = _ref7.setProgress;
+function Section5(_ref9) {
+  var progress = _ref9.progress,
+    setProgress = _ref9.setProgress;
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "topic-head"
   }, /*#__PURE__*/React.createElement("div", {
@@ -2000,9 +2325,9 @@ function Section5(_ref7) {
     def: "An ethical approach (deontology) that focuses on whether individuals' fundamental rights to privacy, autonomy, and informed consent are respected, regardless of outcomes."
   }, "Rights-based ethics"), " focuses on whether individual rights (to privacy, autonomy, ", /*#__PURE__*/React.createElement(Term, {
     def: "The principle that research participants must be given accurate information and must voluntarily agree before their biological materials are used."
-  }, "informed consent"), ") are respected, regardless of outcomes. A justice framework asks whether benefits and burdens are distributed fairly across different groups in society."), /*#__PURE__*/React.createElement("p", null, "In January 1951, Henrietta Lacks, a 31-year-old African American woman, was treated for cervical cancer at Johns Hopkins Hospital in Baltimore, USA. Without her knowledge or consent, a sample of her tumour cells was taken by researcher George Gey. These cells, named ", /*#__PURE__*/React.createElement(Term, {
+  }, "informed consent"), ") are respected, regardless of outcomes. A justice framework asks whether benefits and burdens are distributed fairly across different groups in society."), /*#__PURE__*/React.createElement("p", null, "In 1951, Henrietta Lacks, a 30-year-old African American mother of five, was treated for cervical cancer at Johns Hopkins Hospital in Baltimore, USA. Without her knowledge or consent, a sample of her tumour cells taken during treatment was given to the laboratory of researcher George Gey. These cells, named ", /*#__PURE__*/React.createElement(Term, {
     def: "The first immortal human cell line, taken from Henrietta Lacks in 1951 without her consent. Used in thousands of medical advances including the polio vaccine."
-  }, "HeLa cells"), ", could divide indefinitely in laboratory culture, the first human cells to do so. Henrietta Lacks died in October 1951. HeLa cells went on to contribute to the development of the polio vaccine, cancer research, virology, drug testing, in vitro fertilisation, and thousands of other advances. Pharmaceutical companies have profited significantly. The Lacks family knew nothing of the cells until the 1970s and received no compensation."), /*#__PURE__*/React.createElement("p", null, "In 2013, a German research group published the full HeLa genome online, making the Lacks family's genetic information publicly accessible without their consent. This renewed concerns about genetic privacy. The case has become a landmark in discussions about ", /*#__PURE__*/React.createElement(Term, {
+  }, "HeLa cells"), ", could divide indefinitely in laboratory culture, the first human cells to do so. Henrietta Lacks died in October 1951. HeLa cells went on to contribute to the development of the polio vaccine, cancer research, virology, drug testing, in vitro fertilisation, and thousands of other advances. Pharmaceutical companies have profited significantly. The Lacks family knew nothing of the cells until the 1970s and for decades received no compensation; in 2023 they reached a settlement with one biotechnology company that had sold HeLa cells."), /*#__PURE__*/React.createElement("p", null, "In 2013, a German research group published the full HeLa genome online, making the Lacks family's genetic information publicly accessible without their consent. This renewed concerns about genetic privacy. The case has become a landmark in discussions about ", /*#__PURE__*/React.createElement(Term, {
     def: "The right of research participants to give voluntary, informed agreement before their tissue is used in research."
   }, "informed consent"), ", racial justice in medical research, who owns human biological materials, and the responsibilities of scientists and institutions toward research participants."), /*#__PURE__*/React.createElement(Callout, {
     kind: "key",
@@ -2010,7 +2335,7 @@ function Section5(_ref7) {
   }, "A strong ethical argument: (1) states your position clearly, (2) applies at least one named ethical framework, (3) uses specific factual evidence, (4) acknowledges and responds to counterarguments, (5) considers whose interests are affected, and (6) reaches a reasoned conclusion."), /*#__PURE__*/React.createElement(Callout, {
     kind: "warn",
     title: "Racial and social context"
-  }, "Henrietta Lacks was an African American woman treated at a segregated public hospital. Her community disproportionately bore the costs (cells taken without consent, no compensation) while institutions in predominantly white settings reaped the benefits. An ethical analysis that ignores race and class fails to account for the full pattern of injustice in the case."), /*#__PURE__*/React.createElement(QGroup, {
+  }, "Henrietta Lacks was an African American woman treated in the racially segregated wards of the hospital. Her community disproportionately bore the costs (cells taken without consent, no compensation) while institutions in predominantly white settings reaped the benefits. An ethical analysis that ignores race and class fails to account for the full pattern of injustice in the case."), /*#__PURE__*/React.createElement(QGroup, {
     title: "Check yourself"
   }, /*#__PURE__*/React.createElement(MCQ, {
     num: 29,

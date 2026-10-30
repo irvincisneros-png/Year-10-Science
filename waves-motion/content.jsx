@@ -46,7 +46,7 @@ function WaveSim() {
 
       if (waveType === "transverse") {
         // Draw transverse wave (sine curve)
-        ctx.strokeStyle = cssv(canvas, "--accent-deep", "#1d4ed8");
+        ctx.strokeStyle = cssv(canvas, "--accent", "#1d4ed8");
         ctx.lineWidth = 3;
         ctx.beginPath();
         for (let x = 0; x <= W; x++) {
@@ -58,7 +58,7 @@ function WaveSim() {
 
         // Label crest and trough
         const crestX = W / (frequency * 4);
-        ctx.fillStyle = cssv(canvas, "--accent-deep", "#1d4ed8");
+        ctx.fillStyle = cssv(canvas, "--accent", "#1d4ed8");
         ctx.font = "12px sans-serif";
         ctx.fillText("crest", crestX - 16, midY - amplitude - 8);
         ctx.fillText("trough", crestX * 3 - 20, midY + amplitude + 14);
@@ -89,7 +89,7 @@ function WaveSim() {
         // Draw longitudinal wave (compressions and rarefactions using dots)
         const numParticles = 60;
         const spacing = W / numParticles;
-        ctx.fillStyle = cssv(canvas, "--accent-deep", "#1d4ed8");
+        ctx.fillStyle = cssv(canvas, "--accent", "#1d4ed8");
         for (let i = 0; i < numParticles; i++) {
           const baseX = i * spacing + spacing / 2;
           const displacement = (amplitude / 2) * Math.sin((baseX / W) * frequency * 2 * Math.PI - t * frequency);
@@ -99,7 +99,7 @@ function WaveSim() {
           ctx.fill();
         }
         // Labels
-        ctx.fillStyle = cssv(canvas, "--accent-deep", "#1d4ed8");
+        ctx.fillStyle = cssv(canvas, "--accent", "#1d4ed8");
         ctx.font = "12px sans-serif";
         const compX = W / (frequency * 4);
         ctx.fillText("compression", compX - 38, midY + 24);
@@ -154,9 +154,9 @@ function EMExplorer() {
   const bands = [
     { name: "Radio", color: "#6366f1", freq: "10⁴ to 10⁹ Hz", wl: ">30 cm", energy: "Very low", uses: "Radio and TV broadcasting, MRI, aircraft communication", ionising: false },
     { name: "Microwave", color: "#8b5cf6", freq: "10⁹ to 3x10¹¹ Hz", wl: "1 mm to 30 cm", energy: "Low", uses: "Cooking, radar, WiFi, satellite links, mobile phones", ionising: false },
-    { name: "Infrared", color: "#f59e0b", freq: "3x10¹¹ to 4x10¹⁴ Hz", wl: "700 nm to 1 mm", energy: "Moderate", uses: "Remote controls, thermal cameras, physiotherapy", ionising: false },
-    { name: "Visible", color: "#10b981", freq: "4x10¹⁴ to 7x10¹⁴ Hz", wl: "400 to 700 nm", energy: "Moderate", uses: "Human vision, photography, fibre optics", ionising: false },
-    { name: "Ultraviolet", color: "#3b82f6", freq: "7x10¹⁴ to 3x10¹⁶ Hz", wl: "10 to 400 nm", energy: "High", uses: "Sterilisation, fluorescence, forensics", ionising: true },
+    { name: "Infrared", color: "#d97706", freq: "3x10¹¹ to 4.3x10¹⁴ Hz", wl: "700 nm to 1 mm", energy: "Moderate", uses: "Remote controls, thermal cameras, physiotherapy", ionising: false },
+    { name: "Visible", color: "#059669", freq: "4.3x10¹⁴ to 7.5x10¹⁴ Hz", wl: "400 to 700 nm", energy: "Moderate", uses: "Human vision, photography, fibre optics", ionising: false },
+    { name: "Ultraviolet", color: "#3b82f6", freq: "7.5x10¹⁴ to 3x10¹⁶ Hz", wl: "10 to 400 nm", energy: "High", uses: "Sterilisation, fluorescence, forensics", ionising: true },
     { name: "X-ray", color: "#ef4444", freq: "3x10¹⁶ to 3x10¹⁹ Hz", wl: "0.01 to 10 nm", energy: "Very high", uses: "Medical imaging, security scanning", ionising: true },
     { name: "Gamma", color: "#dc2626", freq: ">3x10¹⁹ Hz", wl: "<0.01 nm", energy: "Extreme", uses: "Cancer treatment, sterilisation", ionising: true },
   ];
@@ -171,7 +171,7 @@ function EMExplorer() {
             key={band.name}
             onClick={() => setSelected(i)}
             style={{
-              background: selected === i ? band.color : "var(--surface-raised, #f1f5f9)",
+              background: selected === i ? band.color : "var(--surface)",
               color: selected === i ? "#fff" : "var(--ink, #1e293b)",
               border: `2px solid ${band.color}`,
               borderRadius: "0.4rem",
@@ -361,7 +361,7 @@ function DopplerSim() {
       ctx.textAlign = "left";
 
       // Observer labels
-      ctx.fillStyle = "#374151";
+      ctx.fillStyle = cssv(canvas, "--ink", "#374151");
       ctx.font = "11px sans-serif";
       ctx.fillText("Observer (ahead): higher pitch", 8, 18);
       ctx.fillText("Observer (behind): lower pitch", 8, H - 6);
@@ -404,13 +404,13 @@ function UltrasoundCalc() {
 
   return (
     <Interactive title="Ultrasound depth calculator" subtitle="depth = (v x t) / 2, where v = 1540 m/s in soft tissue." takeaway="Medical ultrasound calculates tissue depth from the echo return time using depth = (v x t) / 2, dividing by two because the pulse travels to the boundary and back.">
-      <Slider label="Echo return time (microseconds)" min={5} max={200} step={1} value={echoTime} onChange={setEchoTime} unit=" us" />
+      <Slider label="Echo return time (microseconds)" min={5} max={200} step={1} value={echoTime} onChange={setEchoTime} unit=" µs" />
       <div className="stat-readout">
-        <Stat value={echoTime + " us"} label="Echo time" />
+        <Stat value={echoTime + " µs"} label="Echo time" />
         <Stat value={depth + " cm"} label="Tissue depth" />
       </div>
       <Callout kind="tip" title="How it works">
-        The sound travels to the boundary and back, so we divide by 2. depth = (1540 x {echoTime} x 10^-6) / 2 = {depth} cm.
+        The sound travels to the boundary and back, so we divide by 2. depth = (1540 x {echoTime} x 10⁻⁶) / 2 = {(depth / 100).toFixed(3)} m = {depth} cm.
       </Callout>
     </Interactive>
   );
@@ -460,12 +460,12 @@ function LightPropertiesSim() {
         {/* Surface */}
         <rect x="0" y="120" width="240" height="120" fill="#bfdbfe" opacity="0.4" rx="0" />
         <line x1="0" y1="120" x2="240" y2="120" stroke="#93c5fd" strokeWidth="2" />
-        <text x="8" y="115" fontSize="10" fill="#6b7280">air</text>
-        <text x="8" y="135" fontSize="10" fill="#6b7280">{mode === "refraction" ? "glass (n=1.5)" : "mirror"}</text>
+        <text x="8" y="115" fontSize="10" fill="var(--ink-muted)">air</text>
+        <text x="8" y="135" fontSize="10" fill="var(--ink-muted)">{mode === "refraction" ? "glass (n=1.5)" : "mirror"}</text>
 
         {/* Normal line */}
         <line x1={cx} y1="40" x2={cx} y2="200" stroke="#9ca3af" strokeWidth="1" strokeDasharray="5,4" />
-        <text x={cx + 4} y="52" fontSize="9" fill="#9ca3af">normal</text>
+        <text x={cx + 4} y="52" fontSize="9" fill="var(--ink-muted)">normal</text>
 
         {/* Incident ray */}
         <line x1={incX1} y1={incY1} x2={cx} y2={cy} stroke="#f59e0b" strokeWidth="2.5" markerEnd="url(#arrowY)" />
@@ -562,7 +562,7 @@ function StarTempExplorer() {
         }} />
         <div>
           <strong>Peak emission region:</strong><br />
-          <span style={{ color: colour, fontWeight: 700 }}>{region}</span>
+          <span style={{ color: "var(--ink)", fontWeight: 700 }}>{region}</span>
         </div>
       </div>
       <Callout kind="fact" title="Wien's displacement law">
@@ -626,7 +626,7 @@ function MotionGraphSim() {
       const maxX = 4;
       const maxY = 80;
 
-      ctx.fillStyle = cssv(canvas, "--surface-raised", "#f1f5f9");
+      ctx.fillStyle = cssv(canvas, "--surface", "#f8f9fa");
       ctx.fillRect(offsetX, 0, half, H);
 
       // Grid
@@ -779,7 +779,7 @@ function NewtonSecondSim() {
       ctx.fillText("F = " + force + " N", boxX + boxW + arrowLen / 2, boxY + boxH / 2 - 10);
 
       // Acceleration label
-      ctx.fillStyle = "#374151";
+      ctx.fillStyle = cssv(canvas, "--ink", "#374151");
       ctx.textAlign = "left";
       ctx.font = "12px sans-serif";
       ctx.fillText("a = F/m = " + force + "/" + mass + " = " + accel + " m/s²", 8, 20);
@@ -840,7 +840,7 @@ function NetForceSim() {
         {/* Right force */}
         <line x1="220" y1="45" x2={220 + Math.min(120, forceR * 1.2)} y2="45" stroke="#10b981" strokeWidth="3" />
         <polygon points={`${220 + Math.min(120, forceR * 1.2)},39 ${220 + Math.min(120, forceR * 1.2)},51 ${220 + Math.min(120, forceR * 1.2) + 12},45`} fill="#10b981" />
-        <text x={220 + Math.min(120, forceR * 1.2) / 2} y="34" textAnchor="middle" fill="#10b981" fontSize="11">{forceR} N</text>
+        <text x={220 + Math.min(120, forceR * 1.2) / 2} y="34" textAnchor="middle" fill="#059669" fontSize="11">{forceR} N</text>
       </svg>
       <div className="ctrl-row" style={{ flexWrap: "wrap" }}>
         <Slider label="Force RIGHT" min={0} max={80} value={forceR} onChange={setForceR} unit=" N" />
@@ -909,7 +909,7 @@ function CERBuilder() {
         </div>
       </div>
       {complete && (
-        <div style={{ marginTop: "1rem", background: "var(--accent-soft, #dbeafe)", borderRadius: "0.75rem", padding: "1rem" }}>
+        <div style={{ marginTop: "1rem", background: "var(--accent-soft, #dbeafe)", color: "#1b1a17", borderRadius: "0.75rem", padding: "1rem" }}>
           <p style={{ margin: 0, fontWeight: 700, marginBottom: "0.4rem" }}>Your argument:</p>
           <p style={{ margin: "0 0 0.3rem" }}><strong>Claim:</strong> {claim}</p>
           <p style={{ margin: "0 0 0.3rem" }}><strong>Evidence:</strong> {evidence}</p>
@@ -935,7 +935,7 @@ function Section71({ progress, setProgress }) {
         <p className="lead">Waves carry energy across space and through matter. Here you will explore what all waves have in common and discover how light and sound differ in fundamental ways.</p>
       </div>
 
-      <Figure src="img/wave.png" caption="A transverse wave showing crest, trough and wavelength." />
+      <Figure src="img/wave.png" alt="A transverse wave with two crests and two troughs. An arrow above spans one wavelength from crest to crest; an arrow inside a crest marks the amplitude." caption="A transverse wave. The arrow above spans one wavelength (crest to crest); the arrow inside a crest marks the amplitude." />
       <DotPoint id="7.1.1" title="Mechanical waves and electromagnetic waves" progress={progress} setProgress={setProgress}>
         <p>A <Term def="A wave that requires a physical medium (solid, liquid or gas) to travel through.">mechanical wave</Term> needs matter to travel. Sound, water ripples, and seismic waves are all mechanical. Take away the medium and the wave disappears. That is why the vacuum of space is silent: no air means no sound.</p>
         <p>An <Term def="A wave made of oscillating electric and magnetic fields that can travel through a vacuum.">electromagnetic (EM) wave</Term> is completely different. It does not need particles. The electric and magnetic fields that make it up sustain each other as they travel, so light from the Sun crosses 150 million kilometres of almost empty space to reach you. Radio waves, X-rays, and microwaves are all electromagnetic.</p>
@@ -948,7 +948,7 @@ function Section71({ progress, setProgress }) {
             ].map(([title, sub, ex, bg], i) => (
               <g key={title} transform={`translate(${i * 268 + 4}, 4)`}>
                 <rect width="248" height="80" rx="12" fill={bg} stroke="var(--accent-deep,#1d4ed8)" strokeWidth="1.5" />
-                <text x="124" y="26" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--ink)">{title}</text>
+                <text x="124" y="26" textAnchor="middle" fontSize="13" fontWeight="700" fill="#1b1a17">{title}</text>
                 <text x="124" y="46" textAnchor="middle" fontSize="11" fill="#374151">{sub}</text>
                 <text x="124" y="66" textAnchor="middle" fontSize="11" fill="#6b7280">{ex}</text>
               </g>
@@ -998,13 +998,13 @@ function Section71({ progress, setProgress }) {
             <line x1="100" y1="35" x2="100" y2="65" stroke="#ef4444" strokeWidth="1.5" strokeDasharray="4,3" />
             <text x="104" y="55" fontSize="11" fill="#ef4444" fontWeight="600">A (amplitude)</text>
             {/* Wavelength */}
-            <line x1="30" y1="120" x2="310" y2="120" stroke="#10b981" strokeWidth="1.5" />
-            <line x1="30" y1="115" x2="30" y2="125" stroke="#10b981" strokeWidth="1.5" />
-            <line x1="310" y1="115" x2="310" y2="125" stroke="#10b981" strokeWidth="1.5" />
-            <text x="160" y="118" textAnchor="middle" fontSize="11" fill="#10b981" fontWeight="600">lambda (wavelength)</text>
+            <line x1="30" y1="120" x2="310" y2="120" stroke="#059669" strokeWidth="1.5" />
+            <line x1="30" y1="115" x2="30" y2="125" stroke="#059669" strokeWidth="1.5" />
+            <line x1="310" y1="115" x2="310" y2="125" stroke="#059669" strokeWidth="1.5" />
+            <text x="160" y="118" textAnchor="middle" fontSize="11" fill="#059669" fontWeight="600">lambda (wavelength)</text>
             {/* Labels */}
-            <text x="100" y="29" textAnchor="middle" fontSize="10" fill="#374151">crest</text>
-            <text x="240" y="128" textAnchor="middle" fontSize="10" fill="#374151">trough</text>
+            <text x="100" y="29" textAnchor="middle" fontSize="10" fill="var(--ink)">crest</text>
+            <text x="240" y="110" textAnchor="middle" fontSize="10" fill="var(--ink)">trough</text>
           </svg>
         </Figure>
       </DotPoint>
@@ -1043,7 +1043,7 @@ function Section72({ progress, setProgress }) {
       <Figure src="img/sound.png" caption="Sound travels as compressions and rarefactions through the air to the ear." />
       <DotPoint id="7.2.1" title="Sound energy travels as compressions and rarefactions" progress={progress} setProgress={setProgress}>
         <p>When an object vibrates, it pushes the surrounding air molecules together, forming a <Term def="A region of higher-than-normal pressure in a longitudinal wave where molecules are pushed close together.">compression</Term>. Then it pulls back, spreading the molecules apart into a <Term def="A region of lower-than-normal pressure in a longitudinal wave where molecules spread apart.">rarefaction</Term>. These alternating pressure changes radiate outward as a longitudinal mechanical wave. The individual air molecules do not travel to your ear. Only the pattern of pressure variations travels.</p>
-        <p>The speed of sound depends on the medium and its temperature. In dry air at 20 degrees Celsius, sound travels at about 343 m/s. In water, molecules are much closer together, so collisions transfer energy faster: sound travels at about 1480 m/s in water. In steel, it reaches roughly 5000 m/s. Warmer air also carries sound faster because molecules move faster and collide more frequently.</p>
+        <p>The speed of sound depends on the medium and its temperature. In dry air at 20 °C, sound travels at about 343 m/s. In water, molecules are much closer together, so collisions transfer energy faster: sound travels at about 1480 m/s in water. In steel, it reaches roughly 5000 m/s. Warmer air also carries sound faster because molecules move faster and collide more frequently.</p>
         <Callout kind="key" title="No medium, no sound">Sound is a mechanical wave. In a vacuum there are no molecules to compress or rarefy, so sound cannot exist. Space is silent.</Callout>
         <QGroup title="Check yourself">
           <MCQ num={8} question="A student shouts and hears an echo from a cliff 0.4 s later. The speed of sound is 340 m/s. How far away is the cliff?" options={["136 m", "68 m", "340 m", "0.4 m"]} correct={1} explain="Distance = speed x time / 2 = 340 x 0.4 / 2 = 68 m. We divide by 2 because the sound travels to the cliff and back." />
@@ -1076,8 +1076,8 @@ function Section72({ progress, setProgress }) {
             {["Pinna", "Ear canal", "Eardrum", "Ossicles", "Oval window", "Cochlea", "Auditory nerve"].map((s, i) => (
               <g key={s} transform={`translate(${i * 80 + 4}, 8)`}>
                 <rect width="68" height="40" rx="8" fill="var(--accent-soft,#dbeafe)" stroke="var(--accent-deep,#1d4ed8)" strokeWidth="1.5" />
-                <text x="34" y="25" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--ink)">{s}</text>
-                {i < 6 && <text x="76" y="28" textAnchor="middle" fontSize="14" fill="var(--accent-deep,#1d4ed8)">›</text>}
+                <text x="34" y="25" textAnchor="middle" fontSize="10" fontWeight="600" fill="#1b1a17">{s}</text>
+                {i < 6 && <text x="76" y="28" textAnchor="middle" fontSize="14" fill="var(--ink-muted)">›</text>}
               </g>
             ))}
           </svg>
@@ -1138,15 +1138,15 @@ function Section73({ progress, setProgress }) {
         <Figure num="4" caption="Three light properties and their everyday applications.">
           <svg viewBox="0 0 540 80" width="100%" style={{ maxWidth: 540 }}>
             {[
-              ["Absorption", "Solar panels\nDark clothing", "#f59e0b"],
+              ["Absorption", "Solar panels\nDark clothing", "#d97706"],
               ["Reflection", "Mirrors\nFibre optics (TIR)\nRoad markings", "#3b82f6"],
-              ["Refraction", "Spectacles\nCamera lenses\nRainbows", "#10b981"],
+              ["Refraction", "Spectacles\nCamera lenses\nRainbows", "#059669"],
             ].map(([title, apps, color], i) => (
               <g key={title} transform={`translate(${i * 182 + 4}, 4)`}>
                 <rect width="170" height="72" rx="12" fill={color + "20"} stroke={color} strokeWidth="1.5" />
                 <text x="85" y="22" textAnchor="middle" fontSize="12" fontWeight="700" fill={color}>{title}</text>
                 {apps.split("\n").map((line, j) => (
-                  <text key={j} x="85" y={38 + j * 14} textAnchor="middle" fontSize="10" fill="#374151">{line}</text>
+                  <text key={j} x="85" y={38 + j * 14} textAnchor="middle" fontSize="10" fill="var(--ink)">{line}</text>
                 ))}
               </g>
             ))}
@@ -1167,6 +1167,40 @@ function Section73({ progress, setProgress }) {
 }
 
 
+/* Header figure for 7.4: a distance-time graph with three stages
+   (10 m/s for 4 s, stopped for 2 s, 20 m/s for 3 s). Gradient = speed. */
+function DistanceTimeFigure() {
+  const X = (t) => 52 + t * 30, Y = (d) => 196 - d * 1.6;
+  const pts = [[0, 0], [4, 40], [6, 40], [9, 100]];
+  return (
+    <Figure caption="A distance–time graph. The line rises while the object moves, is flat while it is stopped, and is steeper when it moves faster, because the gradient equals the speed.">
+      <svg viewBox="0 0 360 236" width="100%" style={{ maxWidth: 440, display: "block", margin: "0 auto" }} role="img"
+        aria-label="Distance-time graph. From 0 to 4 seconds the line rises steadily to 40 metres (10 metres per second). From 4 to 6 seconds it is flat at 40 metres (stopped). From 6 to 9 seconds it rises steeply to 100 metres (20 metres per second).">
+        {[0, 20, 40, 60, 80, 100].map(d => (
+          <g key={"d" + d}>
+            <line x1="52" y1={Y(d)} x2="334" y2={Y(d)} stroke="var(--border)" strokeWidth="1"/>
+            <text x="46" y={Y(d) + 4} textAnchor="end" fontSize="11" fill="var(--ink-muted)">{d}</text>
+          </g>
+        ))}
+        {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(t => (
+          <text key={"t" + t} x={X(t)} y="212" textAnchor="middle" fontSize="11" fill="var(--ink-muted)">{t}</text>
+        ))}
+        <line x1="52" y1="196" x2="336" y2="196" stroke="var(--ink)" strokeWidth="1.8"/>
+        <line x1="52" y1="196" x2="52" y2="24" stroke="var(--ink)" strokeWidth="1.8"/>
+        <text x="194" y="230" textAnchor="middle" fontSize="12" fill="var(--ink)">Time (s)</text>
+        <text x="16" y="110" textAnchor="middle" fontSize="12" fill="var(--ink)" transform="rotate(-90,16,110)">Distance (m)</text>
+        <polyline points={pts.map(([t, d]) => `${X(t)},${Y(d)}`).join(" ")} fill="none" stroke="#4b7bc9" strokeWidth="3.5" strokeLinejoin="round"/>
+        {pts.map(([t, d]) => <circle key={t} cx={X(t)} cy={Y(d)} r="4" fill="#4b7bc9"/>)}
+        <text x={X(1.5)} y={Y(20) - 14} textAnchor="end" fontSize="12" fontWeight="700" fill="var(--ink)">steady</text>
+        <text x={X(1.5)} y={Y(20) - 1} textAnchor="end" fontSize="11" fill="var(--ink-muted)">10 m/s</text>
+        <text x={X(5)} y={Y(40) - 10} textAnchor="middle" fontSize="12" fontWeight="700" fill="var(--ink)">stopped</text>
+        <text x={X(6.8)} y={Y(70) - 6} textAnchor="end" fontSize="12" fontWeight="700" fill="var(--ink)">faster</text>
+        <text x={X(6.8)} y={Y(70) + 7} textAnchor="end" fontSize="11" fill="var(--ink-muted)">20 m/s</text>
+      </svg>
+    </Figure>
+  );
+}
+
 function Section74({ progress, setProgress }) {
   return (
     <>
@@ -1176,7 +1210,7 @@ function Section74({ progress, setProgress }) {
         <p className="lead">Everything that moves follows rules. Learn the language of motion, master distance-time and velocity-time graphs, and use Newton's three laws to explain the world around you.</p>
       </div>
 
-      <Figure src="img/motion.png" caption="A distance–time graph rises as an object moves." />
+      <DistanceTimeFigure/>
       <DotPoint id="7.4.1" title="Distance, displacement, speed and velocity" progress={progress} setProgress={setProgress}>
         <p><Term def="The total length of the path travelled by an object. A scalar quantity with no direction.">Distance</Term> is the total path length, a <Term def="A quantity that has magnitude (size) only, with no direction.">scalar</Term> quantity. <Term def="The straight-line distance from start to finish, including direction. A vector quantity.">Displacement</Term> is the straight-line distance from start to end, including direction: it is a <Term def="A quantity that has both magnitude and direction.">vector</Term>. An athlete who runs one lap of a 400 m track and returns to the start has covered 400 m of distance but zero displacement.</p>
         <p><Term def="The rate of change of distance. Speed = distance / time. A scalar quantity.">Speed</Term> is the rate of change of distance (v = d/t), a scalar. <Term def="The rate of change of displacement. Velocity = displacement / time. A vector quantity with magnitude and direction.">Velocity</Term> is the rate of change of displacement, a vector that includes direction. Moving at 60 km/h north is a different velocity from 60 km/h south, even though the speed is the same. An object moving in a circle at constant speed is continuously changing its velocity because its direction is changing.</p>
@@ -1212,7 +1246,7 @@ function Section74({ progress, setProgress }) {
           <svg viewBox="0 0 540 90" width="100%" style={{ maxWidth: 540 }}>
             {[
               ["1st Law", "Inertia", "Seatbelts protect\npassengers in a crash", "#3b82f6"],
-              ["2nd Law", "F = ma", "Heavier car needs more\nforce to accelerate", "#10b981"],
+              ["2nd Law", "F = ma", "Heavier car needs more\nforce to accelerate", "#059669"],
               ["3rd Law", "Action-Reaction", "Rocket: gases back,\ncraft forward", "#8b5cf6"],
             ].map(([law, label, ex, color], i) => (
               <g key={law} transform={`translate(${i * 182 + 4}, 4)`}>
@@ -1220,7 +1254,7 @@ function Section74({ progress, setProgress }) {
                 <text x="85" y="22" textAnchor="middle" fontSize="13" fontWeight="700" fill={color}>{law}</text>
                 <text x="85" y="40" textAnchor="middle" fontSize="11" fontWeight="600" fill="var(--ink)">{label}</text>
                 {ex.split("\n").map((line, j) => (
-                  <text key={j} x="85" y={56 + j * 15} textAnchor="middle" fontSize="10" fill="#374151">{line}</text>
+                  <text key={j} x="85" y={56 + j * 15} textAnchor="middle" fontSize="10" fill="var(--ink)">{line}</text>
                 ))}
               </g>
             ))}
@@ -1266,7 +1300,7 @@ function Section75({ progress, setProgress }) {
       </div>
 
       <DotPoint id="7.5.1" title="How waves and motion have changed society" progress={progress} setProgress={setProgress}>
-        <p>Our understanding of waves and motion has driven some of the most significant transformations in human history. Before Newton's laws were published in 1687, there was no reliable way to predict or engineer the motion of machines. Today, aircraft, high-speed trains, rockets, and smartphones are all engineered using those same principles. Before Maxwell and Hertz established the theory of electromagnetic waves in the 1860s to 1880s, long-distance communication took days or weeks. Today, radio, television, mobile phone networks, the internet, and GPS all rely on EM waves, connecting billions of people instantly.</p>
+        <p>Our understanding of waves and motion has driven some of the most significant transformations in human history. Before Newton's laws were published in 1687, there was no reliable way to predict or engineer the motion of machines. Today, aircraft, high-speed trains, rockets, and smartphones are all engineered using those same principles. Before Maxwell and Hertz established the theory of electromagnetic waves in the 1860s to 1880s, long-distance messages needed a telegraph wire or travelled by ship, and could take days or weeks to reach places without a cable. Today, radio, television, mobile phone networks, the internet, and GPS all rely on EM waves, connecting billions of people instantly.</p>
         <p>In medicine, ultrasound imaging (using reflected sound waves) and X-ray imaging (using EM waves) allow doctors to diagnose conditions and guide treatment without exploratory surgery. These technologies have reduced maternal mortality, improved cancer detection, and transformed healthcare in both wealthy and remote communities. Not all impacts have been positive: fossil-fuel combustion in transport engines contributes to climate change, and military radar and surveillance technologies raise ethical questions. A balanced analysis requires examining both benefits and costs.</p>
         <p>A <Term def="A structured approach to scientific argument using three components: Claim (statement of position), Evidence (facts and examples), and Reasoning (explanation of the connection).">Claim-Evidence-Reasoning (CER)</Term> framework helps you build well-structured arguments. Your claim answers the question directly. Your evidence consists of specific facts, statistics, or examples. Your reasoning explains how and why the evidence supports the claim. A thorough argument also acknowledges counterarguments or limitations.</p>
         <CERBuilder />

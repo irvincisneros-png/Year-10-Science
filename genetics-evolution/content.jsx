@@ -39,33 +39,33 @@ function DNABaseBuilder() {
                 {/* Top base */}
                 <rect x={x - 16} y="10" width="32" height="32" rx="6"
                   fill={BASE_COLORS[base]} stroke={isHigh ? "var(--ink)" : "transparent"} strokeWidth="2"/>
-                <text x={x} y="31" textAnchor="middle" fontSize="14" fontWeight="800" fill="#fff">{base}</text>
+                <text x={x} y="31" textAnchor="middle" fontSize="14" fontWeight="800" fill="#1b1a17">{base}</text>
                 {/* Bond lines */}
                 <line x1={x} y1="42" x2={x} y2="75" stroke={BASE_COLORS[base]} strokeWidth="2" strokeDasharray="4 3"/>
                 <line x1={x} y1="125" x2={x} y2="158" stroke={BASE_COLORS[comp]} strokeWidth="2" strokeDasharray="4 3"/>
                 {/* Bond label */}
-                <text x={x} y="102" textAnchor="middle" fontSize="9" fill="var(--muted)" fontWeight="600">
+                <text x={x} y="102" textAnchor="middle" fontSize="9" fill="var(--ink-muted)" fontWeight="600">
                   {(base === "A" || base === "T") ? "A-T" : "C-G"}
                 </text>
-                <text x={x} y="114" textAnchor="middle" fontSize="8" fill="var(--muted)">
+                <text x={x} y="114" textAnchor="middle" fontSize="8" fill="var(--ink-muted)">
                   {(base === "A" || base === "T") ? "2 bonds" : "3 bonds"}
                 </text>
                 {/* Bottom base */}
                 <rect x={x - 16} y="158" width="32" height="32" rx="6"
                   fill={BASE_COLORS[comp]} stroke={isHigh ? "var(--ink)" : "transparent"} strokeWidth="2"/>
-                <text x={x} y="179" textAnchor="middle" fontSize="14" fontWeight="800" fill="#fff">{comp}</text>
+                <text x={x} y="179" textAnchor="middle" fontSize="14" fontWeight="800" fill="#1b1a17">{comp}</text>
               </g>
             );
           })}
           {/* Labels */}
-          <text x="8" y="56" fontSize="10" fill="var(--muted)" fontWeight="700" writingMode="tb">5'</text>
-          <text x="8" y="148" fontSize="10" fill="var(--muted)" fontWeight="700" writingMode="tb">3'</text>
+          <text x="8" y="56" fontSize="10" fill="var(--ink-muted)" fontWeight="700" writingMode="tb">5'</text>
+          <text x="8" y="148" fontSize="10" fill="var(--ink-muted)" fontWeight="700" writingMode="tb">3'</text>
         </svg>
       </div>
       <div className="ctrl-row" style={{ flexWrap: "wrap", gap: 8 }}>
         {strand.map((base, i) => (
           <div key={i} style={{ textAlign: "center" }}>
-            <div style={{ fontSize: 11, color: "var(--muted)", marginBottom: 2 }}>Pos {i + 1}</div>
+            <div style={{ fontSize: 11, color: "var(--ink-muted)", marginBottom: 2 }}>Pos {i + 1}</div>
             <SegToggle
               options={["A","T","C","G"]}
               value={base}
@@ -103,7 +103,7 @@ function GeneticOrganisationSVG() {
           <g key={lv.label} transform={`translate(${i * 112 + 4}, 6)`}>
             <rect width="104" height="64" rx="10" fill={lv.color} opacity="0.18" stroke={lv.color} strokeWidth="1.5"/>
             <text x="52" y="26" textAnchor="middle" fontSize="12" fontWeight="800" fill="var(--ink)">{lv.label}</text>
-            <text x="52" y="42" textAnchor="middle" fontSize="9" fill="var(--muted)">{lv.desc}</text>
+            <text x="52" y="42" textAnchor="middle" fontSize="9" fill="var(--ink-muted)">{lv.desc}</text>
             {i < levels.length - 1 && (
               <text x="116" y="36" textAnchor="middle" fontSize="20" fill={lv.color} fontWeight="700">›</text>
             )}
@@ -175,7 +175,7 @@ function DNADiscoverySorter() {
                     else if (!sel && c.correct.includes(s.id)) bg = "#fef9c3";
                   }
                   return (
-                    <td key={s.id} style={{ textAlign: "center", background: bg, cursor: "pointer", borderRadius: 4 }}
+                    <td key={s.id} style={{ textAlign: "center", background: bg, color: checked && bg !== "transparent" ? "#1b1a17" : undefined, cursor: "pointer", borderRadius: 4 }}
                       onClick={() => toggle(c.id, s.id)}>
                       <span style={{ fontSize: 20 }}>{sel ? "✓" : "○"}</span>
                     </td>
@@ -287,7 +287,7 @@ function PunnettSquareTool() {
     <Interactive title="Interactive Punnett Square" subtitle="Pick a trait and both parent genotypes, then read off the offspring ratios." takeaway="A Punnett square predicts the probability of each offspring genotype and phenotype; two heterozygous parents (Xx x Xx) give a 3:1 dominant to recessive phenotype ratio.">
       <div className="ctrl-row" style={{ flexWrap: "wrap", gap: 12, alignItems: "flex-start" }}>
         <div>
-          <div style={{ fontSize: 12, fontWeight: 700, marginBottom: 4, color: "var(--muted)" }}>Trait</div>
+          <div style={{ fontSize: 12, fontWeight: 700, marginBottom: 4, color: "var(--ink-muted)" }}>Trait</div>
           <SegToggle
             options={TRAITS.map((t, i) => ({ value: String(i), label: t.name }))}
             value={String(traitIdx)}
@@ -297,7 +297,7 @@ function PunnettSquareTool() {
       </div>
       <div className="ctrl-row" style={{ flexWrap: "wrap", gap: 16, marginTop: 8 }}>
         <div>
-          <div style={{ fontSize: 12, fontWeight: 700, marginBottom: 4, color: "var(--muted)" }}>Parent 1 genotype</div>
+          <div style={{ fontSize: 12, fontWeight: 700, marginBottom: 4, color: "var(--ink-muted)" }}>Parent 1 genotype</div>
           <SegToggle
             options={GENO_VALS.map((v, i) => ({ value: v, label: v.replace(/X/g, dom).replace(/x/g, rec) }))}
             value={parent1}
@@ -305,7 +305,7 @@ function PunnettSquareTool() {
           />
         </div>
         <div>
-          <div style={{ fontSize: 12, fontWeight: 700, marginBottom: 4, color: "var(--muted)" }}>Parent 2 genotype</div>
+          <div style={{ fontSize: 12, fontWeight: 700, marginBottom: 4, color: "var(--ink-muted)" }}>Parent 2 genotype</div>
           <SegToggle
             options={GENO_VALS.map((v, i) => ({ value: v, label: v.replace(/X/g, dom).replace(/x/g, rec) }))}
             value={parent2}
@@ -339,7 +339,7 @@ function PunnettSquareTool() {
                   const cell = sortGeno(aa + ab);
                   return (
                     <td key={ci} style={{ width: 80, height: 64, border: "2px solid var(--border)",
-                      background: cellColor(cell), textAlign: "center", fontSize: 20, fontWeight: 700 }}>
+                      background: cellColor(cell), color: "#1b1a17", textAlign: "center", fontSize: 20, fontWeight: 700 }}>
                       {cell.replace(/./g, c => c === dom ? dom : rec)}
                     </td>
                   );
@@ -370,6 +370,58 @@ function PunnettSquareTool() {
         Red = homozygous recessive ({rec+rec}, shows recessive trait).
       </Callout>
     </Interactive>
+  );
+}
+
+/* Static worked example for the top of 5.2: a monohybrid Bb x Bb cross,
+   using the same guinea pig coat trait and cell colours as PunnettSquareTool.
+   Cell fills are fixed light colours, so text inside them is fixed dark ink
+   (legible in both themes); everything outside the cells uses theme vars. */
+function PunnettFigure() {
+  const CELL = { BB: "#bbf7d0", Bb: "#d1fae5", bb: "#fecaca" };
+  const gx = 104, gy = 82, cw = 112, ch = 86;          // grid origin + cell size
+  const top = ["B", "b"], side = ["B", "b"];
+  const gamete = (x, y, a) => (
+    <g key={`${x}-${y}`}>
+      <circle cx={x} cy={y} r="17" fill="var(--accent-soft)" stroke="var(--accent-deep)" strokeWidth="2"/>
+      <text x={x} y={y + 7} textAnchor="middle" fontSize="20" fontWeight="800" fill="var(--accent-deep)">{a}</text>
+    </g>
+  );
+  return (
+    <Figure caption="A Punnett square for a cross between two heterozygous black guinea pigs (Bb × Bb). Each parent's gametes go along the edges; the four cells show the equally likely offspring: 1 BB : 2 Bb : 1 bb, so 3 black : 1 white.">
+      <svg viewBox="0 0 348 356" width="100%" style={{ maxWidth: 420, display: "block", margin: "0 auto" }}
+        role="img" aria-label="Punnett square for Bb crossed with Bb. Parent 2 gametes B and b across the top, Parent 1 gametes B and b down the side. Offspring cells: BB black, Bb black, Bb black, bb white. Genotype ratio 1 BB to 2 Bb to 1 bb; phenotype ratio 3 black to 1 white.">
+        {/* parent labels */}
+        <text x={gx + cw} y="18" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--ink)">Parent 2: Bb (black)</text>
+        <text x="16" y={gy + ch} textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--ink)"
+          transform={`rotate(-90, 16, ${gy + ch})`}>Parent 1: Bb (black)</text>
+        {/* gametes */}
+        {top.map((a, i) => gamete(gx + cw * i + cw / 2, 50, a))}
+        {side.map((a, i) => gamete(64, gy + ch * i + ch / 2, a))}
+        {/* offspring cells */}
+        {side.map((s, r) => top.map((t, c) => {
+          const g = [s, t].sort((p, q) => (p === q ? 0 : p === "B" ? -1 : 1)).join("");
+          const black = g.includes("B");
+          const x = gx + cw * c, y = gy + ch * r;
+          return (
+            <g key={`${r}${c}`}>
+              <rect x={x} y={y} width={cw} height={ch} fill={CELL[g]} stroke="var(--border-strong)" strokeWidth="2"/>
+              <text x={x + cw / 2} y={y + 40} textAnchor="middle" fontSize="28" fontWeight="800" fill="#1b1a17">{g}</text>
+              <circle cx={x + cw / 2 - 26} cy={y + 62} r="7" fill={black ? "#1b1a17" : "#ffffff"} stroke="#1b1a17" strokeWidth="1.5"/>
+              <text x={x + cw / 2 - 14} y={y + 67} fontSize="13" fontWeight="600" fill="#1b1a17">{black ? "black" : "white"}</text>
+            </g>
+          );
+        }))}
+        {/* summary */}
+        <text x="174" y={gy + ch * 2 + 30} textAnchor="middle" fontSize="14" fill="var(--ink)">
+          <tspan fontWeight="700">Genotypes </tspan>1 BB : 2 Bb : 1 bb
+        </text>
+        <text x="174" y={gy + ch * 2 + 52} textAnchor="middle" fontSize="14" fill="var(--ink)">
+          <tspan fontWeight="700">Phenotypes </tspan>3 black : 1 white
+        </text>
+        <text x="174" y={gy + ch * 2 + 72} textAnchor="middle" fontSize="12" fill="var(--ink-muted)">B = black (dominant), b = white (recessive)</text>
+      </svg>
+    </Figure>
   );
 }
 
@@ -440,7 +492,7 @@ function MutationSimulator() {
     <Interactive title="Mutation Simulator" subtitle="Apply a point substitution, deletion, or insertion and see how the amino acid sequence changes." takeaway="A single base deletion or insertion causes a frameshift that alters every amino acid downstream and is usually far more damaging than a point substitution, which may change only one codon or be silent.">
       <div className="ctrl-row" style={{ flexWrap: "wrap", gap: 12 }}>
         <div>
-          <div style={{ fontSize: 12, fontWeight: 700, marginBottom: 4, color: "var(--muted)" }}>Mutation type</div>
+          <div style={{ fontSize: 12, fontWeight: 700, marginBottom: 4, color: "var(--ink-muted)" }}>Mutation type</div>
           <SegToggle
             options={[{value:"none",label:"None"},{value:"sub",label:"Substitution"},{value:"del",label:"Deletion"},{value:"ins",label:"Insertion"}]}
             value={mutType}
@@ -449,13 +501,13 @@ function MutationSimulator() {
         </div>
         {mutType !== "none" && (
           <div>
-            <div style={{ fontSize: 12, fontWeight: 700, marginBottom: 4, color: "var(--muted)" }}>Position (1-{original.length})</div>
+            <div style={{ fontSize: 12, fontWeight: 700, marginBottom: 4, color: "var(--ink-muted)" }}>Position (1-{original.length})</div>
             <Slider min={1} max={original.length} value={pos} onChange={setPos} label=""/>
           </div>
         )}
         {(mutType === "sub" || mutType === "ins") && (
           <div>
-            <div style={{ fontSize: 12, fontWeight: 700, marginBottom: 4, color: "var(--muted)" }}>New base</div>
+            <div style={{ fontSize: 12, fontWeight: 700, marginBottom: 4, color: "var(--ink-muted)" }}>New base</div>
             <SegToggle options={["A","T","C","G"]} value={subBase} onChange={setSubBase}/>
           </div>
         )}
@@ -479,7 +531,7 @@ function MutationSimulator() {
               <td style={{ fontFamily: "monospace", fontSize: 14, letterSpacing: 1 }}>
                 {mutChunks.map((c, i) => {
                   const changed = origChunks[i] !== c;
-                  return <span key={i} style={{ marginRight: 4, background: changed ? "#fef08a" : "transparent",
+                  return <span key={i} style={{ marginRight: 4, background: changed ? "#fef08a" : "transparent", color: changed ? "#1b1a17" : undefined,
                     borderRadius: 3, padding: "0 2px" }}>{c}</span>;
                 })}
               </td>
@@ -487,7 +539,7 @@ function MutationSimulator() {
                 {mutCodons.map((x, i) => {
                   const origAA = origCodons[i]?.aa;
                   const changed = origAA !== x.aa;
-                  return <span key={i} style={{ marginRight: 4, background: changed ? "#fecaca" : "transparent",
+                  return <span key={i} style={{ marginRight: 4, background: changed ? "#fecaca" : "transparent", color: changed ? "#1b1a17" : undefined,
                     borderRadius: 3, padding: "0 2px" }}>{x.aa}</span>;
                 })}
               </td>
@@ -499,6 +551,11 @@ function MutationSimulator() {
       {mutType === "del" && (
         <Callout kind="warn" title="Frameshift detected">
           A single base deletion shifts every codon after position {pos}, changing all downstream amino acids. This is usually much more damaging than a substitution.
+        </Callout>
+      )}
+      {mutType === "ins" && (
+        <Callout kind="warn" title="Frameshift detected">
+          A single base insertion shifts every codon after position {pos}, changing all downstream amino acids. Like a deletion, this is usually much more damaging than a substitution.
         </Callout>
       )}
       {mutType === "sub" && (
@@ -545,7 +602,7 @@ function EthicsDebateTool() {
     {
       title: "HeLa cells in medical research",
       benefit: "HeLa cells have enabled thousands of advances including the polio vaccine, cancer research, and IVF development.",
-      concern: "Cells were taken from Henrietta Lacks without her consent. Her family received no compensation while corporations profited.",
+      concern: "Cells were taken from Henrietta Lacks without her consent. For decades her family received no compensation while companies profited.",
       utilitarian: "The vast benefit to millions may outweigh harm to one person, but the precedent of non-consent harms trust in research.",
       rights: "Henrietta's right to autonomy and informed consent was violated. The ends do not justify the means.",
       justice: "An African American woman in a segregated hospital bore the cost; mainly wealthy institutions gained the benefit. This is unjust.",
@@ -578,7 +635,7 @@ function EthicsDebateTool() {
     <Interactive title="Ethics Framework Explorer" subtitle="Choose a scenario and an ethical framework to see how the analysis differs." takeaway="Different ethical frameworks (utilitarian, rights-based, justice) can lead to different conclusions about the same genetic technology scenario, which is why ethical debates require considering more than one perspective.">
       <div className="ctrl-row" style={{ flexWrap: "wrap", gap: 12 }}>
         <div>
-          <div style={{ fontSize: 12, fontWeight: 700, marginBottom: 4, color: "var(--muted)" }}>Scenario</div>
+          <div style={{ fontSize: 12, fontWeight: 700, marginBottom: 4, color: "var(--ink-muted)" }}>Scenario</div>
           <SegToggle
             options={scenarios.map((s, i) => ({ value: String(i), label: `${i + 1}` }))}
             value={String(idx)}
@@ -586,7 +643,7 @@ function EthicsDebateTool() {
           />
         </div>
         <div>
-          <div style={{ fontSize: 12, fontWeight: 700, marginBottom: 4, color: "var(--muted)" }}>Ethical framework</div>
+          <div style={{ fontSize: 12, fontWeight: 700, marginBottom: 4, color: "var(--ink-muted)" }}>Ethical framework</div>
           <SegToggle
             options={[{value:"utilitarian",label:"Utilitarian"},{value:"rights",label:"Rights-based"},{value:"justice",label:"Justice"}]}
             value={frame}
@@ -597,11 +654,11 @@ function EthicsDebateTool() {
       <div style={{ marginTop: 16 }}>
         <h3 style={{ fontWeight: 800, marginBottom: 8 }}>{s.title}</h3>
         <div className="grid-2" style={{ gap: 12 }}>
-          <div className="card" style={{ background: "#d1fae5" }}>
+          <div className="card" style={{ background: "#d1fae5", color: "#1b1a17" }}>
             <div style={{ fontWeight: 700, fontSize: 12, marginBottom: 4 }}>Potential benefit</div>
             <div style={{ fontSize: 13 }}>{s.benefit}</div>
           </div>
-          <div className="card" style={{ background: "#fecaca" }}>
+          <div className="card" style={{ background: "#fecaca", color: "#1b1a17" }}>
             <div style={{ fontWeight: 700, fontSize: 12, marginBottom: 4 }}>Potential concern</div>
             <div style={{ fontSize: 13 }}>{s.concern}</div>
           </div>
@@ -646,7 +703,7 @@ function NaturalSelectionSim() {
     if (running) {
       intervalRef.current = setInterval(() => {
         setGen(g => {
-          if (g >= GENS - 1) { setRunning(false); return g; }
+          if (g >= GENS) { setRunning(false); return g; }
           setHistory(h => nextGen(h));
           return g + 1;
         });
@@ -681,7 +738,7 @@ function NaturalSelectionSim() {
             <g key={y}>
               <line x1="50" y1={chartH - y * chartH / 100 + 10} x2={chartW + 52} y2={chartH - y * chartH / 100 + 10}
                 stroke="var(--border)" strokeWidth="0.5"/>
-              <text x="46" y={chartH - y * chartH / 100 + 14} textAnchor="end" fontSize="9" fill="var(--muted)">{y}%</text>
+              <text x="46" y={chartH - y * chartH / 100 + 14} textAnchor="end" fontSize="9" fill="var(--ink-muted)">{y}%</text>
             </g>
           ))}
           {/* Bars */}
@@ -691,11 +748,11 @@ function NaturalSelectionSim() {
                 fill="#34d399" rx="2"/>
               <rect x={52 + i * barW} y={10} width={barW - 2} height={(100 - h.camou) * chartH / 100}
                 fill="#fca5a5" rx="2" opacity="0.7"/>
-              <text x={52 + i * barW + barW / 2} y={chartH + 28} textAnchor="middle" fontSize="9" fill="var(--muted)">{i}</text>
+              <text x={52 + i * barW + barW / 2} y={chartH + 28} textAnchor="middle" fontSize="9" fill="var(--ink-muted)">{i}</text>
             </g>
           ))}
-          <text x={chartW / 2 + 52} y={chartH + 42} textAnchor="middle" fontSize="10" fill="var(--muted)">Generation</text>
-          <text x="8" y={chartH / 2 + 10} textAnchor="middle" fontSize="10" fill="var(--muted)"
+          <text x={chartW / 2 + 52} y={chartH + 42} textAnchor="middle" fontSize="10" fill="var(--ink-muted)">Generation</text>
+          <text x="8" y={chartH / 2 + 10} textAnchor="middle" fontSize="10" fill="var(--ink-muted)"
             transform={`rotate(-90, 8, ${chartH / 2 + 10})`}>% of population</text>
         </svg>
       </div>
@@ -709,12 +766,73 @@ function NaturalSelectionSim() {
         <Stat value={gen} label="Generation"/>
       </div>
       <div className="ctrl-row" style={{ marginTop: 8 }}>
-        <button className="btn btn-accent" onClick={() => setRunning(true)} disabled={running || gen >= GENS - 1}>
+        <button className="btn btn-accent" onClick={() => setRunning(true)} disabled={running || gen >= GENS}>
           Run simulation
         </button>
         <button className="btn btn-ghost" onClick={reset}>Reset</button>
       </div>
     </Interactive>
+  );
+}
+
+/* Header figure for 5.4: three-panel camouflage story (variation -> selection -> inheritance).
+   Panels use fixed leaf colours; labels outside the panels use theme vars. */
+function NaturalSelectionFigure() {
+  const POS = [[32, 34], [84, 28], [142, 40], [50, 80], [108, 74], [154, 96], [28, 126], [80, 136], [128, 130], [160, 150]];
+  const PANELS = [
+    { title: "1. Variation", sub: "colours vary", c: "GBGBGBBGBG", eaten: [] },
+    { title: "2. Selection", sub: "brown ones eaten", c: "GBGBGBBGBG", eaten: [1, 3, 7, 8] },
+    { title: "3. Inheritance", sub: "mostly green", c: "GGGBGGGGBG", eaten: [] },
+  ];
+  const beetle = (x, y, col, faded, k) => (
+    <g key={k} transform={`translate(${x},${y}) rotate(${(k * 37) % 60 - 30})`} opacity={faded ? 0.28 : 1}>
+      {[-7, 0, 7].map(ly => <line key={ly} x1="-13" y1={ly} x2="13" y2={ly} stroke="#1b1a17" strokeWidth="1.4"/>)}
+      <circle cx="0" cy="-13" r="5" fill="#1b1a17"/>
+      <ellipse cx="0" cy="0" rx="9" ry="12" fill={col === "G" ? "#4f9443" : "#8a5a2b"} stroke="#1b1a17" strokeWidth="1.4"/>
+      <line x1="0" y1="-11" x2="0" y2="12" stroke="#1b1a17" strokeWidth="1"/>
+    </g>
+  );
+  return (
+    <Figure caption="Natural selection by camouflage. Beetles vary in colour; birds spot and eat more of the brown beetles on green leaves; survivors pass on their colour genes, so over generations green beetles become more common.">
+      <svg viewBox="0 0 600 264" width="100%" style={{ maxWidth: 640, display: "block", margin: "0 auto" }} role="img"
+        aria-label="Three panels. Panel 1, variation: five green and five brown beetles on green leaves. Panel 2, selection: birds eat three brown beetles and one green beetle; four green and two brown survive. Panel 3, inheritance: several generations later, eight green beetles and two brown beetles.">
+        <defs><clipPath id="ns-panel-clip"><rect x="1" y="1" width="178" height="170" rx="9"/></clipPath></defs>
+        {PANELS.map((p, i) => {
+          const ox = 10 + i * 200, oy = 24;
+          return (
+            <g key={p.title}>
+              <g transform={`translate(${ox},${oy})`}>
+                <rect width="180" height="172" rx="10" fill="#cfe5c4" stroke="var(--border-strong)" strokeWidth="2"/>
+                <g clipPath="url(#ns-panel-clip)">
+                  <ellipse cx="55" cy="50" rx="62" ry="30" fill="#6fae5a" transform="rotate(-25 55 50)"/>
+                  <ellipse cx="130" cy="110" rx="66" ry="32" fill="#5a9e4b" transform="rotate(20 130 110)"/>
+                  <ellipse cx="40" cy="140" rx="44" ry="24" fill="#6fae5a" transform="rotate(-10 40 140)"/>
+                </g>
+                {POS.map(([x, y], k) => beetle(x, y, p.c[k], p.eaten.includes(k), k))}
+                {p.eaten.map(k => (
+                  <g key={"x" + k} stroke="#c4471c" strokeWidth="3" strokeLinecap="round">
+                    <line x1={POS[k][0] - 10} y1={POS[k][1] - 10} x2={POS[k][0] + 10} y2={POS[k][1] + 10}/>
+                    <line x1={POS[k][0] + 10} y1={POS[k][1] - 10} x2={POS[k][0] - 10} y2={POS[k][1] + 10}/>
+                  </g>
+                ))}
+                {i === 1 && (
+                  <g transform="translate(150,-6)">
+                    <ellipse cx="0" cy="8" rx="16" ry="11" fill="#4b7bc9" stroke="#1b1a17" strokeWidth="1.6"/>
+                    <circle cx="-13" cy="0" r="8" fill="#4b7bc9" stroke="#1b1a17" strokeWidth="1.6"/>
+                    <path d="M -20 -2 L -30 2 L -20 4 Z" fill="#d99e1e" stroke="#1b1a17" strokeWidth="1.2"/>
+                    <circle cx="-14" cy="-2" r="1.8" fill="#1b1a17"/>
+                    <path d="M 2 4 Q 10 -4 18 2" fill="none" stroke="#1b1a17" strokeWidth="1.4"/>
+                  </g>
+                )}
+              </g>
+              <text x={ox + 90} y="228" textAnchor="middle" fontSize="22" fontWeight="800" fill="var(--ink)">{p.title}</text>
+              <text x={ox + 90} y="254" textAnchor="middle" fontSize="20" fill="var(--ink-muted)">{p.sub}</text>
+              {i < 2 && <path d={`M ${ox + 184} 110 l 12 0 m -5 -5 l 5 5 l -5 5`} fill="none" stroke="var(--ink)" strokeWidth="2.2" strokeLinecap="round"/>}
+            </g>
+          );
+        })}
+      </svg>
+    </Figure>
   );
 }
 
@@ -838,7 +956,7 @@ function Section2({ progress, setProgress }) {
         <p className="lead">How does genetic information pass from parent to child? Why do siblings look different? And how do mutations create the raw material for evolution?</p>
       </div>
 
-      <Figure src="img/inheritance.png" caption="A Punnett square predicts how traits pass to offspring." />
+      <PunnettFigure/>
       <DotPoint id="5.2.1" title="Passing genetic information to offspring" progress={progress} setProgress={setProgress}>
         <p>All organisms reproduce, and in doing so they pass copies of their genetic information to their offspring. In <Term def="Reproduction involving a single parent, producing offspring that are genetically identical (clones) to the parent.">asexual reproduction</Term>, one parent produces offspring that are genetically identical copies. Bacteria split by <Term def="Asexual reproduction in bacteria: the cell copies its DNA and splits into two equal daughter cells.">binary fission</Term>; yeast buds; plants can grow from cuttings. Because only one parent is involved and no shuffling of DNA occurs, all offspring carry exactly the same genetic information.</p>
         <p>In <Term def="Reproduction involving two parents, each contributing half their genetic information through specialised sex cells (gametes).">sexual reproduction</Term>, two parents each contribute half their genetic information through <Term def="Specialised sex cells (sperm and egg) that carry half the chromosome number, produced by meiosis.">gametes</Term>. Gametes are produced by <Term def="A type of cell division that halves the chromosome number and shuffles genetic information, producing four genetically unique sex cells.">meiosis</Term>, which halves the chromosome number and shuffles alleles through a process called crossing over. When two gametes fuse in <Term def="The fusion of sperm and egg to form a zygote with the full chromosome number.">fertilisation</Term>, the resulting zygote inherits a unique combination of genes from both parents, generating the <Term def="Differences between individuals in a population in their genes, traits, or appearance.">genetic variation</Term> that drives natural selection.</p>
@@ -855,7 +973,7 @@ function Section2({ progress, setProgress }) {
       </DotPoint>
 
       <DotPoint id="5.2.2" title="Genes, environment and trait development" progress={progress} setProgress={setProgress}>
-        <p>Most observable characteristics, called <Term def="The observable characteristics of an organism, produced by the interaction of genotype and environment.">phenotypes</Term>, result from the combined effect of many genes working together (called <Term def="Inheritance in which a single trait is influenced by many genes, each making a small contribution.">polygenic inheritance</Term>) plus the influence of environmental factors. Human height, for example, is influenced by more than 700 identified gene variants, but also by nutrition, physical activity, and general health during childhood.</p>
+        <p>Most observable characteristics, called <Term def="The observable characteristics of an organism, produced by the interaction of genotype and environment.">phenotypes</Term>, result from the combined effect of many genes working together (called <Term def="Inheritance in which a single trait is influenced by many genes, each making a small contribution.">polygenic inheritance</Term>) plus the influence of environmental factors. Human height, for example, is influenced by thousands of identified gene variants, but also by nutrition, physical activity, and general health during childhood.</p>
         <p>The interaction between an organism's <Term def="The specific alleles an organism carries at its gene loci.">genotype</Term> (its genetic makeup) and the environment produces the phenotype. Two organisms with identical genotypes can develop different phenotypes if raised in different environments. This is why identical twins, who share the same DNA, often develop differences in height, weight, and health over time. Rather than 'nature versus nurture', most biologists today recognise that genes and environment always work together.</p>
         <Callout kind="fact" title="Hydrangea flowers">
           Hydrangea flowers change colour depending on soil pH. The same genotype produces blue flowers in acidic soil and pink flowers in alkaline soil. The gene for pigment production does not change; what changes is the chemical environment that affects the pigment pathway.
@@ -863,7 +981,7 @@ function Section2({ progress, setProgress }) {
         <QGroup title="Check yourself">
           <MCQ num={11} question="Which of the following traits is MOST strongly influenced by environment?"
             options={["ABO blood type","Human height","Number of chromosomes","Eye shape"]} correct={1}
-            explain="Height is influenced by over 700 genes AND environmental factors like nutrition. Blood type is entirely genetic."/>
+            explain="Height is influenced by thousands of gene variants AND environmental factors like nutrition. Blood type is entirely genetic."/>
         </QGroup>
       </DotPoint>
 
@@ -985,7 +1103,7 @@ function Section4({ progress, setProgress }) {
         <p className="lead">Natural selection, geographic isolation, and deep time have shaped every living thing on Earth. Explore the evidence and the history of ideas that led to one of biology's greatest unifying theories.</p>
       </div>
 
-      <Figure src="img/natural-selection.png" caption="Better-camouflaged individuals survive and pass on their traits." />
+      <NaturalSelectionFigure/>
       <DotPoint id="5.4.1" title="Natural selection and isolation drive evolutionary change" progress={progress} setProgress={setProgress}>
         <p><Term def="The process by which individuals with heritable traits better suited to their environment tend to survive and reproduce more, causing those traits to become more common in the population over generations.">Natural selection</Term> operates on the genetic variation that exists within a population. Four conditions are required: variation in traits, a genetic basis for that variation (<Term def="The ability of a trait to be passed from parents to offspring because it has a genetic basis.">heritability</Term>), differential survival and reproduction, and a <Term def="Any environmental factor (predation, disease, food scarcity, climate) that makes some traits more advantageous than others.">selection pressure</Term>. Over generations, advantageous traits become more common; less advantageous traits become rarer.</p>
         <p><Term def="Separation of a population by a physical barrier so that the two groups can no longer interbreed, allowing them to evolve independently.">Geographic isolation</Term> is crucial for <Term def="The process by which one species splits into two or more distinct species, usually following geographic isolation.">speciation</Term>. A barrier such as a mountain range, river, or ocean separates a population into two groups that evolve independently under different selection pressures, accumulating different genetic changes through mutation and natural selection. Over millions of years the two populations may become so different that they can no longer interbreed, making them separate species. Darwin's Galapagos finches are a classic example: one ancestral finch diversified into more than a dozen species across different islands.</p>
@@ -1068,13 +1186,13 @@ function Section5({ progress, setProgress }) {
 
       <DotPoint id="5.5.1" title="Ethical frameworks and the HeLa cell line" progress={progress} setProgress={setProgress}>
         <p>Ethical frameworks provide structured ways to evaluate the implications of scientific actions. <Term def="An ethical approach that evaluates actions based on whether they produce the greatest benefit for the greatest number of people.">Utilitarianism</Term> asks whether an action produces the greatest benefit for the greatest number. <Term def="An ethical approach (deontology) that focuses on whether individuals' fundamental rights to privacy, autonomy, and informed consent are respected, regardless of outcomes.">Rights-based ethics</Term> focuses on whether individual rights (to privacy, autonomy, <Term def="The principle that research participants must be given accurate information and must voluntarily agree before their biological materials are used.">informed consent</Term>) are respected, regardless of outcomes. A justice framework asks whether benefits and burdens are distributed fairly across different groups in society.</p>
-        <p>In January 1951, Henrietta Lacks, a 31-year-old African American woman, was treated for cervical cancer at Johns Hopkins Hospital in Baltimore, USA. Without her knowledge or consent, a sample of her tumour cells was taken by researcher George Gey. These cells, named <Term def="The first immortal human cell line, taken from Henrietta Lacks in 1951 without her consent. Used in thousands of medical advances including the polio vaccine.">HeLa cells</Term>, could divide indefinitely in laboratory culture, the first human cells to do so. Henrietta Lacks died in October 1951. HeLa cells went on to contribute to the development of the polio vaccine, cancer research, virology, drug testing, in vitro fertilisation, and thousands of other advances. Pharmaceutical companies have profited significantly. The Lacks family knew nothing of the cells until the 1970s and received no compensation.</p>
+        <p>In 1951, Henrietta Lacks, a 30-year-old African American mother of five, was treated for cervical cancer at Johns Hopkins Hospital in Baltimore, USA. Without her knowledge or consent, a sample of her tumour cells taken during treatment was given to the laboratory of researcher George Gey. These cells, named <Term def="The first immortal human cell line, taken from Henrietta Lacks in 1951 without her consent. Used in thousands of medical advances including the polio vaccine.">HeLa cells</Term>, could divide indefinitely in laboratory culture, the first human cells to do so. Henrietta Lacks died in October 1951. HeLa cells went on to contribute to the development of the polio vaccine, cancer research, virology, drug testing, in vitro fertilisation, and thousands of other advances. Pharmaceutical companies have profited significantly. The Lacks family knew nothing of the cells until the 1970s and for decades received no compensation; in 2023 they reached a settlement with one biotechnology company that had sold HeLa cells.</p>
         <p>In 2013, a German research group published the full HeLa genome online, making the Lacks family's genetic information publicly accessible without their consent. This renewed concerns about genetic privacy. The case has become a landmark in discussions about <Term def="The right of research participants to give voluntary, informed agreement before their tissue is used in research.">informed consent</Term>, racial justice in medical research, who owns human biological materials, and the responsibilities of scientists and institutions toward research participants.</p>
         <Callout kind="key" title="Constructing an evidence-based ethical argument">
           A strong ethical argument: (1) states your position clearly, (2) applies at least one named ethical framework, (3) uses specific factual evidence, (4) acknowledges and responds to counterarguments, (5) considers whose interests are affected, and (6) reaches a reasoned conclusion.
         </Callout>
         <Callout kind="warn" title="Racial and social context">
-          Henrietta Lacks was an African American woman treated at a segregated public hospital. Her community disproportionately bore the costs (cells taken without consent, no compensation) while institutions in predominantly white settings reaped the benefits. An ethical analysis that ignores race and class fails to account for the full pattern of injustice in the case.
+          Henrietta Lacks was an African American woman treated in the racially segregated wards of the hospital. Her community disproportionately bore the costs (cells taken without consent, no compensation) while institutions in predominantly white settings reaped the benefits. An ethical analysis that ignores race and class fails to account for the full pattern of injustice in the case.
         </Callout>
         <QGroup title="Check yourself">
           <MCQ num={29} question="Which ethical framework argues that actions should be judged by whether individual rights to autonomy and consent are respected?"

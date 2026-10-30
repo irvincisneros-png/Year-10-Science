@@ -101,7 +101,7 @@ function ConservationSim() {
     style: {
       fontSize: 13,
       fontWeight: 700,
-      color: "var(--muted)",
+      color: "var(--ink-muted)",
       marginBottom: 8
     }
   }, "BEFORE REACTION"), /*#__PURE__*/React.createElement("svg", {
@@ -173,7 +173,7 @@ function ConservationSim() {
     style: {
       fontSize: 13,
       fontWeight: 700,
-      color: "var(--muted)",
+      color: "var(--ink-muted)",
       marginBottom: 8
     }
   }, "AFTER REACTION"), /*#__PURE__*/React.createElement("svg", {
@@ -212,7 +212,7 @@ function ConservationSim() {
     x: "30",
     y: "10",
     fontSize: "10",
-    fill: "var(--muted)"
+    fill: "var(--ink-muted)"
   }, "CO\u2082 escapes")), reacted && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("circle", {
     cx: "30",
     cy: "52",
@@ -256,6 +256,262 @@ function ConservationSim() {
     title: "Mass conserved!"
   }, "Every atom stayed inside. The total mass before and after is exactly the same."));
 }
+
+/* Header figure for 6.1: a level balance with the same atoms on each pan (2H2 + O2 -> 2H2O). */
+function ConservationFigure() {
+  var H = function H(x, y, k) {
+    return /*#__PURE__*/React.createElement("circle", {
+      key: k,
+      cx: x,
+      cy: y,
+      r: "7",
+      fill: "#f7f1e3",
+      stroke: "#1b1a17",
+      strokeWidth: "1.4"
+    });
+  };
+  var O = function O(x, y, k) {
+    return /*#__PURE__*/React.createElement("circle", {
+      key: k,
+      cx: x,
+      cy: y,
+      r: "11",
+      fill: "#ef6b4b",
+      stroke: "#1b1a17",
+      strokeWidth: "1.4"
+    });
+  };
+  var pan = function pan(cx) {
+    return /*#__PURE__*/React.createElement("g", null, /*#__PURE__*/React.createElement("line", {
+      x1: cx,
+      y1: "62",
+      x2: cx - 46,
+      y2: "128",
+      stroke: "var(--ink)",
+      strokeWidth: "1.6"
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: cx,
+      y1: "62",
+      x2: cx + 46,
+      y2: "128",
+      stroke: "var(--ink)",
+      strokeWidth: "1.6"
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M ".concat(cx - 54, " 128 Q ").concat(cx, " 164 ").concat(cx + 54, " 128 Z"),
+      fill: "#f7f1e3",
+      stroke: "var(--border-strong)",
+      strokeWidth: "2"
+    }));
+  };
+  return /*#__PURE__*/React.createElement(Figure, {
+    caption: "Mass is conserved. 4 g of hydrogen and 32 g of oxygen (2H\u2082 + O\u2082) react to make 36 g of water (2H\u2082O). The same 4 H atoms and 2 O atoms are on each pan, just rearranged, so the balance stays level."
+  }, /*#__PURE__*/React.createElement("svg", {
+    viewBox: "0 0 360 236",
+    width: "100%",
+    style: {
+      maxWidth: 420,
+      display: "block",
+      margin: "0 auto"
+    },
+    role: "img",
+    "aria-label": "A level balance. Left pan: two hydrogen molecules and one oxygen molecule, 4 g plus 32 g equals 36 g. Right pan: two water molecules, 36 g. Both pans hold 4 hydrogen atoms and 2 oxygen atoms."
+  }, /*#__PURE__*/React.createElement("rect", {
+    x: "140",
+    y: "204",
+    width: "80",
+    height: "10",
+    rx: "3",
+    fill: "var(--ink)"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "180",
+    y1: "62",
+    x2: "180",
+    y2: "206",
+    stroke: "var(--ink)",
+    strokeWidth: "5"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M 170 70 L 180 54 L 190 70 Z",
+    fill: "var(--ink)"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "72",
+    y1: "62",
+    x2: "288",
+    y2: "62",
+    stroke: "var(--ink)",
+    strokeWidth: "5",
+    strokeLinecap: "round"
+  }), pan(72), pan(288), H(38, 122, "a"), H(51, 122, "b"), H(38, 106, "c"), H(51, 106, "d"), O(78, 120, "e"), O(98, 120, "f"), [262, 310].map(function (x) {
+    return /*#__PURE__*/React.createElement("g", {
+      key: x
+    }, H(x - 11, 108, "h1"), H(x + 11, 108, "h2"), O(x, 121, "o"));
+  }), /*#__PURE__*/React.createElement("text", {
+    x: "72",
+    y: "182",
+    textAnchor: "middle",
+    fontSize: "15",
+    fontWeight: "800",
+    fill: "var(--ink)"
+  }, "2H\u2082 + O\u2082"), /*#__PURE__*/React.createElement("text", {
+    x: "72",
+    y: "201",
+    textAnchor: "middle",
+    fontSize: "13",
+    fill: "var(--ink)"
+  }, "4 g + 32 g = 36 g"), /*#__PURE__*/React.createElement("text", {
+    x: "288",
+    y: "182",
+    textAnchor: "middle",
+    fontSize: "15",
+    fontWeight: "800",
+    fill: "var(--ink)"
+  }, "2H\u2082O"), /*#__PURE__*/React.createElement("text", {
+    x: "288",
+    y: "201",
+    textAnchor: "middle",
+    fontSize: "13",
+    fill: "var(--ink)"
+  }, "36 g"), /*#__PURE__*/React.createElement("text", {
+    x: "72",
+    y: "40",
+    textAnchor: "middle",
+    fontSize: "13",
+    fontWeight: "700",
+    fill: "var(--ink-muted)"
+  }, "Reactants"), /*#__PURE__*/React.createElement("text", {
+    x: "288",
+    y: "40",
+    textAnchor: "middle",
+    fontSize: "13",
+    fontWeight: "700",
+    fill: "var(--ink-muted)"
+  }, "Products"), /*#__PURE__*/React.createElement("circle", {
+    cx: "140",
+    cy: "18",
+    r: "6",
+    fill: "#f7f1e3",
+    stroke: "#1b1a17",
+    strokeWidth: "1.4"
+  }), /*#__PURE__*/React.createElement("text", {
+    x: "150",
+    y: "22",
+    fontSize: "12",
+    fill: "var(--ink)"
+  }, "H"), /*#__PURE__*/React.createElement("circle", {
+    cx: "182",
+    cy: "18",
+    r: "8",
+    fill: "#ef6b4b",
+    stroke: "#1b1a17",
+    strokeWidth: "1.4"
+  }), /*#__PURE__*/React.createElement("text", {
+    x: "194",
+    y: "22",
+    fontSize: "12",
+    fill: "var(--ink)"
+  }, "O")));
+}
+
+/* Header figure for 6.4: neutron-induced fission of U-235 (mass and atomic numbers balance:
+   1 + 235 = 141 + 92 + 3; 92 = 56 + 36). */
+function FissionFigure() {
+  var nuc = function nuc(cx, cy, r, fill, label) {
+    return /*#__PURE__*/React.createElement("g", null, /*#__PURE__*/React.createElement("circle", {
+      cx: cx,
+      cy: cy,
+      r: r,
+      fill: fill,
+      stroke: "#1b1a17",
+      strokeWidth: "2"
+    }), /*#__PURE__*/React.createElement("text", {
+      x: cx,
+      y: cy + 5,
+      textAnchor: "middle",
+      fontSize: r > 30 ? 15 : 13,
+      fontWeight: "800",
+      fill: "#1b1a17"
+    }, label));
+  };
+  var n = function n(cx, cy) {
+    return /*#__PURE__*/React.createElement("g", null, /*#__PURE__*/React.createElement("circle", {
+      cx: cx,
+      cy: cy,
+      r: "9",
+      fill: "#c9c2b4",
+      stroke: "#1b1a17",
+      strokeWidth: "1.6"
+    }), /*#__PURE__*/React.createElement("text", {
+      x: cx,
+      y: cy + 4,
+      textAnchor: "middle",
+      fontSize: "11",
+      fontWeight: "700",
+      fill: "#1b1a17"
+    }, "n"));
+  };
+  var arrow = function arrow(d) {
+    return /*#__PURE__*/React.createElement("path", {
+      d: d,
+      fill: "none",
+      stroke: "var(--ink)",
+      strokeWidth: "2",
+      markerEnd: "url(#fis-arrow)"
+    });
+  };
+  return /*#__PURE__*/React.createElement(Figure, {
+    caption: "Nuclear fission. A neutron is absorbed by a uranium-235 nucleus, which splits into two smaller nuclei (for example barium-141 and krypton-92), releasing a large amount of energy and three more neutrons that can trigger further fissions."
+  }, /*#__PURE__*/React.createElement("svg", {
+    viewBox: "0 0 360 224",
+    width: "100%",
+    style: {
+      maxWidth: 460,
+      display: "block",
+      margin: "0 auto"
+    },
+    role: "img",
+    "aria-label": "A neutron hits a uranium-235 nucleus. The nucleus splits into barium-141 and krypton-92, releasing energy and 3 neutrons. Equation: n plus U-235 gives Ba-141 plus Kr-92 plus 3 n plus energy."
+  }, /*#__PURE__*/React.createElement("defs", null, /*#__PURE__*/React.createElement("marker", {
+    id: "fis-arrow",
+    viewBox: "0 0 10 10",
+    refX: "8",
+    refY: "5",
+    markerWidth: "6",
+    markerHeight: "6",
+    orient: "auto-start-reverse"
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M 0 0 L 10 5 L 0 10 Z",
+    fill: "var(--ink)"
+  }))), n(24, 100), /*#__PURE__*/React.createElement("text", {
+    x: "4",
+    y: "128",
+    fontSize: "12",
+    fill: "var(--ink)"
+  }, "neutron"), arrow("M 36 100 L 66 100"), nuc(108, 100, 38, "#d99e1e", "U-235"), /*#__PURE__*/React.createElement("path", {
+    d: "M 178 80 L 184 93 L 198 90 L 189 101 L 198 112 L 184 109 L 178 122 L 172 109 L 158 112 L 167 101 L 158 90 L 172 93 Z",
+    fill: "#f6c945",
+    stroke: "#1b1a17",
+    strokeWidth: "1.4"
+  }), /*#__PURE__*/React.createElement("text", {
+    x: "178",
+    y: "142",
+    textAnchor: "middle",
+    fontSize: "12",
+    fontWeight: "700",
+    fill: "var(--ink)"
+  }, "energy"), arrow("M 190 88 L 224 66"), arrow("M 190 114 L 226 136"), nuc(252, 52, 28, "#ef6b4b", "Ba-141"), nuc(252, 152, 24, "#4b7bc9", "Kr-92"), arrow("M 198 98 Q 290 92 316 58"), arrow("M 200 101 L 318 101"), arrow("M 198 104 Q 290 110 316 146"), n(330, 50), n(332, 101), n(330, 154), /*#__PURE__*/React.createElement("text", {
+    x: "352",
+    y: "180",
+    textAnchor: "end",
+    fontSize: "12",
+    fill: "var(--ink)"
+  }, "3 neutrons"), /*#__PURE__*/React.createElement("text", {
+    x: "180",
+    y: "214",
+    textAnchor: "middle",
+    fontSize: "13",
+    fontWeight: "700",
+    fill: "var(--ink)"
+  }, "n + U-235 \u2192 Ba-141 + Kr-92 + 3 n + energy")));
+}
 function Section61(_ref) {
   var progress = _ref.progress,
     setProgress = _ref.setProgress;
@@ -265,10 +521,7 @@ function Section61(_ref) {
     className: "eyebrow"
   }, "6.1 Law of conservation of mass"), /*#__PURE__*/React.createElement("h1", null, "Nothing is created, nothing is lost"), /*#__PURE__*/React.createElement("p", {
     className: "lead"
-  }, "In every chemical reaction, the total mass of the substances you start with equals the total mass of the substances you end up with.")), /*#__PURE__*/React.createElement(Figure, {
-    src: "img/conservation-mass.png",
-    caption: "Mass is conserved \u2014 the reactant and product masses balance."
-  }), /*#__PURE__*/React.createElement(DotPoint, {
+  }, "In every chemical reaction, the total mass of the substances you start with equals the total mass of the substances you end up with.")), /*#__PURE__*/React.createElement(ConservationFigure, null), /*#__PURE__*/React.createElement(DotPoint, {
     id: "6.1.1",
     title: "Explain the meaning of the law of conservation of mass",
     progress: progress,
@@ -330,6 +583,7 @@ function Section61(_ref) {
   }, "closed system"), " is one where no matter can cross the boundary. In a closed system, every atom produced in the reaction stays inside, so the total mass is always conserved, even if gases are formed."), /*#__PURE__*/React.createElement("p", null, "In an ", /*#__PURE__*/React.createElement(Term, {
     def: "A system that can exchange both matter and energy with the surroundings."
   }, "open system"), ", gases such as CO\u2082 or water vapour can escape, making it look as though mass has been lost. Alternatively, if a substance absorbs oxygen from the air (like burning magnesium), the mass appears to increase. Both are only apparent changes. If you account for all the substances involved, including those that entered or left, mass is still conserved."), /*#__PURE__*/React.createElement(ConservationSim, null), /*#__PURE__*/React.createElement(Figure, {
+    num: "1",
     caption: "Open vs closed systems: matter escaping causes apparent mass changes."
   }, /*#__PURE__*/React.createElement("svg", {
     viewBox: "0 0 520 120",
@@ -358,13 +612,13 @@ function Section61(_ref) {
     y: "75",
     textAnchor: "middle",
     fontSize: "12",
-    fill: "var(--ink)"
+    fill: "#1b1a17"
   }, "CO\u2082 escapes"), /*#__PURE__*/React.createElement("text", {
     x: "110",
     y: "95",
     textAnchor: "middle",
     fontSize: "11",
-    fill: "var(--muted)"
+    fill: "var(--accent-deep)"
   }, "apparent mass loss"), /*#__PURE__*/React.createElement("path", {
     d: "M180,40 Q220,10 250,5",
     stroke: "var(--accent-deep)",
@@ -405,13 +659,13 @@ function Section61(_ref) {
     y: "70",
     textAnchor: "middle",
     fontSize: "12",
-    fill: "var(--ink)"
+    fill: "#1b1a17"
   }, "All gases trapped"), /*#__PURE__*/React.createElement("text", {
     x: "410",
     y: "90",
     textAnchor: "middle",
     fontSize: "11",
-    fill: "var(--muted)"
+    fill: "var(--accent-deep)"
   }, "mass unchanged"))), /*#__PURE__*/React.createElement(Callout, {
     kind: "fact",
     title: "Real-world example"
@@ -635,7 +889,7 @@ function EquationBalancer() {
     }, i > 0 && /*#__PURE__*/React.createElement("span", {
       style: {
         fontWeight: 700,
-        color: "var(--accent-deep)"
+        color: "var(--ink)"
       }
     }, "+"), /*#__PURE__*/React.createElement(CoeffInput, {
       val: rCoeffs[i] || 1,
@@ -654,7 +908,7 @@ function EquationBalancer() {
     style: {
       fontWeight: 700,
       fontSize: 20,
-      color: "var(--accent-deep)",
+      color: "var(--ink)",
       margin: "0 8px"
     }
   }, "\u2192"), eq.products.map(function (s, i) {
@@ -668,7 +922,7 @@ function EquationBalancer() {
     }, i > 0 && /*#__PURE__*/React.createElement("span", {
       style: {
         fontWeight: 700,
-        color: "var(--accent-deep)"
+        color: "var(--ink)"
       }
     }, "+"), /*#__PURE__*/React.createElement(CoeffInput, {
       val: pCoeffs[i] || 1,
@@ -703,7 +957,7 @@ function EquationBalancer() {
       key: el
     }, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("strong", null, el)), /*#__PURE__*/React.createElement("td", null, r), /*#__PURE__*/React.createElement("td", null, p), /*#__PURE__*/React.createElement("td", {
       style: {
-        color: r === p ? "#16a34a" : "#dc2626",
+        color: r === p ? "#16a34a" : "#ef4444",
         fontWeight: 700
       }
     }, r === p ? "Yes" : "No"));
@@ -837,6 +1091,7 @@ function ReactionTypeClassifier() {
       fontFamily: "monospace",
       padding: "12px 16px",
       background: "var(--accent-soft)",
+      color: "var(--accent-deep)",
       borderRadius: 10,
       marginBottom: 8
     }
@@ -866,6 +1121,7 @@ function ReactionTypeClassifier() {
         borderRadius: 10,
         border: border,
         background: bg,
+        color: bg === "var(--surface)" ? "var(--ink)" : "#1b1a17",
         fontWeight: 700,
         fontSize: 14,
         cursor: chosen ? "default" : "pointer",
@@ -909,6 +1165,7 @@ function Section62(_ref5) {
   }, "Ionic compounds"), " are named by stating the metal (cation) first, then the non-metal (anion) with the ending changed to \"-ide\". For transition metals, a Roman numeral in brackets shows the charge: for example, FeCl\u2083 is iron(III) chloride. To write the formula, use the swap-and-drop rule: swap the values of the ion charges to become subscripts, then simplify."), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement(Term, {
     def: "A compound formed between two or more non-metals, held together by shared pairs of electrons."
   }, "Covalent compounds"), " use Greek prefixes (mono-, di-, tri-, tetra-, penta-, hexa-) to show how many atoms of each element are present. The second element gets the \"-ide\" ending. For example, CO\u2082 is carbon dioxide and N\u2082O\u2084 is dinitrogen tetroxide."), /*#__PURE__*/React.createElement(Figure, {
+    num: "2",
     caption: "Common polyatomic ions you need to know."
   }, /*#__PURE__*/React.createElement("svg", {
     viewBox: "0 0 560 130",
@@ -936,7 +1193,7 @@ function Section62(_ref5) {
       textAnchor: "middle",
       fontSize: "12",
       fontWeight: "700",
-      fill: "var(--ink)"
+      fill: "#1b1a17"
     }, name), /*#__PURE__*/React.createElement("text", {
       x: "89",
       y: "38",
@@ -988,127 +1245,91 @@ function Section62(_ref5) {
     progress: progress,
     setProgress: setProgress
   }, /*#__PURE__*/React.createElement("p", null, "Models help you visualise what happens at the atomic level. When a reaction occurs, bonds between atoms in the reactants break, and new bonds form to make the products. The atoms themselves are never destroyed; they are just rearranged into different combinations."), /*#__PURE__*/React.createElement("p", null, "You can model reactions using coloured balls and sticks, drawings of circles labelled with element symbols, Lego bricks, or computer simulations. Whatever method you use, the key check is: every atom in the reactants must appear in the products, with none added or removed."), /*#__PURE__*/React.createElement(Figure, {
-    num: "2",
-    caption: "Water formation: 4 H atoms and 2 O atoms appear on both sides."
+    num: "3",
+    caption: "Water formation: 4 H atoms (cream) and 2 O atoms (red) appear on both sides, just rearranged."
   }, /*#__PURE__*/React.createElement("svg", {
-    viewBox: "0 0 520 90",
+    viewBox: "0 0 470 118",
     width: "100%",
     style: {
       maxWidth: 520
-    }
-  }, /*#__PURE__*/React.createElement("circle", {
-    cx: "30",
-    cy: "45",
-    r: "13",
-    fill: "#ef4444"
-  }), /*#__PURE__*/React.createElement("circle", {
-    cx: "58",
-    cy: "45",
-    r: "13",
-    fill: "#ef4444"
-  }), /*#__PURE__*/React.createElement("line", {
-    x1: "43",
-    y1: "45",
-    x2: "43",
-    y2: "45",
-    stroke: "#333",
-    strokeWidth: "3"
-  }), /*#__PURE__*/React.createElement("circle", {
-    cx: "90",
-    cy: "45",
-    r: "13",
-    fill: "#ef4444"
-  }), /*#__PURE__*/React.createElement("circle", {
-    cx: "118",
-    cy: "45",
-    r: "13",
-    fill: "#ef4444"
-  }), /*#__PURE__*/React.createElement("text", {
-    x: "69",
-    y: "50",
-    textAnchor: "middle",
-    fontSize: "11",
-    fill: "var(--muted)"
-  }, "2H\u2082"), /*#__PURE__*/React.createElement("text", {
-    x: "145",
-    y: "50",
-    textAnchor: "middle",
-    fontSize: "20",
-    fontWeight: "700",
-    fill: "var(--accent-deep)"
-  }, "+"), /*#__PURE__*/React.createElement("circle", {
-    cx: "175",
-    cy: "45",
-    r: "13",
-    fill: "#3b82f6"
-  }), /*#__PURE__*/React.createElement("circle", {
-    cx: "203",
-    cy: "45",
-    r: "13",
-    fill: "#3b82f6"
-  }), /*#__PURE__*/React.createElement("text", {
-    x: "189",
-    y: "75",
-    textAnchor: "middle",
-    fontSize: "11",
-    fill: "var(--muted)"
-  }, "O\u2082"), /*#__PURE__*/React.createElement("text", {
-    x: "235",
-    y: "50",
-    textAnchor: "middle",
-    fontSize: "20",
-    fontWeight: "700",
-    fill: "var(--accent-deep)"
-  }, "\u2192"), /*#__PURE__*/React.createElement("circle", {
-    cx: "270",
-    cy: "38",
-    r: "13",
-    fill: "#ef4444"
-  }), /*#__PURE__*/React.createElement("circle", {
-    cx: "298",
-    cy: "55",
-    r: "18",
-    fill: "#3b82f6"
-  }), /*#__PURE__*/React.createElement("circle", {
-    cx: "326",
-    cy: "38",
-    r: "13",
-    fill: "#ef4444"
-  }), /*#__PURE__*/React.createElement("text", {
-    x: "298",
-    y: "82",
-    textAnchor: "middle",
-    fontSize: "11",
-    fill: "var(--muted)"
-  }, "H\u2082O"), /*#__PURE__*/React.createElement("text", {
-    x: "354",
-    y: "50",
-    textAnchor: "middle",
-    fontSize: "20",
-    fontWeight: "700",
-    fill: "var(--accent-deep)"
-  }, "+"), /*#__PURE__*/React.createElement("circle", {
-    cx: "385",
-    cy: "38",
-    r: "13",
-    fill: "#ef4444"
-  }), /*#__PURE__*/React.createElement("circle", {
-    cx: "413",
-    cy: "55",
-    r: "18",
-    fill: "#3b82f6"
-  }), /*#__PURE__*/React.createElement("circle", {
-    cx: "441",
-    cy: "38",
-    r: "13",
-    fill: "#ef4444"
-  }), /*#__PURE__*/React.createElement("text", {
-    x: "413",
-    y: "82",
-    textAnchor: "middle",
-    fontSize: "11",
-    fill: "var(--muted)"
-  }, "H\u2082O"))), /*#__PURE__*/React.createElement(Callout, {
+    },
+    role: "img",
+    "aria-label": "Particle model: two hydrogen molecules plus one oxygen molecule become two water molecules. Four hydrogen atoms and two oxygen atoms on each side."
+  }, function () {
+    var H = function H(x, y) {
+      return /*#__PURE__*/React.createElement("circle", {
+        cx: x,
+        cy: y,
+        r: "10",
+        fill: "#f7f1e3",
+        stroke: "#1b1a17",
+        strokeWidth: "1.6"
+      });
+    };
+    var O = function O(x, y) {
+      return /*#__PURE__*/React.createElement("circle", {
+        cx: x,
+        cy: y,
+        r: "15",
+        fill: "#ef6b4b",
+        stroke: "#1b1a17",
+        strokeWidth: "1.6"
+      });
+    };
+    var water = function water(x) {
+      return /*#__PURE__*/React.createElement("g", {
+        key: x
+      }, H(x - 15, 34), H(x + 15, 34), O(x, 50));
+    };
+    return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("g", null, H(26, 46), H(43, 46)), /*#__PURE__*/React.createElement("g", null, H(80, 46), H(97, 46)), /*#__PURE__*/React.createElement("text", {
+      x: "62",
+      y: "86",
+      textAnchor: "middle",
+      fontSize: "14",
+      fontWeight: "700",
+      fill: "var(--ink)"
+    }, "2H\u2082"), /*#__PURE__*/React.createElement("text", {
+      x: "128",
+      y: "52",
+      textAnchor: "middle",
+      fontSize: "20",
+      fontWeight: "700",
+      fill: "var(--ink)"
+    }, "+"), /*#__PURE__*/React.createElement("g", null, O(164, 46), O(190, 46)), /*#__PURE__*/React.createElement("text", {
+      x: "177",
+      y: "86",
+      textAnchor: "middle",
+      fontSize: "14",
+      fontWeight: "700",
+      fill: "var(--ink)"
+    }, "O\u2082"), /*#__PURE__*/React.createElement("text", {
+      x: "240",
+      y: "53",
+      textAnchor: "middle",
+      fontSize: "22",
+      fontWeight: "700",
+      fill: "var(--ink)"
+    }, "\u2192"), water(305), water(395), /*#__PURE__*/React.createElement("text", {
+      x: "350",
+      y: "86",
+      textAnchor: "middle",
+      fontSize: "14",
+      fontWeight: "700",
+      fill: "var(--ink)"
+    }, "2H\u2082O"), /*#__PURE__*/React.createElement("text", {
+      x: "110",
+      y: "110",
+      textAnchor: "middle",
+      fontSize: "12",
+      fill: "var(--ink-muted)"
+    }, "4 H atoms, 2 O atoms"), /*#__PURE__*/React.createElement("text", {
+      x: "350",
+      y: "110",
+      textAnchor: "middle",
+      fontSize: "12",
+      fill: "var(--ink-muted)"
+    }, "4 H atoms, 2 O atoms"));
+  }())), /*#__PURE__*/React.createElement(Callout, {
     kind: "key",
     title: "Linking to conservation of mass"
   }, "Because every atom present at the start also appears at the end (just in different arrangements), the total mass cannot change. This directly demonstrates the law of conservation of mass."), /*#__PURE__*/React.createElement(QGroup, {
@@ -1165,7 +1386,7 @@ function Section62(_ref5) {
   }, "hydrogen ions (H\u207A)"), " in the solution. A pH below 7 is acidic, pH 7 is neutral (pure water), and pH above 7 is alkaline."), /*#__PURE__*/React.createElement("p", null, "The scale is logarithmic: each whole-number step represents a tenfold change in acidity. A solution at pH 3 is ten times more acidic than one at pH 4, and one hundred times more acidic than one at pH 5. This is why even small pH changes can have large real-world effects."), /*#__PURE__*/React.createElement("p", null, "pH can be measured with ", /*#__PURE__*/React.createElement(Term, {
     def: "A solution that changes colour across the pH range, giving an approximate reading."
   }, "universal indicator"), ", pH paper, or a digital pH meter for precise readings. Human blood must stay between 7.35 and 7.45 for normal body function, farm soil pH affects crop growth, and pool pH must be controlled to prevent irritation."), /*#__PURE__*/React.createElement(Figure, {
-    num: "3",
+    num: "4",
     caption: "The pH scale with common substances."
   }, /*#__PURE__*/React.createElement("svg", {
     viewBox: "0 0 560 130",
@@ -1257,12 +1478,12 @@ function Section62(_ref5) {
       y1: "26",
       x2: "0",
       y2: "10",
-      stroke: "#333",
+      stroke: "var(--ink)",
       strokeWidth: "1.5"
     }), /*#__PURE__*/React.createElement("text", {
-      x: "0",
+      x: label === "Water" ? -2 : label === "Blood" ? 2 : label === "Battery acid" ? -4 : 0,
       y: "8",
-      textAnchor: "middle",
+      textAnchor: label === "Water" ? "end" : label === "Blood" || label === "Battery acid" ? "start" : "middle",
       fontSize: "9",
       fill: "var(--ink)"
     }, label));
@@ -1276,14 +1497,14 @@ function Section62(_ref5) {
     x: "280",
     y: "115",
     fontSize: "11",
-    fill: "#22c55e",
+    fill: "#16a34a",
     fontWeight: "700",
     textAnchor: "middle"
   }, "NEUTRAL"), /*#__PURE__*/React.createElement("text", {
     x: "550",
     y: "115",
     fontSize: "11",
-    fill: "#6d28d9",
+    fill: "#8b5cf6",
     fontWeight: "700",
     textAnchor: "end"
   }, "ALKALINE"))), /*#__PURE__*/React.createElement(QGroup, {
@@ -1309,7 +1530,7 @@ function Section62(_ref5) {
     kind: "key",
     title: "Titration curve shape"
   }, "The curve starts at low pH (acidic), rises gradually, then rises sharply at the equivalence point (pH = 7 for a strong acid + strong base), then levels off at high pH (alkaline)."), /*#__PURE__*/React.createElement(Figure, {
-    num: "4",
+    num: "5",
     caption: "Titration curve: adding NaOH to HCl."
   }, /*#__PURE__*/React.createElement("svg", {
     viewBox: "0 0 360 200",
@@ -1370,13 +1591,13 @@ function Section62(_ref5) {
     y: "198",
     textAnchor: "middle",
     fontSize: "11",
-    fill: "var(--muted)"
+    fill: "var(--ink-muted)"
   }, "Volume NaOH added (mL)"), /*#__PURE__*/React.createElement("text", {
     x: "14",
     y: "90",
     textAnchor: "middle",
     fontSize: "11",
-    fill: "var(--muted)",
+    fill: "var(--ink-muted)",
     transform: "rotate(-90,14,90)"
   }, "pH"), /*#__PURE__*/React.createElement("path", {
     d: "M40,158 C80,155 110,152 130,148 C150,144 160,140 165,125 C167,115 168,100 168,90 C168,75 170,55 176,45 C184,36 200,33 250,30 C280,29 300,28 320,28",
@@ -1545,7 +1766,10 @@ function CollisionRateSim() {
       borderRadius: 10,
       background: "var(--accent-soft)",
       display: "block",
-      margin: "0 auto 14px"
+      margin: "0 auto 14px",
+      width: "100%",
+      maxWidth: 340,
+      height: "auto"
     }
   }), /*#__PURE__*/React.createElement("div", {
     className: "stat-readout"
@@ -1556,7 +1780,7 @@ function CollisionRateSim() {
     value: rateLabel,
     label: "Description"
   }), /*#__PURE__*/React.createElement(Stat, {
-    value: "".concat(activationEnergy, " kJ"),
+    value: "".concat(activationEnergy, " kJ/mol"),
     label: "Activation energy"
   })), /*#__PURE__*/React.createElement("p", {
     className: "muted",
@@ -1564,7 +1788,7 @@ function CollisionRateSim() {
       marginBottom: 0,
       fontSize: 13
     }
-  }, "A 10 degree rise in temperature roughly doubles the rate. A catalyst lowers the activation energy so more collisions succeed."));
+  }, "In many real reactions a 10 \xB0C rise roughly doubles the rate (this simple model does not show that exactly). A catalyst lowers the activation energy so more collisions succeed."));
 }
 function Section63(_ref9) {
   var progress = _ref9.progress,
@@ -1593,7 +1817,7 @@ function Section63(_ref9) {
     def: "The amount of substance dissolved in a given volume of solution."
   }, "concentration"), " means more particles per unit volume, so collisions happen more often. Larger ", /*#__PURE__*/React.createElement(Term, {
     def: "The total area of a solid that is exposed and available for collisions with other particles."
-  }, "surface area"), " exposes more particles to collisions; powders react faster than lumps because there are far more particle sites available."), /*#__PURE__*/React.createElement("p", null, "Higher temperature makes particles move faster, causing both more frequent collisions and more energetic ones, so more collisions exceed the activation energy. As a rule of thumb, every 10 degree Celsius rise roughly doubles the rate. A ", /*#__PURE__*/React.createElement(Term, {
+  }, "surface area"), " exposes more particles to collisions; powders react faster than lumps because there are far more particle sites available."), /*#__PURE__*/React.createElement("p", null, "Higher temperature makes particles move faster, causing both more frequent collisions and more energetic ones, so more collisions exceed the activation energy. As a rule of thumb, every 10 \xB0C rise roughly doubles the rate for many reactions. A ", /*#__PURE__*/React.createElement(Term, {
     def: "A substance that speeds up a reaction without being consumed in the process. It lowers the activation energy."
   }, "catalyst"), " lowers the activation energy needed, so a higher proportion of collisions are successful, speeding up the reaction without being used up itself."), /*#__PURE__*/React.createElement(CollisionRateSim, null), /*#__PURE__*/React.createElement(Callout, {
     kind: "tip",
@@ -1627,8 +1851,8 @@ function Section63(_ref9) {
     kind: "key",
     title: "Scientific report structure"
   }, "Title - Aim - Hypothesis - Variables - Materials - Method - Results (table + graph) - Discussion - Conclusion."), /*#__PURE__*/React.createElement(Figure, {
-    num: "5",
-    caption: "Sample graph: mass loss vs time for marble chips in acid at two concentrations."
+    num: "6",
+    caption: "Sample graph: mass loss vs time for marble chips in the same volume of acid at two concentrations. The acid is the limiting reactant, so the more concentrated acid reacts faster and also produces more CO\u2082 in total."
   }, /*#__PURE__*/React.createElement("svg", {
     viewBox: "0 0 360 200",
     width: "100%",
@@ -1688,13 +1912,13 @@ function Section63(_ref9) {
     y: "198",
     textAnchor: "middle",
     fontSize: "11",
-    fill: "var(--muted)"
+    fill: "var(--ink-muted)"
   }, "Time (min)"), /*#__PURE__*/React.createElement("text", {
     x: "14",
     y: "90",
     textAnchor: "middle",
     fontSize: "11",
-    fill: "var(--muted)",
+    fill: "var(--ink-muted)",
     transform: "rotate(-90,14,90)"
   }, "Mass loss (g)"), /*#__PURE__*/React.createElement("path", {
     d: "M50,170 C90,140 130,115 160,105 C190,95 230,90 330,88",
@@ -1705,17 +1929,17 @@ function Section63(_ref9) {
     x: "335",
     y: "86",
     fontSize: "10",
-    fill: "var(--accent-deep)"
+    fill: "var(--ink)"
   }, "conc."), /*#__PURE__*/React.createElement("path", {
     d: "M50,170 C90,155 140,140 180,130 C220,120 270,115 330,112",
     fill: "none",
-    stroke: "#94a3b8",
+    stroke: "#7a8699",
     strokeWidth: "2.5"
   }), /*#__PURE__*/React.createElement("text", {
     x: "335",
     y: "112",
     fontSize: "10",
-    fill: "#94a3b8"
+    fill: "#7a8699"
   }, "dilute"))), /*#__PURE__*/React.createElement(QGroup, {
     title: "Check yourself"
   }, /*#__PURE__*/React.createElement(MCQ, {
@@ -1845,13 +2069,13 @@ function HalfLifeSim() {
     y: H + 2,
     textAnchor: "middle",
     fontSize: "10",
-    fill: "var(--muted)"
+    fill: "var(--ink-muted)"
   }, "Time (", iso.unit, ")"), /*#__PURE__*/React.createElement("text", {
     x: "10",
     y: H / 2,
     textAnchor: "middle",
     fontSize: "10",
-    fill: "var(--muted)",
+    fill: "var(--ink-muted)",
     transform: "rotate(-90,10,".concat(H / 2, ")")
   }, "Atoms remaining"), /*#__PURE__*/React.createElement("path", {
     d: pathD,
@@ -2024,7 +2248,7 @@ function NuclearEquationChecker() {
   }, /*#__PURE__*/React.createElement("sup", null, p.parent.A), /*#__PURE__*/React.createElement("sub", null, p.parent.Z), p.parent.symbol), /*#__PURE__*/React.createElement("span", {
     style: {
       fontWeight: 700,
-      color: "var(--accent-deep)",
+      color: "var(--ink)",
       fontSize: 22
     }
   }, "\u2192"), /*#__PURE__*/React.createElement("span", {
@@ -2047,7 +2271,8 @@ function NuclearEquationChecker() {
       borderRadius: 6,
       border: "2px solid var(--accent-deep)",
       padding: "2px 4px",
-      background: checked ? aOk ? "#bbf7d0" : "#fecaca" : "var(--surface)"
+      background: checked ? aOk ? "#bbf7d0" : "#fecaca" : "var(--surface)",
+      color: checked ? "#1b1a17" : "var(--ink)"
     },
     placeholder: "A"
   }), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("input", {
@@ -2064,6 +2289,7 @@ function NuclearEquationChecker() {
       border: "2px solid var(--accent-deep)",
       padding: "2px 4px",
       background: checked ? zOk ? "#bbf7d0" : "#fecaca" : "var(--surface)",
+      color: checked ? "#1b1a17" : "var(--ink)",
       marginTop: 2
     },
     placeholder: "Z"
@@ -2074,7 +2300,7 @@ function NuclearEquationChecker() {
   }, p.daughter.symbol))), /*#__PURE__*/React.createElement("span", {
     style: {
       fontWeight: 700,
-      color: "var(--accent-deep)"
+      color: "var(--ink)"
     }
   }, "+"), /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("sup", null, p.particle.A), /*#__PURE__*/React.createElement("sub", null, p.particle.Z), p.particle.symbol)), /*#__PURE__*/React.createElement("div", {
     className: "ctrl-row",
@@ -2102,10 +2328,7 @@ function Section64(_ref0) {
     className: "eyebrow"
   }, "6.4 Nuclear reactions"), /*#__PURE__*/React.createElement("h1", null, "Inside the nucleus"), /*#__PURE__*/React.createElement("p", {
     className: "lead"
-  }, "From the Big Bang to radioactive decay, half-lives, fission, and fusion, the nucleus is where some of the universe's most powerful reactions take place.")), /*#__PURE__*/React.createElement(Figure, {
-    src: "img/nuclear.png",
-    caption: "In nuclear fission a heavy nucleus splits, releasing energy."
-  }), /*#__PURE__*/React.createElement(DotPoint, {
+  }, "From the Big Bang to radioactive decay, half-lives, fission, and fusion, the nucleus is where some of the universe's most powerful reactions take place.")), /*#__PURE__*/React.createElement(FissionFigure, null), /*#__PURE__*/React.createElement(DotPoint, {
     id: "6.4.1",
     title: "Outline how the first elements were formed after the Big Bang",
     progress: progress,
@@ -2140,9 +2363,9 @@ function Section64(_ref0) {
     def: "A nucleus that has the right balance of protons and neutrons to remain intact without emitting radiation."
   }, "stable"), " when these two forces are balanced."), /*#__PURE__*/React.createElement("p", null, "A nucleus becomes ", /*#__PURE__*/React.createElement(Term, {
     def: "A nucleus that has too many or too few neutrons relative to its protons, causing it to emit radiation to reach a more stable state."
-  }, "unstable"), " if it has too many neutrons for its protons, too few neutrons for its protons, or too many nucleons in total. Every element with more than 83 protons has at least some unstable ", /*#__PURE__*/React.createElement(Term, {
+  }, "unstable"), " if it has too many neutrons for its protons, too few neutrons for its protons, or too many nucleons in total. Every element with more than 82 protons (heavier than lead) has no stable ", /*#__PURE__*/React.createElement(Term, {
     def: "Atoms of the same element with different numbers of neutrons. Some isotopes are radioactive."
-  }, "isotopes"), ". Unstable nuclei undergo ", /*#__PURE__*/React.createElement(Term, {
+  }, "isotopes"), " at all: all of its isotopes are radioactive. Unstable nuclei undergo ", /*#__PURE__*/React.createElement(Term, {
     def: "The spontaneous emission of radiation from an unstable nucleus to reach a more stable state."
   }, "radioactive decay"), ", emitting alpha particles, beta particles, or gamma radiation."), /*#__PURE__*/React.createElement(Callout, {
     kind: "key",
@@ -2151,10 +2374,10 @@ function Section64(_ref0) {
     title: "Check yourself"
   }, /*#__PURE__*/React.createElement(MCQ, {
     num: 18,
-    question: "Why do all elements with more than 83 protons have at least some radioactive isotopes?",
+    question: "Why are all isotopes of elements with more than 82 protons radioactive?",
     options: ["They have too few electrons", "The strong nuclear force cannot balance the repulsion between so many protons", "They are too light to be stable", "They were not formed in the Big Bang"],
     correct: 1,
-    explain: "Above 83 protons, the electrostatic repulsion between protons in the nucleus becomes so strong that no stable neutron-to-proton ratio exists."
+    explain: "Above 82 protons, the electrostatic repulsion between protons in the nucleus becomes so strong that no stable neutron-to-proton ratio exists."
   }))), /*#__PURE__*/React.createElement(DotPoint, {
     id: "6.4.3",
     title: "Represent alpha and beta reactions as nuclear equations",
@@ -2164,9 +2387,9 @@ function Section64(_ref0) {
     def: "An equation showing how atomic nuclei change, with mass numbers and atomic numbers balancing on both sides."
   }, "nuclear equations"), ". In these, the top number (mass number, A) is the total number of protons and neutrons, and the bottom number (atomic number, Z) is the number of protons. Both A and Z must balance on each side of the arrow."), /*#__PURE__*/React.createElement("p", null, "In ", /*#__PURE__*/React.createElement(Term, {
     def: "A type of radioactive decay in which an alpha particle (2 protons + 2 neutrons) is emitted, reducing the mass number by 4 and the atomic number by 2."
-  }, "alpha decay"), ", the nucleus loses an alpha particle (written as \u2074\u2082He or \u03B1), so the mass number decreases by 4 and the atomic number decreases by 2. The element changes to a different element. Example: \xB2\xB3\u2078\u240A\u2082U \u2192 \xB2\xB3\u2074\u240A\u2080Th + \u2074\u2082He."), /*#__PURE__*/React.createElement("p", null, "In ", /*#__PURE__*/React.createElement(Term, {
+  }, "alpha decay"), ", the nucleus loses an alpha particle (written as \u2074\u2082He or \u03B1), so the mass number decreases by 4 and the atomic number decreases by 2. The element changes to a different element. Example: \xB2\xB3\u2078\u2089\u2082U \u2192 \xB2\xB3\u2074\u2089\u2080Th + \u2074\u2082He."), /*#__PURE__*/React.createElement("p", null, "In ", /*#__PURE__*/React.createElement(Term, {
     def: "A type of radioactive decay in which a neutron converts into a proton and a high-energy electron (beta particle) that is ejected, increasing the atomic number by 1."
-  }, "beta decay"), ", a neutron in the nucleus becomes a proton, and a high-energy electron (the beta particle, \u207B\xB9\u2080e) is ejected. The mass number stays the same, but the atomic number increases by 1. Example: \xB9\u2074\u2086C \u2192 \xB9\u2074\u2087N + \u207B\xB9\u2080e. ", /*#__PURE__*/React.createElement(Term, {
+  }, "beta decay"), ", a neutron in the nucleus becomes a proton, and a high-energy electron (the beta particle, \u2070\u208B\u2081e) is ejected. The mass number stays the same, but the atomic number increases by 1. Example: \xB9\u2074\u2086C \u2192 \xB9\u2074\u2087N + \u2070\u208B\u2081e. ", /*#__PURE__*/React.createElement(Term, {
     def: "High-energy electromagnetic radiation emitted alongside alpha or beta decay. It does not change the atomic or mass number."
   }, "Gamma emission"), " does not change atomic or mass number."), /*#__PURE__*/React.createElement(NuclearEquationChecker, null), /*#__PURE__*/React.createElement(QGroup, {
     title: "Check yourself"
@@ -2219,10 +2442,10 @@ function Section64(_ref0) {
   }, "chain reaction"), ". Fission releases about one million times more energy per unit mass than a chemical reaction. It is used in nuclear power stations and atomic weapons."), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement(Term, {
     def: "The joining of two small nuclei to form a larger nucleus, releasing a very large amount of energy."
   }, "Nuclear fusion"), " is the opposite: two small nuclei (usually hydrogen isotopes deuterium and tritium) are forced together to form a larger nucleus. Fusion requires extremely high temperatures (millions of degrees Celsius) and pressures, conditions found naturally inside stars. Fusion releases even more energy per unit mass than fission and produces far less long-lived radioactive waste. Commercial fusion power stations do not yet exist, but international research projects like ITER are working on it."), /*#__PURE__*/React.createElement(Figure, {
-    num: "6",
+    num: "7",
     caption: "Fission vs fusion: key differences at a glance."
   }, /*#__PURE__*/React.createElement("svg", {
-    viewBox: "0 0 540 130",
+    viewBox: "0 0 540 146",
     width: "100%",
     style: {
       maxWidth: 540
@@ -2234,7 +2457,7 @@ function Section64(_ref0) {
       fus = _ref10[2];
     return /*#__PURE__*/React.createElement("g", {
       key: feat,
-      transform: "translate(0,".concat(i * 24, ")")
+      transform: "translate(0,".concat(i * 24 + 22, ")")
     }, /*#__PURE__*/React.createElement("rect", {
       x: "0",
       y: "4",
@@ -2248,7 +2471,7 @@ function Section64(_ref0) {
       textAnchor: "middle",
       fontSize: "11",
       fontWeight: "700",
-      fill: "var(--ink)"
+      fill: "#1b1a17"
     }, feat), /*#__PURE__*/React.createElement("rect", {
       x: "165",
       y: "4",
@@ -2261,7 +2484,7 @@ function Section64(_ref0) {
       y: "18",
       textAnchor: "middle",
       fontSize: "10",
-      fill: "var(--ink)"
+      fill: "#1b1a17"
     }, fiss), /*#__PURE__*/React.createElement("rect", {
       x: "345",
       y: "4",
@@ -2274,29 +2497,29 @@ function Section64(_ref0) {
       y: "18",
       textAnchor: "middle",
       fontSize: "10",
-      fill: "var(--ink)"
+      fill: "#1b1a17"
     }, fus));
   }), /*#__PURE__*/React.createElement("text", {
     x: "80",
-    y: "124",
+    y: "18",
     textAnchor: "middle",
     fontSize: "12",
     fontWeight: "700",
     fill: "var(--ink)"
   }, "Feature"), /*#__PURE__*/React.createElement("text", {
     x: "252",
-    y: "124",
+    y: "18",
     textAnchor: "middle",
     fontSize: "12",
     fontWeight: "700",
-    fill: "#1d4ed8"
+    fill: "#4b7bc9"
   }, "Fission"), /*#__PURE__*/React.createElement("text", {
     x: "440",
-    y: "124",
+    y: "18",
     textAnchor: "middle",
     fontSize: "12",
     fontWeight: "700",
-    fill: "#15803d"
+    fill: "#3f8a4a"
   }, "Fusion"))), /*#__PURE__*/React.createElement(QGroup, {
     title: "Check yourself"
   }, /*#__PURE__*/React.createElement(MCQ, {
@@ -2350,7 +2573,7 @@ function HaberProcessSim() {
   return /*#__PURE__*/React.createElement(Interactive, {
     title: "Haber process explorer",
     subtitle: "Adjust temperature and pressure to find the best industrial conditions for ammonia production.",
-    takeaway: "Industrial conditions for the Haber process are a compromise: lower temperature gives better yield but too slowly, while higher pressure improves yield but makes equipment expensive and dangerous, so around 450 degrees C and 200 atm is used with an iron catalyst."
+    takeaway: "Industrial conditions for the Haber process are a compromise: lower temperature gives better yield but too slowly, while higher pressure improves yield but makes equipment expensive and dangerous, so around 450 \xB0C and 200 atm is used with an iron catalyst."
   }, /*#__PURE__*/React.createElement("div", {
     className: "grid-2",
     style: {
@@ -2385,7 +2608,7 @@ function HaberProcessSim() {
   })), /*#__PURE__*/React.createElement("p", {
     style: {
       fontSize: 13,
-      color: "var(--muted)",
+      color: "var(--ink-muted)",
       marginTop: 8,
       marginBottom: 0
     }
@@ -2413,7 +2636,7 @@ function Section65(_ref11) {
     setProgress: setProgress
   }, /*#__PURE__*/React.createElement("p", null, "Industrial reactions are chemical or nuclear processes carried out on a large scale to produce useful products. Studying them helps you understand how scientific knowledge is applied to meet real-world needs and to evaluate the environmental and social trade-offs involved."), /*#__PURE__*/React.createElement("p", null, "The ", /*#__PURE__*/React.createElement(Term, {
     def: "An industrial process that produces ammonia (NH3) from nitrogen and hydrogen gas using an iron catalyst at high temperature and pressure."
-  }, "Haber process"), " synthesises ammonia (NH\u2083) from nitrogen and hydrogen: N\u2082 + 3H\u2082 \u2192 2NH\u2083. Ammonia is the starting material for fertilisers that feed billions of people. It requires high pressure (about 200 atm), moderate temperature (about 450 degrees Celsius), and an iron catalyst. The conditions represent a compromise between yield and reaction rate."), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement(Term, {
+  }, "Haber process"), " synthesises ammonia (NH\u2083) from nitrogen and hydrogen: N\u2082 + 3H\u2082 \u2192 2NH\u2083. Ammonia is the starting material for fertilisers that feed billions of people. It requires high pressure (about 200 atm), moderate temperature (about 450 \xB0C), and an iron catalyst. The conditions represent a compromise between yield and reaction rate."), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement(Term, {
     def: "The industrial process that uses nuclear fission of uranium-235 to generate heat, which produces steam to drive turbines and generate electricity."
   }, "Nuclear fission power stations"), " control a chain reaction of uranium-235 to generate heat, then steam to drive turbines. They produce very low greenhouse gas emissions but generate radioactive waste and require careful safety management. Other important industrial reactions include sulfuric acid production (used in fertilisers, car batteries, and mining), iron and steel production in blast furnaces, and medical radioisotope production."), /*#__PURE__*/React.createElement("p", null, "When evaluating any industrial reaction, consider: raw materials and their availability, energy required, conditions needed (temperature, pressure, catalyst), products and by-products, economic value, environmental impact at every stage, and social benefits and considerations."), /*#__PURE__*/React.createElement(HaberProcessSim, null), /*#__PURE__*/React.createElement(Callout, {
     kind: "fact",

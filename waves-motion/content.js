@@ -70,7 +70,7 @@ function WaveSim() {
       ctx.setLineDash([]);
       if (waveType === "transverse") {
         // Draw transverse wave (sine curve)
-        ctx.strokeStyle = cssv(canvas, "--accent-deep", "#1d4ed8");
+        ctx.strokeStyle = cssv(canvas, "--accent", "#1d4ed8");
         ctx.lineWidth = 3;
         ctx.beginPath();
         for (var x = 0; x <= W; x++) {
@@ -82,7 +82,7 @@ function WaveSim() {
 
         // Label crest and trough
         var crestX = W / (frequency * 4);
-        ctx.fillStyle = cssv(canvas, "--accent-deep", "#1d4ed8");
+        ctx.fillStyle = cssv(canvas, "--accent", "#1d4ed8");
         ctx.font = "12px sans-serif";
         ctx.fillText("crest", crestX - 16, midY - amplitude - 8);
         ctx.fillText("trough", crestX * 3 - 20, midY + amplitude + 14);
@@ -117,7 +117,7 @@ function WaveSim() {
         // Draw longitudinal wave (compressions and rarefactions using dots)
         var numParticles = 60;
         var spacing = W / numParticles;
-        ctx.fillStyle = cssv(canvas, "--accent-deep", "#1d4ed8");
+        ctx.fillStyle = cssv(canvas, "--accent", "#1d4ed8");
         for (var i = 0; i < numParticles; i++) {
           var baseX = i * spacing + spacing / 2;
           var displacement = amplitude / 2 * Math.sin(baseX / W * frequency * 2 * Math.PI - t * frequency);
@@ -127,7 +127,7 @@ function WaveSim() {
           ctx.fill();
         }
         // Labels
-        ctx.fillStyle = cssv(canvas, "--accent-deep", "#1d4ed8");
+        ctx.fillStyle = cssv(canvas, "--accent", "#1d4ed8");
         ctx.font = "12px sans-serif";
         var compX = W / (frequency * 4);
         ctx.fillText("compression", compX - 38, midY + 24);
@@ -235,16 +235,16 @@ function EMExplorer() {
     ionising: false
   }, {
     name: "Infrared",
-    color: "#f59e0b",
-    freq: "3x10¹¹ to 4x10¹⁴ Hz",
+    color: "#d97706",
+    freq: "3x10¹¹ to 4.3x10¹⁴ Hz",
     wl: "700 nm to 1 mm",
     energy: "Moderate",
     uses: "Remote controls, thermal cameras, physiotherapy",
     ionising: false
   }, {
     name: "Visible",
-    color: "#10b981",
-    freq: "4x10¹⁴ to 7x10¹⁴ Hz",
+    color: "#059669",
+    freq: "4.3x10¹⁴ to 7.5x10¹⁴ Hz",
     wl: "400 to 700 nm",
     energy: "Moderate",
     uses: "Human vision, photography, fibre optics",
@@ -252,7 +252,7 @@ function EMExplorer() {
   }, {
     name: "Ultraviolet",
     color: "#3b82f6",
-    freq: "7x10¹⁴ to 3x10¹⁶ Hz",
+    freq: "7.5x10¹⁴ to 3x10¹⁶ Hz",
     wl: "10 to 400 nm",
     energy: "High",
     uses: "Sterilisation, fluorescence, forensics",
@@ -297,7 +297,7 @@ function EMExplorer() {
         return setSelected(i);
       },
       style: {
-        background: selected === i ? band.color : "var(--surface-raised, #f1f5f9)",
+        background: selected === i ? band.color : "var(--surface)",
         color: selected === i ? "#fff" : "var(--ink, #1e293b)",
         border: "2px solid ".concat(band.color),
         borderRadius: "0.4rem",
@@ -597,7 +597,7 @@ function DopplerSim() {
       ctx.textAlign = "left";
 
       // Observer labels
-      ctx.fillStyle = "#374151";
+      ctx.fillStyle = cssv(canvas, "--ink", "#374151");
       ctx.font = "11px sans-serif";
       ctx.fillText("Observer (ahead): higher pitch", 8, 18);
       ctx.fillText("Observer (behind): lower pitch", 8, H - 6);
@@ -666,11 +666,11 @@ function UltrasoundCalc() {
     step: 1,
     value: echoTime,
     onChange: setEchoTime,
-    unit: " us"
+    unit: " \xB5s"
   }), /*#__PURE__*/React.createElement("div", {
     className: "stat-readout"
   }, /*#__PURE__*/React.createElement(Stat, {
-    value: echoTime + " us",
+    value: echoTime + " µs",
     label: "Echo time"
   }), /*#__PURE__*/React.createElement(Stat, {
     value: depth + " cm",
@@ -678,7 +678,7 @@ function UltrasoundCalc() {
   })), /*#__PURE__*/React.createElement(Callout, {
     kind: "tip",
     title: "How it works"
-  }, "The sound travels to the boundary and back, so we divide by 2. depth = (1540 x ", echoTime, " x 10^-6) / 2 = ", depth, " cm."));
+  }, "The sound travels to the boundary and back, so we divide by 2. depth = (1540 x ", echoTime, " x 10\u207B\u2076) / 2 = ", (depth / 100).toFixed(3), " m = ", depth, " cm."));
 }
 
 /* =========================================================
@@ -764,12 +764,12 @@ function LightPropertiesSim() {
     x: "8",
     y: "115",
     fontSize: "10",
-    fill: "#6b7280"
+    fill: "var(--ink-muted)"
   }, "air"), /*#__PURE__*/React.createElement("text", {
     x: "8",
     y: "135",
     fontSize: "10",
-    fill: "#6b7280"
+    fill: "var(--ink-muted)"
   }, mode === "refraction" ? "glass (n=1.5)" : "mirror"), /*#__PURE__*/React.createElement("line", {
     x1: cx,
     y1: "40",
@@ -782,7 +782,7 @@ function LightPropertiesSim() {
     x: cx + 4,
     y: "52",
     fontSize: "9",
-    fill: "#9ca3af"
+    fill: "var(--ink-muted)"
   }, "normal"), /*#__PURE__*/React.createElement("line", {
     x1: incX1,
     y1: incY1,
@@ -949,7 +949,7 @@ function StarTempExplorer() {
     }
   }), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("strong", null, "Peak emission region:"), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("span", {
     style: {
-      color: colour,
+      color: "var(--ink)",
       fontWeight: 700
     }
   }, region))), /*#__PURE__*/React.createElement(Callout, {
@@ -1015,7 +1015,7 @@ function MotionGraphSim() {
       var y0 = pad.t;
       var maxX = 4;
       var maxY = 80;
-      ctx.fillStyle = cssv(canvas, "--surface-raised", "#f1f5f9");
+      ctx.fillStyle = cssv(canvas, "--surface", "#f8f9fa");
       ctx.fillRect(offsetX, 0, half, H);
 
       // Grid
@@ -1200,7 +1200,7 @@ function NewtonSecondSim() {
       ctx.fillText("F = " + force + " N", boxX + boxW + arrowLen / 2, boxY + boxH / 2 - 10);
 
       // Acceleration label
-      ctx.fillStyle = "#374151";
+      ctx.fillStyle = cssv(canvas, "--ink", "#374151");
       ctx.textAlign = "left";
       ctx.font = "12px sans-serif";
       ctx.fillText("a = F/m = " + force + "/" + mass + " = " + accel + " m/s²", 8, 20);
@@ -1337,7 +1337,7 @@ function NetForceSim() {
     x: 220 + Math.min(120, forceR * 1.2) / 2,
     y: "34",
     textAnchor: "middle",
-    fill: "#10b981",
+    fill: "#059669",
     fontSize: "11"
   }, forceR, " N")), /*#__PURE__*/React.createElement("div", {
     className: "ctrl-row",
@@ -1463,6 +1463,7 @@ function CERBuilder() {
     style: {
       marginTop: "1rem",
       background: "var(--accent-soft, #dbeafe)",
+      color: "#1b1a17",
       borderRadius: "0.75rem",
       padding: "1rem"
     }
@@ -1507,7 +1508,8 @@ function Section71(_ref7) {
     className: "lead"
   }, "Waves carry energy across space and through matter. Here you will explore what all waves have in common and discover how light and sound differ in fundamental ways.")), /*#__PURE__*/React.createElement(Figure, {
     src: "img/wave.png",
-    caption: "A transverse wave showing crest, trough and wavelength."
+    alt: "A transverse wave with two crests and two troughs. An arrow above spans one wavelength from crest to crest; an arrow inside a crest marks the amplitude.",
+    caption: "A transverse wave. The arrow above spans one wavelength (crest to crest); the arrow inside a crest marks the amplitude."
   }), /*#__PURE__*/React.createElement(DotPoint, {
     id: "7.1.1",
     title: "Mechanical waves and electromagnetic waves",
@@ -1548,7 +1550,7 @@ function Section71(_ref7) {
       textAnchor: "middle",
       fontSize: "13",
       fontWeight: "700",
-      fill: "var(--ink)"
+      fill: "#1b1a17"
     }, title), /*#__PURE__*/React.createElement("text", {
       x: "124",
       y: "46",
@@ -1686,41 +1688,41 @@ function Section71(_ref7) {
     y1: "120",
     x2: "310",
     y2: "120",
-    stroke: "#10b981",
+    stroke: "#059669",
     strokeWidth: "1.5"
   }), /*#__PURE__*/React.createElement("line", {
     x1: "30",
     y1: "115",
     x2: "30",
     y2: "125",
-    stroke: "#10b981",
+    stroke: "#059669",
     strokeWidth: "1.5"
   }), /*#__PURE__*/React.createElement("line", {
     x1: "310",
     y1: "115",
     x2: "310",
     y2: "125",
-    stroke: "#10b981",
+    stroke: "#059669",
     strokeWidth: "1.5"
   }), /*#__PURE__*/React.createElement("text", {
     x: "160",
     y: "118",
     textAnchor: "middle",
     fontSize: "11",
-    fill: "#10b981",
+    fill: "#059669",
     fontWeight: "600"
   }, "lambda (wavelength)"), /*#__PURE__*/React.createElement("text", {
     x: "100",
     y: "29",
     textAnchor: "middle",
     fontSize: "10",
-    fill: "#374151"
+    fill: "var(--ink)"
   }, "crest"), /*#__PURE__*/React.createElement("text", {
     x: "240",
-    y: "128",
+    y: "110",
     textAnchor: "middle",
     fontSize: "10",
-    fill: "#374151"
+    fill: "var(--ink)"
   }, "trough")))), /*#__PURE__*/React.createElement(DotPoint, {
     id: "7.1.6",
     title: "The wave equation: v = f x lambda",
@@ -1775,7 +1777,7 @@ function Section72(_ref0) {
     def: "A region of higher-than-normal pressure in a longitudinal wave where molecules are pushed close together."
   }, "compression"), ". Then it pulls back, spreading the molecules apart into a ", /*#__PURE__*/React.createElement(Term, {
     def: "A region of lower-than-normal pressure in a longitudinal wave where molecules spread apart."
-  }, "rarefaction"), ". These alternating pressure changes radiate outward as a longitudinal mechanical wave. The individual air molecules do not travel to your ear. Only the pattern of pressure variations travels."), /*#__PURE__*/React.createElement("p", null, "The speed of sound depends on the medium and its temperature. In dry air at 20 degrees Celsius, sound travels at about 343 m/s. In water, molecules are much closer together, so collisions transfer energy faster: sound travels at about 1480 m/s in water. In steel, it reaches roughly 5000 m/s. Warmer air also carries sound faster because molecules move faster and collide more frequently."), /*#__PURE__*/React.createElement(Callout, {
+  }, "rarefaction"), ". These alternating pressure changes radiate outward as a longitudinal mechanical wave. The individual air molecules do not travel to your ear. Only the pattern of pressure variations travels."), /*#__PURE__*/React.createElement("p", null, "The speed of sound depends on the medium and its temperature. In dry air at 20 \xB0C, sound travels at about 343 m/s. In water, molecules are much closer together, so collisions transfer energy faster: sound travels at about 1480 m/s in water. In steel, it reaches roughly 5000 m/s. Warmer air also carries sound faster because molecules move faster and collide more frequently."), /*#__PURE__*/React.createElement(Callout, {
     kind: "key",
     title: "No medium, no sound"
   }, "Sound is a mechanical wave. In a vacuum there are no molecules to compress or rarefy, so sound cannot exist. Space is silent."), /*#__PURE__*/React.createElement(QGroup, {
@@ -1865,13 +1867,13 @@ function Section72(_ref0) {
       textAnchor: "middle",
       fontSize: "10",
       fontWeight: "600",
-      fill: "var(--ink)"
+      fill: "#1b1a17"
     }, s), i < 6 && /*#__PURE__*/React.createElement("text", {
       x: "76",
       y: "28",
       textAnchor: "middle",
       fontSize: "14",
-      fill: "var(--accent-deep,#1d4ed8)"
+      fill: "var(--ink-muted)"
     }, "\u203A"));
   }))), /*#__PURE__*/React.createElement(Callout, {
     kind: "warn",
@@ -1979,7 +1981,7 @@ function Section73(_ref1) {
     style: {
       maxWidth: 540
     }
-  }, [["Absorption", "Solar panels\nDark clothing", "#f59e0b"], ["Reflection", "Mirrors\nFibre optics (TIR)\nRoad markings", "#3b82f6"], ["Refraction", "Spectacles\nCamera lenses\nRainbows", "#10b981"]].map(function (_ref10, i) {
+  }, [["Absorption", "Solar panels\nDark clothing", "#d97706"], ["Reflection", "Mirrors\nFibre optics (TIR)\nRoad markings", "#3b82f6"], ["Refraction", "Spectacles\nCamera lenses\nRainbows", "#059669"]].map(function (_ref10, i) {
     var _ref11 = _slicedToArray(_ref10, 3),
       title = _ref11[0],
       apps = _ref11[1],
@@ -2008,7 +2010,7 @@ function Section73(_ref1) {
         y: 38 + j * 14,
         textAnchor: "middle",
         fontSize: "10",
-        fill: "#374151"
+        fill: "var(--ink)"
       }, line);
     }));
   })))), /*#__PURE__*/React.createElement(DotPoint, {
@@ -2026,19 +2028,149 @@ function Section73(_ref1) {
     model: "The shift to longer wavelengths is a redshift, caused by the Doppler effect. This tells us the star is moving away from Earth. The size of the shift is proportional to the star's recession speed."
   }))));
 }
-function Section74(_ref12) {
-  var progress = _ref12.progress,
-    setProgress = _ref12.setProgress;
+
+/* Header figure for 7.4: a distance-time graph with three stages
+   (10 m/s for 4 s, stopped for 2 s, 20 m/s for 3 s). Gradient = speed. */
+function DistanceTimeFigure() {
+  var X = function X(t) {
+      return 52 + t * 30;
+    },
+    Y = function Y(d) {
+      return 196 - d * 1.6;
+    };
+  var pts = [[0, 0], [4, 40], [6, 40], [9, 100]];
+  return /*#__PURE__*/React.createElement(Figure, {
+    caption: "A distance\u2013time graph. The line rises while the object moves, is flat while it is stopped, and is steeper when it moves faster, because the gradient equals the speed."
+  }, /*#__PURE__*/React.createElement("svg", {
+    viewBox: "0 0 360 236",
+    width: "100%",
+    style: {
+      maxWidth: 440,
+      display: "block",
+      margin: "0 auto"
+    },
+    role: "img",
+    "aria-label": "Distance-time graph. From 0 to 4 seconds the line rises steadily to 40 metres (10 metres per second). From 4 to 6 seconds it is flat at 40 metres (stopped). From 6 to 9 seconds it rises steeply to 100 metres (20 metres per second)."
+  }, [0, 20, 40, 60, 80, 100].map(function (d) {
+    return /*#__PURE__*/React.createElement("g", {
+      key: "d" + d
+    }, /*#__PURE__*/React.createElement("line", {
+      x1: "52",
+      y1: Y(d),
+      x2: "334",
+      y2: Y(d),
+      stroke: "var(--border)",
+      strokeWidth: "1"
+    }), /*#__PURE__*/React.createElement("text", {
+      x: "46",
+      y: Y(d) + 4,
+      textAnchor: "end",
+      fontSize: "11",
+      fill: "var(--ink-muted)"
+    }, d));
+  }), [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(function (t) {
+    return /*#__PURE__*/React.createElement("text", {
+      key: "t" + t,
+      x: X(t),
+      y: "212",
+      textAnchor: "middle",
+      fontSize: "11",
+      fill: "var(--ink-muted)"
+    }, t);
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "52",
+    y1: "196",
+    x2: "336",
+    y2: "196",
+    stroke: "var(--ink)",
+    strokeWidth: "1.8"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "52",
+    y1: "196",
+    x2: "52",
+    y2: "24",
+    stroke: "var(--ink)",
+    strokeWidth: "1.8"
+  }), /*#__PURE__*/React.createElement("text", {
+    x: "194",
+    y: "230",
+    textAnchor: "middle",
+    fontSize: "12",
+    fill: "var(--ink)"
+  }, "Time (s)"), /*#__PURE__*/React.createElement("text", {
+    x: "16",
+    y: "110",
+    textAnchor: "middle",
+    fontSize: "12",
+    fill: "var(--ink)",
+    transform: "rotate(-90,16,110)"
+  }, "Distance (m)"), /*#__PURE__*/React.createElement("polyline", {
+    points: pts.map(function (_ref12) {
+      var _ref13 = _slicedToArray(_ref12, 2),
+        t = _ref13[0],
+        d = _ref13[1];
+      return "".concat(X(t), ",").concat(Y(d));
+    }).join(" "),
+    fill: "none",
+    stroke: "#4b7bc9",
+    strokeWidth: "3.5",
+    strokeLinejoin: "round"
+  }), pts.map(function (_ref14) {
+    var _ref15 = _slicedToArray(_ref14, 2),
+      t = _ref15[0],
+      d = _ref15[1];
+    return /*#__PURE__*/React.createElement("circle", {
+      key: t,
+      cx: X(t),
+      cy: Y(d),
+      r: "4",
+      fill: "#4b7bc9"
+    });
+  }), /*#__PURE__*/React.createElement("text", {
+    x: X(1.5),
+    y: Y(20) - 14,
+    textAnchor: "end",
+    fontSize: "12",
+    fontWeight: "700",
+    fill: "var(--ink)"
+  }, "steady"), /*#__PURE__*/React.createElement("text", {
+    x: X(1.5),
+    y: Y(20) - 1,
+    textAnchor: "end",
+    fontSize: "11",
+    fill: "var(--ink-muted)"
+  }, "10 m/s"), /*#__PURE__*/React.createElement("text", {
+    x: X(5),
+    y: Y(40) - 10,
+    textAnchor: "middle",
+    fontSize: "12",
+    fontWeight: "700",
+    fill: "var(--ink)"
+  }, "stopped"), /*#__PURE__*/React.createElement("text", {
+    x: X(6.8),
+    y: Y(70) - 6,
+    textAnchor: "end",
+    fontSize: "12",
+    fontWeight: "700",
+    fill: "var(--ink)"
+  }, "faster"), /*#__PURE__*/React.createElement("text", {
+    x: X(6.8),
+    y: Y(70) + 7,
+    textAnchor: "end",
+    fontSize: "11",
+    fill: "var(--ink-muted)"
+  }, "20 m/s")));
+}
+function Section74(_ref16) {
+  var progress = _ref16.progress,
+    setProgress = _ref16.setProgress;
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "topic-head"
   }, /*#__PURE__*/React.createElement("div", {
     className: "eyebrow"
   }, "7.4 Motion"), /*#__PURE__*/React.createElement("h1", null, "Forces, motion and Newton's laws"), /*#__PURE__*/React.createElement("p", {
     className: "lead"
-  }, "Everything that moves follows rules. Learn the language of motion, master distance-time and velocity-time graphs, and use Newton's three laws to explain the world around you.")), /*#__PURE__*/React.createElement(Figure, {
-    src: "img/motion.png",
-    caption: "A distance\u2013time graph rises as an object moves."
-  }), /*#__PURE__*/React.createElement(DotPoint, {
+  }, "Everything that moves follows rules. Learn the language of motion, master distance-time and velocity-time graphs, and use Newton's three laws to explain the world around you.")), /*#__PURE__*/React.createElement(DistanceTimeFigure, null), /*#__PURE__*/React.createElement(DotPoint, {
     id: "7.4.1",
     title: "Distance, displacement, speed and velocity",
     progress: progress,
@@ -2119,12 +2251,12 @@ function Section74(_ref12) {
     style: {
       maxWidth: 540
     }
-  }, [["1st Law", "Inertia", "Seatbelts protect\npassengers in a crash", "#3b82f6"], ["2nd Law", "F = ma", "Heavier car needs more\nforce to accelerate", "#10b981"], ["3rd Law", "Action-Reaction", "Rocket: gases back,\ncraft forward", "#8b5cf6"]].map(function (_ref13, i) {
-    var _ref14 = _slicedToArray(_ref13, 4),
-      law = _ref14[0],
-      label = _ref14[1],
-      ex = _ref14[2],
-      color = _ref14[3];
+  }, [["1st Law", "Inertia", "Seatbelts protect\npassengers in a crash", "#3b82f6"], ["2nd Law", "F = ma", "Heavier car needs more\nforce to accelerate", "#059669"], ["3rd Law", "Action-Reaction", "Rocket: gases back,\ncraft forward", "#8b5cf6"]].map(function (_ref17, i) {
+    var _ref18 = _slicedToArray(_ref17, 4),
+      law = _ref18[0],
+      label = _ref18[1],
+      ex = _ref18[2],
+      color = _ref18[3];
     return /*#__PURE__*/React.createElement("g", {
       key: law,
       transform: "translate(".concat(i * 182 + 4, ", 4)")
@@ -2156,7 +2288,7 @@ function Section74(_ref12) {
         y: 56 + j * 15,
         textAnchor: "middle",
         fontSize: "10",
-        fill: "#374151"
+        fill: "var(--ink)"
       }, line);
     }));
   }))), /*#__PURE__*/React.createElement(QGroup, {
@@ -2208,9 +2340,9 @@ function Section74(_ref12) {
     model: "Using v squared = u squared + 2as: at stop v = 0. So 0 = 30 squared + 2 x (-6) x s. 0 = 900 - 12s. 12s = 900. s = 75 m. The car travels 75 m before stopping."
   }))));
 }
-function Section75(_ref15) {
-  var progress = _ref15.progress,
-    setProgress = _ref15.setProgress;
+function Section75(_ref19) {
+  var progress = _ref19.progress,
+    setProgress = _ref19.setProgress;
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "topic-head"
   }, /*#__PURE__*/React.createElement("div", {
@@ -2222,7 +2354,7 @@ function Section75(_ref15) {
     title: "How waves and motion have changed society",
     progress: progress,
     setProgress: setProgress
-  }, /*#__PURE__*/React.createElement("p", null, "Our understanding of waves and motion has driven some of the most significant transformations in human history. Before Newton's laws were published in 1687, there was no reliable way to predict or engineer the motion of machines. Today, aircraft, high-speed trains, rockets, and smartphones are all engineered using those same principles. Before Maxwell and Hertz established the theory of electromagnetic waves in the 1860s to 1880s, long-distance communication took days or weeks. Today, radio, television, mobile phone networks, the internet, and GPS all rely on EM waves, connecting billions of people instantly."), /*#__PURE__*/React.createElement("p", null, "In medicine, ultrasound imaging (using reflected sound waves) and X-ray imaging (using EM waves) allow doctors to diagnose conditions and guide treatment without exploratory surgery. These technologies have reduced maternal mortality, improved cancer detection, and transformed healthcare in both wealthy and remote communities. Not all impacts have been positive: fossil-fuel combustion in transport engines contributes to climate change, and military radar and surveillance technologies raise ethical questions. A balanced analysis requires examining both benefits and costs."), /*#__PURE__*/React.createElement("p", null, "A ", /*#__PURE__*/React.createElement(Term, {
+  }, /*#__PURE__*/React.createElement("p", null, "Our understanding of waves and motion has driven some of the most significant transformations in human history. Before Newton's laws were published in 1687, there was no reliable way to predict or engineer the motion of machines. Today, aircraft, high-speed trains, rockets, and smartphones are all engineered using those same principles. Before Maxwell and Hertz established the theory of electromagnetic waves in the 1860s to 1880s, long-distance messages needed a telegraph wire or travelled by ship, and could take days or weeks to reach places without a cable. Today, radio, television, mobile phone networks, the internet, and GPS all rely on EM waves, connecting billions of people instantly."), /*#__PURE__*/React.createElement("p", null, "In medicine, ultrasound imaging (using reflected sound waves) and X-ray imaging (using EM waves) allow doctors to diagnose conditions and guide treatment without exploratory surgery. These technologies have reduced maternal mortality, improved cancer detection, and transformed healthcare in both wealthy and remote communities. Not all impacts have been positive: fossil-fuel combustion in transport engines contributes to climate change, and military radar and surveillance technologies raise ethical questions. A balanced analysis requires examining both benefits and costs."), /*#__PURE__*/React.createElement("p", null, "A ", /*#__PURE__*/React.createElement(Term, {
     def: "A structured approach to scientific argument using three components: Claim (statement of position), Evidence (facts and examples), and Reasoning (explanation of the connection)."
   }, "Claim-Evidence-Reasoning (CER)"), " framework helps you build well-structured arguments. Your claim answers the question directly. Your evidence consists of specific facts, statistics, or examples. Your reasoning explains how and why the evidence supports the claim. A thorough argument also acknowledges counterarguments or limitations."), /*#__PURE__*/React.createElement(CERBuilder, null), /*#__PURE__*/React.createElement(Callout, {
     kind: "key",

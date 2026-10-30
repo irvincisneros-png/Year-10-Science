@@ -45,7 +45,7 @@ function ConservationSim() {
       </div>
       <div style={{ display: "flex", gap: 24, flexWrap: "wrap", justifyContent: "center", margin: "16px 0" }}>
         <div className="card" style={{ flex: 1, minWidth: 140, textAlign: "center", padding: "16px 12px" }}>
-          <div style={{ fontSize: 13, fontWeight: 700, color: "var(--muted)", marginBottom: 8 }}>BEFORE REACTION</div>
+          <div style={{ fontSize: 13, fontWeight: 700, color: "var(--ink-muted)", marginBottom: 8 }}>BEFORE REACTION</div>
           <svg width="80" height="80" viewBox="0 0 80 80">
             <rect x="10" y="20" width="60" height="50" rx="6" fill="var(--accent-soft)" stroke="var(--accent-deep)" strokeWidth="2"/>
             {system === "closed" && <rect x="18" y="15" width="44" height="10" rx="3" fill="var(--accent-deep)"/>}
@@ -60,7 +60,7 @@ function ConservationSim() {
           {animating ? "..." : reacted ? "=" : ""}
         </div>
         <div className="card" style={{ flex: 1, minWidth: 140, textAlign: "center", padding: "16px 12px", opacity: reacted ? 1 : 0.35 }}>
-          <div style={{ fontSize: 13, fontWeight: 700, color: "var(--muted)", marginBottom: 8 }}>AFTER REACTION</div>
+          <div style={{ fontSize: 13, fontWeight: 700, color: "var(--ink-muted)", marginBottom: 8 }}>AFTER REACTION</div>
           <svg width="80" height="80" viewBox="0 0 80 80">
             <rect x="10" y="20" width="60" height="50" rx="6" fill="var(--accent-soft)" stroke="var(--accent-deep)" strokeWidth="2"/>
             {system === "closed" && <rect x="18" y="15" width="44" height="10" rx="3" fill="var(--accent-deep)"/>}
@@ -68,7 +68,7 @@ function ConservationSim() {
               <>
                 <circle cx="50" cy="5" r="5" fill="#a78bfa" opacity="0.5"/>
                 <circle cx="65" cy="2" r="4" fill="#7c3aed" opacity="0.4"/>
-                <text x="30" y="10" fontSize="10" fill="var(--muted)">CO&#8322; escapes</text>
+                <text x="30" y="10" fontSize="10" fill="var(--ink-muted)">CO&#8322; escapes</text>
               </>
             )}
             {reacted && (
@@ -106,6 +106,100 @@ function ConservationSim() {
   );
 }
 
+/* Header figure for 6.1: a level balance with the same atoms on each pan (2H2 + O2 -> 2H2O). */
+function ConservationFigure() {
+  const H = (x, y, k) => <circle key={k} cx={x} cy={y} r="7" fill="#f7f1e3" stroke="#1b1a17" strokeWidth="1.4"/>;
+  const O = (x, y, k) => <circle key={k} cx={x} cy={y} r="11" fill="#ef6b4b" stroke="#1b1a17" strokeWidth="1.4"/>;
+  const pan = (cx) => (
+    <g>
+      <line x1={cx} y1="62" x2={cx - 46} y2="128" stroke="var(--ink)" strokeWidth="1.6"/>
+      <line x1={cx} y1="62" x2={cx + 46} y2="128" stroke="var(--ink)" strokeWidth="1.6"/>
+      <path d={`M ${cx - 54} 128 Q ${cx} 164 ${cx + 54} 128 Z`} fill="#f7f1e3" stroke="var(--border-strong)" strokeWidth="2"/>
+    </g>
+  );
+  return (
+    <Figure caption="Mass is conserved. 4 g of hydrogen and 32 g of oxygen (2H₂ + O₂) react to make 36 g of water (2H₂O). The same 4 H atoms and 2 O atoms are on each pan, just rearranged, so the balance stays level.">
+      <svg viewBox="0 0 360 236" width="100%" style={{ maxWidth: 420, display: "block", margin: "0 auto" }} role="img"
+        aria-label="A level balance. Left pan: two hydrogen molecules and one oxygen molecule, 4 g plus 32 g equals 36 g. Right pan: two water molecules, 36 g. Both pans hold 4 hydrogen atoms and 2 oxygen atoms.">
+        {/* stand */}
+        <rect x="140" y="204" width="80" height="10" rx="3" fill="var(--ink)"/>
+        <line x1="180" y1="62" x2="180" y2="206" stroke="var(--ink)" strokeWidth="5"/>
+        <path d="M 170 70 L 180 54 L 190 70 Z" fill="var(--ink)"/>
+        <line x1="72" y1="62" x2="288" y2="62" stroke="var(--ink)" strokeWidth="5" strokeLinecap="round"/>
+        {pan(72)}{pan(288)}
+        {/* left pan: 2 H2 + O2 */}
+        {H(38, 122, "a")}{H(51, 122, "b")}
+        {H(38, 106, "c")}{H(51, 106, "d")}
+        {O(78, 120, "e")}{O(98, 120, "f")}
+        {/* right pan: 2 H2O */}
+        {[262, 310].map(x => (
+          <g key={x}>{H(x - 11, 108, "h1")}{H(x + 11, 108, "h2")}{O(x, 121, "o")}</g>
+        ))}
+        {/* labels */}
+        <text x="72" y="182" textAnchor="middle" fontSize="15" fontWeight="800" fill="var(--ink)">2H&#8322; + O&#8322;</text>
+        <text x="72" y="201" textAnchor="middle" fontSize="13" fill="var(--ink)">4 g + 32 g = 36 g</text>
+        <text x="288" y="182" textAnchor="middle" fontSize="15" fontWeight="800" fill="var(--ink)">2H&#8322;O</text>
+        <text x="288" y="201" textAnchor="middle" fontSize="13" fill="var(--ink)">36 g</text>
+        <text x="72" y="40" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--ink-muted)">Reactants</text>
+        <text x="288" y="40" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--ink-muted)">Products</text>
+        {/* key */}
+        <circle cx="140" cy="18" r="6" fill="#f7f1e3" stroke="#1b1a17" strokeWidth="1.4"/>
+        <text x="150" y="22" fontSize="12" fill="var(--ink)">H</text>
+        <circle cx="182" cy="18" r="8" fill="#ef6b4b" stroke="#1b1a17" strokeWidth="1.4"/>
+        <text x="194" y="22" fontSize="12" fill="var(--ink)">O</text>
+      </svg>
+    </Figure>
+  );
+}
+
+/* Header figure for 6.4: neutron-induced fission of U-235 (mass and atomic numbers balance:
+   1 + 235 = 141 + 92 + 3; 92 = 56 + 36). */
+function FissionFigure() {
+  const nuc = (cx, cy, r, fill, label) => (
+    <g>
+      <circle cx={cx} cy={cy} r={r} fill={fill} stroke="#1b1a17" strokeWidth="2"/>
+      <text x={cx} y={cy + 5} textAnchor="middle" fontSize={r > 30 ? 15 : 13} fontWeight="800" fill="#1b1a17">{label}</text>
+    </g>
+  );
+  const n = (cx, cy) => (
+    <g>
+      <circle cx={cx} cy={cy} r="9" fill="#c9c2b4" stroke="#1b1a17" strokeWidth="1.6"/>
+      <text x={cx} y={cy + 4} textAnchor="middle" fontSize="11" fontWeight="700" fill="#1b1a17">n</text>
+    </g>
+  );
+  const arrow = (d) => <path d={d} fill="none" stroke="var(--ink)" strokeWidth="2" markerEnd="url(#fis-arrow)"/>;
+  return (
+    <Figure caption="Nuclear fission. A neutron is absorbed by a uranium-235 nucleus, which splits into two smaller nuclei (for example barium-141 and krypton-92), releasing a large amount of energy and three more neutrons that can trigger further fissions.">
+      <svg viewBox="0 0 360 224" width="100%" style={{ maxWidth: 460, display: "block", margin: "0 auto" }} role="img"
+        aria-label="A neutron hits a uranium-235 nucleus. The nucleus splits into barium-141 and krypton-92, releasing energy and 3 neutrons. Equation: n plus U-235 gives Ba-141 plus Kr-92 plus 3 n plus energy.">
+        <defs>
+          <marker id="fis-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 Z" fill="var(--ink)"/>
+          </marker>
+        </defs>
+        {n(24, 100)}
+        <text x="4" y="128" fontSize="12" fill="var(--ink)">neutron</text>
+        {arrow("M 36 100 L 66 100")}
+        {nuc(108, 100, 38, "#d99e1e", "U-235")}
+        {/* energy burst */}
+        <path d="M 178 80 L 184 93 L 198 90 L 189 101 L 198 112 L 184 109 L 178 122 L 172 109 L 158 112 L 167 101 L 158 90 L 172 93 Z"
+          fill="#f6c945" stroke="#1b1a17" strokeWidth="1.4"/>
+        <text x="178" y="142" textAnchor="middle" fontSize="12" fontWeight="700" fill="var(--ink)">energy</text>
+        {arrow("M 190 88 L 224 66")}
+        {arrow("M 190 114 L 226 136")}
+        {nuc(252, 52, 28, "#ef6b4b", "Ba-141")}
+        {nuc(252, 152, 24, "#4b7bc9", "Kr-92")}
+        {arrow("M 198 98 Q 290 92 316 58")}
+        {arrow("M 200 101 L 318 101")}
+        {arrow("M 198 104 Q 290 110 316 146")}
+        {n(330, 50)}{n(332, 101)}{n(330, 154)}
+        <text x="352" y="180" textAnchor="end" fontSize="12" fill="var(--ink)">3 neutrons</text>
+        <text x="180" y="214" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--ink)">n + U-235 → Ba-141 + Kr-92 + 3 n + energy</text>
+      </svg>
+    </Figure>
+  );
+}
+
 function Section61({ progress, setProgress }) {
   return (
     <>
@@ -115,7 +209,7 @@ function Section61({ progress, setProgress }) {
         <p className="lead">In every chemical reaction, the total mass of the substances you start with equals the total mass of the substances you end up with.</p>
       </div>
 
-      <Figure src="img/conservation-mass.png" caption="Mass is conserved — the reactant and product masses balance." />
+      <ConservationFigure/>
       <DotPoint id="6.1.1" title="Explain the meaning of the law of conservation of mass" progress={progress} setProgress={setProgress}>
         <p>The <Term def="Mass cannot be created or destroyed in a chemical reaction. Total mass of reactants equals total mass of products.">law of conservation of mass</Term> states that mass cannot be created or destroyed during a <Term def="A process in which substances called reactants are changed into new substances called products.">chemical reaction</Term>. This means the total mass of the <Term def="Substances that are present at the start of a reaction and are used up.">reactants</Term> always equals the total mass of the <Term def="New substances formed during a chemical reaction.">products</Term>.</p>
         <p>The law was first stated by the French chemist <Term def="French chemist (1743 to 1794) who first formulated the law of conservation of mass through careful experiments.">Antoine Lavoisier</Term> in 1789. It is one of the most important foundations of chemistry.</p>
@@ -166,21 +260,21 @@ function Section61({ progress, setProgress }) {
         <p>A <Term def="A system in which no matter can enter or leave. Energy may still be exchanged.">closed system</Term> is one where no matter can cross the boundary. In a closed system, every atom produced in the reaction stays inside, so the total mass is always conserved, even if gases are formed.</p>
         <p>In an <Term def="A system that can exchange both matter and energy with the surroundings.">open system</Term>, gases such as CO&#8322; or water vapour can escape, making it look as though mass has been lost. Alternatively, if a substance absorbs oxygen from the air (like burning magnesium), the mass appears to increase. Both are only apparent changes. If you account for all the substances involved, including those that entered or left, mass is still conserved.</p>
         <ConservationSim />
-        <Figure caption="Open vs closed systems: matter escaping causes apparent mass changes.">
+        <Figure num="1" caption="Open vs closed systems: matter escaping causes apparent mass changes.">
           <svg viewBox="0 0 520 120" width="100%" style={{ maxWidth: 520 }}>
             {/* Open system */}
             <rect x="10" y="30" width="200" height="80" rx="8" fill="var(--accent-soft)" stroke="var(--accent-deep)" strokeWidth="2"/>
             <text x="110" y="22" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--ink)">Open system</text>
-            <text x="110" y="75" textAnchor="middle" fontSize="12" fill="var(--ink)">CO&#8322; escapes</text>
-            <text x="110" y="95" textAnchor="middle" fontSize="11" fill="var(--muted)">apparent mass loss</text>
+            <text x="110" y="75" textAnchor="middle" fontSize="12" fill="#1b1a17">CO&#8322; escapes</text>
+            <text x="110" y="95" textAnchor="middle" fontSize="11" fill="var(--accent-deep)">apparent mass loss</text>
             <path d="M180,40 Q220,10 250,5" stroke="var(--accent-deep)" strokeWidth="2" fill="none" strokeDasharray="4 3"/>
             <circle cx="255" cy="4" r="5" fill="var(--accent-deep)" opacity="0.6"/>
             {/* Closed system */}
             <rect x="310" y="30" width="200" height="80" rx="8" fill="var(--accent-soft)" stroke="var(--accent-deep)" strokeWidth="2"/>
             <rect x="318" y="24" width="184" height="10" rx="3" fill="var(--accent-deep)"/>
             <text x="410" y="22" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--ink)">Closed system</text>
-            <text x="410" y="70" textAnchor="middle" fontSize="12" fill="var(--ink)">All gases trapped</text>
-            <text x="410" y="90" textAnchor="middle" fontSize="11" fill="var(--muted)">mass unchanged</text>
+            <text x="410" y="70" textAnchor="middle" fontSize="12" fill="#1b1a17">All gases trapped</text>
+            <text x="410" y="90" textAnchor="middle" fontSize="11" fill="var(--accent-deep)">mass unchanged</text>
           </svg>
         </Figure>
         <Callout kind="fact" title="Real-world example">
@@ -293,15 +387,15 @@ function EquationBalancer() {
       <div style={{ display: "flex", alignItems: "center", justifyContent: "center", flexWrap: "wrap", gap: 8, fontSize: 15, marginBottom: 16 }}>
         {eq.reactants.map((s, i) => (
           <span key={i} style={{ display: "flex", alignItems: "center", gap: 4 }}>
-            {i > 0 && <span style={{ fontWeight: 700, color: "var(--accent-deep)" }}>+</span>}
+            {i > 0 && <span style={{ fontWeight: 700, color: "var(--ink)" }}>+</span>}
             <CoeffInput val={rCoeffs[i] || 1} onChange={v => { const c = [...rCoeffs]; c[i] = v; setRCoeffs(c); setChecked(false); }} />
             <span style={{ fontWeight: 700 }}>{s.formula}</span>
           </span>
         ))}
-        <span style={{ fontWeight: 700, fontSize: 20, color: "var(--accent-deep)", margin: "0 8px" }}>→</span>
+        <span style={{ fontWeight: 700, fontSize: 20, color: "var(--ink)", margin: "0 8px" }}>→</span>
         {eq.products.map((s, i) => (
           <span key={i} style={{ display: "flex", alignItems: "center", gap: 4 }}>
-            {i > 0 && <span style={{ fontWeight: 700, color: "var(--accent-deep)" }}>+</span>}
+            {i > 0 && <span style={{ fontWeight: 700, color: "var(--ink)" }}>+</span>}
             <CoeffInput val={pCoeffs[i] || 1} onChange={v => { const c = [...pCoeffs]; c[i] = v; setPCoeffs(c); setChecked(false); }} />
             <span style={{ fontWeight: 700 }}>{s.formula}</span>
           </span>
@@ -321,7 +415,7 @@ function EquationBalancer() {
                   <td><strong>{el}</strong></td>
                   <td>{r}</td>
                   <td>{p}</td>
-                  <td style={{ color: r === p ? "#16a34a" : "#dc2626", fontWeight: 700 }}>{r === p ? "Yes" : "No"}</td>
+                  <td style={{ color: r === p ? "#16a34a" : "#ef4444", fontWeight: 700 }}>{r === p ? "Yes" : "No"}</td>
                 </tr>
               );
             })}
@@ -381,7 +475,7 @@ function ReactionTypeClassifier() {
         <>
           <div style={{ textAlign: "center", marginBottom: 12 }}>
             <span className="chip accent" style={{ marginBottom: 8, display: "inline-block" }}>Equation {idx + 1} of {reactions.length}</span>
-            <div style={{ fontSize: 20, fontWeight: 700, fontFamily: "monospace", padding: "12px 16px", background: "var(--accent-soft)", borderRadius: 10, marginBottom: 8 }}>{r.eq}</div>
+            <div style={{ fontSize: 20, fontWeight: 700, fontFamily: "monospace", padding: "12px 16px", background: "var(--accent-soft)", color: "var(--accent-deep)", borderRadius: 10, marginBottom: 8 }}>{r.eq}</div>
           </div>
           <div className="grid-2" style={{ gap: 10, marginBottom: 12 }}>
             {types.map(t => {
@@ -394,7 +488,7 @@ function ReactionTypeClassifier() {
                 bg = "#bbf7d0"; border = "2px solid #16a34a";
               }
               return (
-                <button key={t} onClick={() => pick(t)} style={{ padding: "12px 8px", borderRadius: 10, border, background: bg, fontWeight: 700, fontSize: 14, cursor: chosen ? "default" : "pointer", textTransform: "capitalize" }}>
+                <button key={t} onClick={() => pick(t)} style={{ padding: "12px 8px", borderRadius: 10, border, background: bg, color: bg === "var(--surface)" ? "var(--ink)" : "#1b1a17", fontWeight: 700, fontSize: 14, cursor: chosen ? "default" : "pointer", textTransform: "capitalize" }}>
                   {t}
                 </button>
               );
@@ -429,7 +523,7 @@ function Section62({ progress, setProgress }) {
         <p><Term def="International Union of Pure and Applied Chemistry. Sets universal naming rules for chemicals.">IUPAC</Term> provides a standard set of rules for naming chemical substances, so scientists around the world can communicate clearly. You need to be able to name and write formulae for two main compound types.</p>
         <p><Term def="A compound formed between a metal and a non-metal, held together by electrostatic attraction between positive and negative ions.">Ionic compounds</Term> are named by stating the metal (cation) first, then the non-metal (anion) with the ending changed to "-ide". For transition metals, a Roman numeral in brackets shows the charge: for example, FeCl&#8323; is iron(III) chloride. To write the formula, use the swap-and-drop rule: swap the values of the ion charges to become subscripts, then simplify.</p>
         <p><Term def="A compound formed between two or more non-metals, held together by shared pairs of electrons.">Covalent compounds</Term> use Greek prefixes (mono-, di-, tri-, tetra-, penta-, hexa-) to show how many atoms of each element are present. The second element gets the "-ide" ending. For example, CO&#8322; is carbon dioxide and N&#8322;O&#8324; is dinitrogen tetroxide.</p>
-        <Figure caption="Common polyatomic ions you need to know.">
+        <Figure num="2" caption="Common polyatomic ions you need to know.">
           <svg viewBox="0 0 560 130" width="100%" style={{ maxWidth: 560 }}>
             {[
               ["Hydroxide", "OH⁻", "1−"],
@@ -441,7 +535,7 @@ function Section62({ progress, setProgress }) {
             ].map(([name, formula, charge], i) => (
               <g key={name} transform={`translate(${(i % 3) * 186 + 4},${Math.floor(i / 3) * 58 + 8})`}>
                 <rect width="178" height="48" rx="8" fill="var(--accent-soft)" stroke="var(--accent-deep)"/>
-                <text x="89" y="20" textAnchor="middle" fontSize="12" fontWeight="700" fill="var(--ink)">{name}</text>
+                <text x="89" y="20" textAnchor="middle" fontSize="12" fontWeight="700" fill="#1b1a17">{name}</text>
                 <text x="89" y="38" textAnchor="middle" fontSize="13" fill="var(--accent-deep)" fontWeight="700">{formula} ({charge})</text>
               </g>
             ))}
@@ -488,31 +582,29 @@ function Section62({ progress, setProgress }) {
       <DotPoint id="6.2.3" title="Model simple chemical reactions to show atoms are rearranged and mass is conserved" progress={progress} setProgress={setProgress}>
         <p>Models help you visualise what happens at the atomic level. When a reaction occurs, bonds between atoms in the reactants break, and new bonds form to make the products. The atoms themselves are never destroyed; they are just rearranged into different combinations.</p>
         <p>You can model reactions using coloured balls and sticks, drawings of circles labelled with element symbols, Lego bricks, or computer simulations. Whatever method you use, the key check is: every atom in the reactants must appear in the products, with none added or removed.</p>
-        <Figure num="2" caption="Water formation: 4 H atoms and 2 O atoms appear on both sides.">
-          <svg viewBox="0 0 520 90" width="100%" style={{ maxWidth: 520 }}>
-            {/* 2H2 */}
-            <circle cx="30" cy="45" r="13" fill="#ef4444"/>
-            <circle cx="58" cy="45" r="13" fill="#ef4444"/>
-            <line x1="43" y1="45" x2="43" y2="45" stroke="#333" strokeWidth="3"/>
-            <circle cx="90" cy="45" r="13" fill="#ef4444"/>
-            <circle cx="118" cy="45" r="13" fill="#ef4444"/>
-            <text x="69" y="50" textAnchor="middle" fontSize="11" fill="var(--muted)">2H&#8322;</text>
-            <text x="145" y="50" textAnchor="middle" fontSize="20" fontWeight="700" fill="var(--accent-deep)">+</text>
-            {/* O2 */}
-            <circle cx="175" cy="45" r="13" fill="#3b82f6"/>
-            <circle cx="203" cy="45" r="13" fill="#3b82f6"/>
-            <text x="189" y="75" textAnchor="middle" fontSize="11" fill="var(--muted)">O&#8322;</text>
-            <text x="235" y="50" textAnchor="middle" fontSize="20" fontWeight="700" fill="var(--accent-deep)">→</text>
-            {/* 2H2O */}
-            <circle cx="270" cy="38" r="13" fill="#ef4444"/>
-            <circle cx="298" cy="55" r="18" fill="#3b82f6"/>
-            <circle cx="326" cy="38" r="13" fill="#ef4444"/>
-            <text x="298" y="82" textAnchor="middle" fontSize="11" fill="var(--muted)">H&#8322;O</text>
-            <text x="354" y="50" textAnchor="middle" fontSize="20" fontWeight="700" fill="var(--accent-deep)">+</text>
-            <circle cx="385" cy="38" r="13" fill="#ef4444"/>
-            <circle cx="413" cy="55" r="18" fill="#3b82f6"/>
-            <circle cx="441" cy="38" r="13" fill="#ef4444"/>
-            <text x="413" y="82" textAnchor="middle" fontSize="11" fill="var(--muted)">H&#8322;O</text>
+        <Figure num="3" caption="Water formation: 4 H atoms (cream) and 2 O atoms (red) appear on both sides, just rearranged.">
+          <svg viewBox="0 0 470 118" width="100%" style={{ maxWidth: 520 }} role="img"
+            aria-label="Particle model: two hydrogen molecules plus one oxygen molecule become two water molecules. Four hydrogen atoms and two oxygen atoms on each side.">
+            {(() => {
+              const H = (x, y) => <circle cx={x} cy={y} r="10" fill="#f7f1e3" stroke="#1b1a17" strokeWidth="1.6"/>;
+              const O = (x, y) => <circle cx={x} cy={y} r="15" fill="#ef6b4b" stroke="#1b1a17" strokeWidth="1.6"/>;
+              const water = (x) => <g key={x}>{H(x - 15, 34)}{H(x + 15, 34)}{O(x, 50)}</g>;
+              return (
+                <>
+                  <g>{H(26, 46)}{H(43, 46)}</g>
+                  <g>{H(80, 46)}{H(97, 46)}</g>
+                  <text x="62" y="86" textAnchor="middle" fontSize="14" fontWeight="700" fill="var(--ink)">2H&#8322;</text>
+                  <text x="128" y="52" textAnchor="middle" fontSize="20" fontWeight="700" fill="var(--ink)">+</text>
+                  <g>{O(164, 46)}{O(190, 46)}</g>
+                  <text x="177" y="86" textAnchor="middle" fontSize="14" fontWeight="700" fill="var(--ink)">O&#8322;</text>
+                  <text x="240" y="53" textAnchor="middle" fontSize="22" fontWeight="700" fill="var(--ink)">→</text>
+                  {water(305)}{water(395)}
+                  <text x="350" y="86" textAnchor="middle" fontSize="14" fontWeight="700" fill="var(--ink)">2H&#8322;O</text>
+                  <text x="110" y="110" textAnchor="middle" fontSize="12" fill="var(--ink-muted)">4 H atoms, 2 O atoms</text>
+                  <text x="350" y="110" textAnchor="middle" fontSize="12" fill="var(--ink-muted)">4 H atoms, 2 O atoms</text>
+                </>
+              );
+            })()}
           </svg>
         </Figure>
         <Callout kind="key" title="Linking to conservation of mass">
@@ -568,7 +660,7 @@ function Section62({ progress, setProgress }) {
         <p><Term def="A scale from 0 to 14 that measures how acidic or alkaline a solution is, based on the concentration of H+ ions.">pH</Term> is a scale used to measure the acidity or alkalinity of a solution. It is based on the concentration of <Term def="Positively charged hydrogen ions (H+) whose concentration determines whether a solution is acidic.">hydrogen ions (H&#8314;)</Term> in the solution. A pH below 7 is acidic, pH 7 is neutral (pure water), and pH above 7 is alkaline.</p>
         <p>The scale is logarithmic: each whole-number step represents a tenfold change in acidity. A solution at pH 3 is ten times more acidic than one at pH 4, and one hundred times more acidic than one at pH 5. This is why even small pH changes can have large real-world effects.</p>
         <p>pH can be measured with <Term def="A solution that changes colour across the pH range, giving an approximate reading.">universal indicator</Term>, pH paper, or a digital pH meter for precise readings. Human blood must stay between 7.35 and 7.45 for normal body function, farm soil pH affects crop growth, and pool pH must be controlled to prevent irritation.</p>
-        <Figure num="3" caption="The pH scale with common substances.">
+        <Figure num="4" caption="The pH scale with common substances.">
           <svg viewBox="0 0 560 130" width="100%" style={{ maxWidth: 560 }}>
             {/* gradient bar */}
             <defs>
@@ -599,13 +691,13 @@ function Section62({ progress, setProgress }) {
               { label: "Bleach", ph: 13 },
             ].map(({ label, ph }) => (
               <g key={label} transform={`translate(${10 + ph * 38.57},0)`}>
-                <line x1="0" y1="26" x2="0" y2="10" stroke="#333" strokeWidth="1.5"/>
-                <text x="0" y="8" textAnchor="middle" fontSize="9" fill="var(--ink)">{label}</text>
+                <line x1="0" y1="26" x2="0" y2="10" stroke="var(--ink)" strokeWidth="1.5"/>
+                <text x={label === "Water" ? -2 : label === "Blood" ? 2 : label === "Battery acid" ? -4 : 0} y="8" textAnchor={label === "Water" ? "end" : label === "Blood" || label === "Battery acid" ? "start" : "middle"} fontSize="9" fill="var(--ink)">{label}</text>
               </g>
             ))}
             <text x="10" y="115" fontSize="11" fill="#ef4444" fontWeight="700">ACIDIC</text>
-            <text x="280" y="115" fontSize="11" fill="#22c55e" fontWeight="700" textAnchor="middle">NEUTRAL</text>
-            <text x="550" y="115" fontSize="11" fill="#6d28d9" fontWeight="700" textAnchor="end">ALKALINE</text>
+            <text x="280" y="115" fontSize="11" fill="#16a34a" fontWeight="700" textAnchor="middle">NEUTRAL</text>
+            <text x="550" y="115" fontSize="11" fill="#8b5cf6" fontWeight="700" textAnchor="end">ALKALINE</text>
           </svg>
         </Figure>
         <QGroup title="Check yourself">
@@ -626,7 +718,7 @@ function Section62({ progress, setProgress }) {
         <Callout kind="key" title="Titration curve shape">
           The curve starts at low pH (acidic), rises gradually, then rises sharply at the equivalence point (pH = 7 for a strong acid + strong base), then levels off at high pH (alkaline).
         </Callout>
-        <Figure num="4" caption="Titration curve: adding NaOH to HCl.">
+        <Figure num="5" caption="Titration curve: adding NaOH to HCl.">
           <svg viewBox="0 0 360 200" width="100%" style={{ maxWidth: 360 }}>
             <line x1="40" y1="170" x2="330" y2="170" stroke="var(--ink)" strokeWidth="1.5"/>
             <line x1="40" y1="10" x2="40" y2="170" stroke="var(--ink)" strokeWidth="1.5"/>
@@ -642,8 +734,8 @@ function Section62({ progress, setProgress }) {
                 <text x={40 + n * 9.67} y="186" textAnchor="middle" fontSize="10" fill="var(--ink)">{n}</text>
               </g>
             ))}
-            <text x="185" y="198" textAnchor="middle" fontSize="11" fill="var(--muted)">Volume NaOH added (mL)</text>
-            <text x="14" y="90" textAnchor="middle" fontSize="11" fill="var(--muted)" transform="rotate(-90,14,90)">pH</text>
+            <text x="185" y="198" textAnchor="middle" fontSize="11" fill="var(--ink-muted)">Volume NaOH added (mL)</text>
+            <text x="14" y="90" textAnchor="middle" fontSize="11" fill="var(--ink-muted)" transform="rotate(-90,14,90)">pH</text>
             {/* titration curve */}
             <path
               d="M40,158 C80,155 110,152 130,148 C150,144 160,140 165,125 C167,115 168,100 168,90 C168,75 170,55 176,45 C184,36 200,33 250,30 C280,29 300,28 320,28"
@@ -752,15 +844,15 @@ function CollisionRateSim() {
         ref={canvasRef}
         width={340}
         height={120}
-        style={{ borderRadius: 10, background: "var(--accent-soft)", display: "block", margin: "0 auto 14px" }}
+        style={{ borderRadius: 10, background: "var(--accent-soft)", display: "block", margin: "0 auto 14px", width: "100%", maxWidth: 340, height: "auto" }}
       />
       <div className="stat-readout">
         <Stat value={relativeRate} label="Relative rate"/>
         <Stat value={rateLabel} label="Description"/>
-        <Stat value={`${activationEnergy} kJ`} label="Activation energy"/>
+        <Stat value={`${activationEnergy} kJ/mol`} label="Activation energy"/>
       </div>
       <p className="muted" style={{ marginBottom: 0, fontSize: 13 }}>
-        A 10 degree rise in temperature roughly doubles the rate. A catalyst lowers the activation energy so more collisions succeed.
+        In many real reactions a 10 °C rise roughly doubles the rate (this simple model does not show that exactly). A catalyst lowers the activation energy so more collisions succeed.
       </p>
     </Interactive>
   );
@@ -779,7 +871,7 @@ function Section63({ progress, setProgress }) {
       <DotPoint id="6.3.1" title="Investigate and explain how concentration, surface area, temperature and catalysts affect rate" progress={progress} setProgress={setProgress}>
         <p>The <Term def="A measure of how quickly reactants are converted into products in a chemical reaction.">rate of a chemical reaction</Term> tells you how fast it goes. Explosions are very fast; rusting is very slow. <Term def="The theory that reactions occur when particles collide with sufficient energy and the correct orientation.">Collision theory</Term> explains rate: a reaction only happens when particles collide with enough energy (the <Term def="The minimum amount of energy that colliding particles must have for a reaction to occur.">activation energy</Term>) and with the correct orientation. Anything that increases the frequency or energy of successful collisions increases the rate.</p>
         <p>Higher <Term def="The amount of substance dissolved in a given volume of solution.">concentration</Term> means more particles per unit volume, so collisions happen more often. Larger <Term def="The total area of a solid that is exposed and available for collisions with other particles.">surface area</Term> exposes more particles to collisions; powders react faster than lumps because there are far more particle sites available.</p>
-        <p>Higher temperature makes particles move faster, causing both more frequent collisions and more energetic ones, so more collisions exceed the activation energy. As a rule of thumb, every 10 degree Celsius rise roughly doubles the rate. A <Term def="A substance that speeds up a reaction without being consumed in the process. It lowers the activation energy.">catalyst</Term> lowers the activation energy needed, so a higher proportion of collisions are successful, speeding up the reaction without being used up itself.</p>
+        <p>Higher temperature makes particles move faster, causing both more frequent collisions and more energetic ones, so more collisions exceed the activation energy. As a rule of thumb, every 10 °C rise roughly doubles the rate for many reactions. A <Term def="A substance that speeds up a reaction without being consumed in the process. It lowers the activation energy.">catalyst</Term> lowers the activation energy needed, so a higher proportion of collisions are successful, speeding up the reaction without being used up itself.</p>
         <CollisionRateSim />
         <Callout kind="tip" title="Measuring rate">
           Common methods include measuring the volume of gas produced over time, measuring the loss of mass over time (if a gas escapes), and measuring the time for a precipitate to obscure a cross drawn on paper.
@@ -807,7 +899,7 @@ function Section63({ progress, setProgress }) {
         <Callout kind="key" title="Scientific report structure">
           Title - Aim - Hypothesis - Variables - Materials - Method - Results (table + graph) - Discussion - Conclusion.
         </Callout>
-        <Figure num="5" caption="Sample graph: mass loss vs time for marble chips in acid at two concentrations.">
+        <Figure num="6" caption="Sample graph: mass loss vs time for marble chips in the same volume of acid at two concentrations. The acid is the limiting reactant, so the more concentrated acid reacts faster and also produces more CO₂ in total.">
           <svg viewBox="0 0 360 200" width="100%" style={{ maxWidth: 360 }}>
             <line x1="50" y1="170" x2="330" y2="170" stroke="var(--ink)" strokeWidth="1.5"/>
             <line x1="50" y1="10" x2="50" y2="170" stroke="var(--ink)" strokeWidth="1.5"/>
@@ -823,14 +915,14 @@ function Section63({ progress, setProgress }) {
                 <text x={50 + i * 56} y="186" textAnchor="middle" fontSize="10" fill="var(--ink)">{v}</text>
               </g>
             ))}
-            <text x="190" y="198" textAnchor="middle" fontSize="11" fill="var(--muted)">Time (min)</text>
-            <text x="14" y="90" textAnchor="middle" fontSize="11" fill="var(--muted)" transform="rotate(-90,14,90)">Mass loss (g)</text>
+            <text x="190" y="198" textAnchor="middle" fontSize="11" fill="var(--ink-muted)">Time (min)</text>
+            <text x="14" y="90" textAnchor="middle" fontSize="11" fill="var(--ink-muted)" transform="rotate(-90,14,90)">Mass loss (g)</text>
             {/* concentrated - faster */}
             <path d="M50,170 C90,140 130,115 160,105 C190,95 230,90 330,88" fill="none" stroke="var(--accent-deep)" strokeWidth="2.5"/>
-            <text x="335" y="86" fontSize="10" fill="var(--accent-deep)">conc.</text>
+            <text x="335" y="86" fontSize="10" fill="var(--ink)">conc.</text>
             {/* dilute - slower */}
-            <path d="M50,170 C90,155 140,140 180,130 C220,120 270,115 330,112" fill="none" stroke="#94a3b8" strokeWidth="2.5"/>
-            <text x="335" y="112" fontSize="10" fill="#94a3b8">dilute</text>
+            <path d="M50,170 C90,155 140,140 180,130 C220,120 270,115 330,112" fill="none" stroke="#7a8699" strokeWidth="2.5"/>
+            <text x="335" y="112" fontSize="10" fill="#7a8699">dilute</text>
           </svg>
         </Figure>
         <QGroup title="Check yourself">
@@ -901,8 +993,8 @@ function HalfLifeSim() {
         <line x1={padL} y1={padT} x2={padL} y2={H - padB + padT} stroke="var(--ink)" strokeWidth="1.5"/>
         <line x1={padL} y1={H - padB + padT} x2={W - padR} y2={H - padB + padT} stroke="var(--ink)" strokeWidth="1.5"/>
         {/* axis labels */}
-        <text x={W / 2} y={H + 2} textAnchor="middle" fontSize="10" fill="var(--muted)">Time ({iso.unit})</text>
-        <text x="10" y={H / 2} textAnchor="middle" fontSize="10" fill="var(--muted)" transform={`rotate(-90,10,${H/2})`}>Atoms remaining</text>
+        <text x={W / 2} y={H + 2} textAnchor="middle" fontSize="10" fill="var(--ink-muted)">Time ({iso.unit})</text>
+        <text x="10" y={H / 2} textAnchor="middle" fontSize="10" fill="var(--ink-muted)" transform={`rotate(-90,10,${H/2})`}>Atoms remaining</text>
         {/* curve */}
         <path d={pathD} fill="none" stroke="var(--accent-deep)" strokeWidth="2.5"/>
         {/* current point */}
@@ -975,16 +1067,16 @@ function NuclearEquationChecker() {
         <span style={{ textAlign: "center" }}>
           <sup>{p.parent.A}</sup><sub>{p.parent.Z}</sub>{p.parent.symbol}
         </span>
-        <span style={{ fontWeight: 700, color: "var(--accent-deep)", fontSize: 22 }}>→</span>
+        <span style={{ fontWeight: 700, color: "var(--ink)", fontSize: 22 }}>→</span>
         <span style={{ textAlign: "center", display: "flex", alignItems: "center", gap: 4 }}>
           <span>
-            <input value={dA} onChange={e => { setDA(e.target.value); setChecked(false); }} style={{ width: 44, textAlign: "center", fontWeight: 700, borderRadius: 6, border: "2px solid var(--accent-deep)", padding: "2px 4px", background: checked ? (aOk ? "#bbf7d0" : "#fecaca") : "var(--surface)" }} placeholder="A"/>
+            <input value={dA} onChange={e => { setDA(e.target.value); setChecked(false); }} style={{ width: 44, textAlign: "center", fontWeight: 700, borderRadius: 6, border: "2px solid var(--accent-deep)", padding: "2px 4px", background: checked ? (aOk ? "#bbf7d0" : "#fecaca") : "var(--surface)", color: checked ? "#1b1a17" : "var(--ink)" }} placeholder="A"/>
             <br/>
-            <input value={dZ} onChange={e => { setDZ(e.target.value); setChecked(false); }} style={{ width: 44, textAlign: "center", fontWeight: 700, borderRadius: 6, border: "2px solid var(--accent-deep)", padding: "2px 4px", background: checked ? (zOk ? "#bbf7d0" : "#fecaca") : "var(--surface)", marginTop: 2 }} placeholder="Z"/>
+            <input value={dZ} onChange={e => { setDZ(e.target.value); setChecked(false); }} style={{ width: 44, textAlign: "center", fontWeight: 700, borderRadius: 6, border: "2px solid var(--accent-deep)", padding: "2px 4px", background: checked ? (zOk ? "#bbf7d0" : "#fecaca") : "var(--surface)", color: checked ? "#1b1a17" : "var(--ink)", marginTop: 2 }} placeholder="Z"/>
             <span style={{ marginLeft: 4 }}>{p.daughter.symbol}</span>
           </span>
         </span>
-        <span style={{ fontWeight: 700, color: "var(--accent-deep)" }}>+</span>
+        <span style={{ fontWeight: 700, color: "var(--ink)" }}>+</span>
         <span>
           <sup>{p.particle.A}</sup><sub>{p.particle.Z}</sub>{p.particle.symbol}
         </span>
@@ -1013,7 +1105,7 @@ function Section64({ progress, setProgress }) {
         <p className="lead">From the Big Bang to radioactive decay, half-lives, fission, and fusion, the nucleus is where some of the universe's most powerful reactions take place.</p>
       </div>
 
-      <Figure src="img/nuclear.png" caption="In nuclear fission a heavy nucleus splits, releasing energy." />
+      <FissionFigure/>
       <DotPoint id="6.4.1" title="Outline how the first elements were formed after the Big Bang" progress={progress} setProgress={setProgress}>
         <p>The <Term def="The leading scientific theory that the universe began about 13.8 billion years ago from an extremely hot, dense point that rapidly expanded.">Big Bang theory</Term> proposes that around 13.8 billion years ago, all matter and energy were concentrated in one unimaginably hot, dense point. As the universe expanded and cooled, matter began to take shape.</p>
         <p>Within the first second, quarks combined to form protons and neutrons. About 3 to 20 minutes after the Big Bang, <Term def="The production of atomic nuclei from protons and neutrons in the first minutes after the Big Bang.">Big Bang nucleosynthesis</Term> produced the lightest nuclei: approximately 75% hydrogen (H) and 25% helium (He), plus tiny traces of lithium and beryllium.</p>
@@ -1034,14 +1126,14 @@ function Section64({ progress, setProgress }) {
 
       <DotPoint id="6.4.2" title="Describe the conditions that cause a nucleus to be unstable" progress={progress} setProgress={setProgress}>
         <p>The nucleus is held together by the <Term def="A very short-range force that binds protons and neutrons together in the nucleus, overcoming the repulsion between protons.">strong nuclear force</Term>, which acts between nucleons (protons and neutrons). At the same time, protons repel each other because they share the same positive charge. A nucleus is <Term def="A nucleus that has the right balance of protons and neutrons to remain intact without emitting radiation.">stable</Term> when these two forces are balanced.</p>
-        <p>A nucleus becomes <Term def="A nucleus that has too many or too few neutrons relative to its protons, causing it to emit radiation to reach a more stable state.">unstable</Term> if it has too many neutrons for its protons, too few neutrons for its protons, or too many nucleons in total. Every element with more than 83 protons has at least some unstable <Term def="Atoms of the same element with different numbers of neutrons. Some isotopes are radioactive.">isotopes</Term>. Unstable nuclei undergo <Term def="The spontaneous emission of radiation from an unstable nucleus to reach a more stable state.">radioactive decay</Term>, emitting alpha particles, beta particles, or gamma radiation.</p>
+        <p>A nucleus becomes <Term def="A nucleus that has too many or too few neutrons relative to its protons, causing it to emit radiation to reach a more stable state.">unstable</Term> if it has too many neutrons for its protons, too few neutrons for its protons, or too many nucleons in total. Every element with more than 82 protons (heavier than lead) has no stable <Term def="Atoms of the same element with different numbers of neutrons. Some isotopes are radioactive.">isotopes</Term> at all: all of its isotopes are radioactive. Unstable nuclei undergo <Term def="The spontaneous emission of radiation from an unstable nucleus to reach a more stable state.">radioactive decay</Term>, emitting alpha particles, beta particles, or gamma radiation.</p>
         <Callout kind="key" title="Types of radiation">
           Alpha (a helium nucleus: 2 protons + 2 neutrons), Beta (a high-energy electron ejected from the nucleus when a neutron converts to a proton), and Gamma (high-energy electromagnetic radiation, often emitted alongside alpha or beta decay).
         </Callout>
         <QGroup title="Check yourself">
           <MCQ
             num={18}
-            question="Why do all elements with more than 83 protons have at least some radioactive isotopes?"
+            question="Why are all isotopes of elements with more than 82 protons radioactive?"
             options={[
               "They have too few electrons",
               "The strong nuclear force cannot balance the repulsion between so many protons",
@@ -1049,15 +1141,15 @@ function Section64({ progress, setProgress }) {
               "They were not formed in the Big Bang"
             ]}
             correct={1}
-            explain="Above 83 protons, the electrostatic repulsion between protons in the nucleus becomes so strong that no stable neutron-to-proton ratio exists."
+            explain="Above 82 protons, the electrostatic repulsion between protons in the nucleus becomes so strong that no stable neutron-to-proton ratio exists."
           />
         </QGroup>
       </DotPoint>
 
       <DotPoint id="6.4.3" title="Represent alpha and beta reactions as nuclear equations" progress={progress} setProgress={setProgress}>
         <p>Nuclear reactions are represented by <Term def="An equation showing how atomic nuclei change, with mass numbers and atomic numbers balancing on both sides.">nuclear equations</Term>. In these, the top number (mass number, A) is the total number of protons and neutrons, and the bottom number (atomic number, Z) is the number of protons. Both A and Z must balance on each side of the arrow.</p>
-        <p>In <Term def="A type of radioactive decay in which an alpha particle (2 protons + 2 neutrons) is emitted, reducing the mass number by 4 and the atomic number by 2.">alpha decay</Term>, the nucleus loses an alpha particle (written as &#8308;&#8322;He or &#945;), so the mass number decreases by 4 and the atomic number decreases by 2. The element changes to a different element. Example: ²³&#8312;&#9226;&#8322;U → ²³&#8308;&#9226;&#8320;Th + &#8308;&#8322;He.</p>
-        <p>In <Term def="A type of radioactive decay in which a neutron converts into a proton and a high-energy electron (beta particle) that is ejected, increasing the atomic number by 1.">beta decay</Term>, a neutron in the nucleus becomes a proton, and a high-energy electron (the beta particle, &#8315;&#185;&#8320;e) is ejected. The mass number stays the same, but the atomic number increases by 1. Example: &#185;&#8308;&#8326;C → &#185;&#8308;&#8327;N + &#8315;&#185;&#8320;e. <Term def="High-energy electromagnetic radiation emitted alongside alpha or beta decay. It does not change the atomic or mass number.">Gamma emission</Term> does not change atomic or mass number.</p>
+        <p>In <Term def="A type of radioactive decay in which an alpha particle (2 protons + 2 neutrons) is emitted, reducing the mass number by 4 and the atomic number by 2.">alpha decay</Term>, the nucleus loses an alpha particle (written as &#8308;&#8322;He or &#945;), so the mass number decreases by 4 and the atomic number decreases by 2. The element changes to a different element. Example: ²³&#8312;&#8329;&#8322;U → ²³&#8308;&#8329;&#8320;Th + &#8308;&#8322;He.</p>
+        <p>In <Term def="A type of radioactive decay in which a neutron converts into a proton and a high-energy electron (beta particle) that is ejected, increasing the atomic number by 1.">beta decay</Term>, a neutron in the nucleus becomes a proton, and a high-energy electron (the beta particle, &#8304;&#8331;&#8321;e) is ejected. The mass number stays the same, but the atomic number increases by 1. Example: &#185;&#8308;&#8326;C → &#185;&#8308;&#8327;N + &#8304;&#8331;&#8321;e. <Term def="High-energy electromagnetic radiation emitted alongside alpha or beta decay. It does not change the atomic or mass number.">Gamma emission</Term> does not change atomic or mass number.</p>
         <NuclearEquationChecker />
         <QGroup title="Check yourself">
           <WrittenQ
@@ -1103,8 +1195,8 @@ function Section64({ progress, setProgress }) {
       <DotPoint id="6.4.6" title="Describe nuclear fission and nuclear fusion" progress={progress} setProgress={setProgress}>
         <p><Term def="The splitting of a large, unstable nucleus into two smaller nuclei, releasing a large amount of energy, several neutrons, and gamma radiation.">Nuclear fission</Term> occurs when a large nucleus, such as uranium-235, absorbs a neutron and splits into two smaller nuclei. This releases extra neutrons that can trigger further fissions, creating a <Term def="A self-sustaining series of fission reactions where neutrons from each fission trigger more fissions.">chain reaction</Term>. Fission releases about one million times more energy per unit mass than a chemical reaction. It is used in nuclear power stations and atomic weapons.</p>
         <p><Term def="The joining of two small nuclei to form a larger nucleus, releasing a very large amount of energy.">Nuclear fusion</Term> is the opposite: two small nuclei (usually hydrogen isotopes deuterium and tritium) are forced together to form a larger nucleus. Fusion requires extremely high temperatures (millions of degrees Celsius) and pressures, conditions found naturally inside stars. Fusion releases even more energy per unit mass than fission and produces far less long-lived radioactive waste. Commercial fusion power stations do not yet exist, but international research projects like ITER are working on it.</p>
-        <Figure num="6" caption="Fission vs fusion: key differences at a glance.">
-          <svg viewBox="0 0 540 130" width="100%" style={{ maxWidth: 540 }}>
+        <Figure num="7" caption="Fission vs fusion: key differences at a glance.">
+          <svg viewBox="0 0 540 146" width="100%" style={{ maxWidth: 540 }}>
             {[
               ["Process", "Large nucleus splits", "Small nuclei join"],
               ["Fuel", "Uranium-235", "Hydrogen isotopes"],
@@ -1112,18 +1204,18 @@ function Section64({ progress, setProgress }) {
               ["Waste", "Long-lived radioactive", "Very little long-lived"],
               ["In use?", "Yes, power stations", "Research only"],
             ].map(([feat, fiss, fus], i) => (
-              <g key={feat} transform={`translate(0,${i * 24})`}>
+              <g key={feat} transform={`translate(0,${i * 24 + 22})`}>
                 <rect x="0" y="4" width="160" height="20" rx="4" fill={i % 2 === 0 ? "var(--accent-soft)" : "#f1f5f9"}/>
-                <text x="80" y="18" textAnchor="middle" fontSize="11" fontWeight="700" fill="var(--ink)">{feat}</text>
+                <text x="80" y="18" textAnchor="middle" fontSize="11" fontWeight="700" fill="#1b1a17">{feat}</text>
                 <rect x="165" y="4" width="175" height="20" rx="4" fill={i % 2 === 0 ? "#dbeafe" : "#eff6ff"}/>
-                <text x="252" y="18" textAnchor="middle" fontSize="10" fill="var(--ink)">{fiss}</text>
+                <text x="252" y="18" textAnchor="middle" fontSize="10" fill="#1b1a17">{fiss}</text>
                 <rect x="345" y="4" width="190" height="20" rx="4" fill={i % 2 === 0 ? "#dcfce7" : "#f0fdf4"}/>
-                <text x="440" y="18" textAnchor="middle" fontSize="10" fill="var(--ink)">{fus}</text>
+                <text x="440" y="18" textAnchor="middle" fontSize="10" fill="#1b1a17">{fus}</text>
               </g>
             ))}
-            <text x="80" y="124" textAnchor="middle" fontSize="12" fontWeight="700" fill="var(--ink)">Feature</text>
-            <text x="252" y="124" textAnchor="middle" fontSize="12" fontWeight="700" fill="#1d4ed8">Fission</text>
-            <text x="440" y="124" textAnchor="middle" fontSize="12" fontWeight="700" fill="#15803d">Fusion</text>
+            <text x="80" y="18" textAnchor="middle" fontSize="12" fontWeight="700" fill="var(--ink)">Feature</text>
+            <text x="252" y="18" textAnchor="middle" fontSize="12" fontWeight="700" fill="#4b7bc9">Fission</text>
+            <text x="440" y="18" textAnchor="middle" fontSize="12" fontWeight="700" fill="#3f8a4a">Fusion</text>
           </svg>
         </Figure>
         <QGroup title="Check yourself">
@@ -1178,7 +1270,7 @@ function HaberProcessSim() {
   const rateLabel = reactionRate < 1.5 ? "Slow" : reactionRate < 2.5 ? "Moderate" : "Fast";
 
   return (
-    <Interactive title="Haber process explorer" subtitle="Adjust temperature and pressure to find the best industrial conditions for ammonia production." takeaway="Industrial conditions for the Haber process are a compromise: lower temperature gives better yield but too slowly, while higher pressure improves yield but makes equipment expensive and dangerous, so around 450 degrees C and 200 atm is used with an iron catalyst.">
+    <Interactive title="Haber process explorer" subtitle="Adjust temperature and pressure to find the best industrial conditions for ammonia production." takeaway="Industrial conditions for the Haber process are a compromise: lower temperature gives better yield but too slowly, while higher pressure improves yield but makes equipment expensive and dangerous, so around 450 °C and 200 atm is used with an iron catalyst.">
       <div className="grid-2" style={{ gap: 14, marginBottom: 12 }}>
         <Slider label="Temperature" min={200} max={600} value={temperature} onChange={setTemperature} unit=" °C"/>
         <Slider label="Pressure" min={50} max={400} value={pressure} onChange={setPressure} unit=" atm"/>
@@ -1188,7 +1280,7 @@ function HaberProcessSim() {
         <Stat value={rateLabel} label="Reaction rate"/>
         <Stat value={temperature + " °C"} label="Temperature"/>
       </div>
-      <p style={{ fontSize: 13, color: "var(--muted)", marginTop: 8, marginBottom: 0 }}>
+      <p style={{ fontSize: 13, color: "var(--ink-muted)", marginTop: 8, marginBottom: 0 }}>
         Industrially, around 450 °C and 200 atm are used with an iron catalyst. Lower temperatures give better yield but too slowly; higher pressure improves yield but makes equipment very expensive and dangerous.
       </p>
       {temperature < 350 && (
@@ -1216,7 +1308,7 @@ function Section65({ progress, setProgress }) {
 
       <DotPoint id="6.5.1" title="Investigate a chemical or nuclear reaction used in industry to produce an important product" progress={progress} setProgress={setProgress}>
         <p>Industrial reactions are chemical or nuclear processes carried out on a large scale to produce useful products. Studying them helps you understand how scientific knowledge is applied to meet real-world needs and to evaluate the environmental and social trade-offs involved.</p>
-        <p>The <Term def="An industrial process that produces ammonia (NH3) from nitrogen and hydrogen gas using an iron catalyst at high temperature and pressure.">Haber process</Term> synthesises ammonia (NH&#8323;) from nitrogen and hydrogen: N&#8322; + 3H&#8322; → 2NH&#8323;. Ammonia is the starting material for fertilisers that feed billions of people. It requires high pressure (about 200 atm), moderate temperature (about 450 degrees Celsius), and an iron catalyst. The conditions represent a compromise between yield and reaction rate.</p>
+        <p>The <Term def="An industrial process that produces ammonia (NH3) from nitrogen and hydrogen gas using an iron catalyst at high temperature and pressure.">Haber process</Term> synthesises ammonia (NH&#8323;) from nitrogen and hydrogen: N&#8322; + 3H&#8322; → 2NH&#8323;. Ammonia is the starting material for fertilisers that feed billions of people. It requires high pressure (about 200 atm), moderate temperature (about 450 °C), and an iron catalyst. The conditions represent a compromise between yield and reaction rate.</p>
         <p><Term def="The industrial process that uses nuclear fission of uranium-235 to generate heat, which produces steam to drive turbines and generate electricity.">Nuclear fission power stations</Term> control a chain reaction of uranium-235 to generate heat, then steam to drive turbines. They produce very low greenhouse gas emissions but generate radioactive waste and require careful safety management. Other important industrial reactions include sulfuric acid production (used in fertilisers, car batteries, and mining), iron and steel production in blast furnaces, and medical radioisotope production.</p>
         <p>When evaluating any industrial reaction, consider: raw materials and their availability, energy required, conditions needed (temperature, pressure, catalyst), products and by-products, economic value, environmental impact at every stage, and social benefits and considerations.</p>
         <HaberProcessSim />
